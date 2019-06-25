@@ -1,0 +1,39 @@
+[push]
+  default = current
+[commit]
+  gpgsign = true
+[core]
+  autocrlf = input
+  editor = vim
+  excludesfile = ~/.gitignore_global
+  filemode = false
+  trustctime = false
+[color]
+  ui = true
+[credential]
+  helper = cache --timeout=604800
+[mergetool]
+  keepbackups = false
+  keeptemporaries = false
+  prompt = false
+  trustexitcode = false
+[alias]
+  br = branch
+  ci = commit
+  cl = clone
+  co = checkout
+  cp = cherry-pick
+  dc = diff --cached
+  gd = !git diff --color | diff-highlight | less -r
+  gl = git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  last = log -1 --stat
+  st = status -sb
+  unstage = reset HEAD --
+[gpg]
+  program = /usr/bin/gpg
+[init]
+  templatedir = ~/.git-templates
+[user]
+  email = sfeuga@member.fsf.org
+  name = Stéphane FEUGA OSHIMA
+  signingkey = AA4DC3EE3C40787D

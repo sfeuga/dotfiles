@@ -1,0 +1,4 @@
+## Default
+Host *
+  ControlMaster auto
+  ControlPersist 4h

@@ -1,0 +1,336 @@
+# for setting history length see HISTSIZE and HISTFILESIZE in bash or zsh
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[[ -x $(command -v lesspipe) ]] && eval "$(SHELL=/bin/sh lesspipe)"
+[[ -x $(command -v lesspipe.sh) ]] && export LESSOPEN="|/usr/bin/lesspipe.sh %s"
+# Use .lessfilter to color less output (need rouge gem or pigmentyze python)
+#export LESS='-RN'
+#export LESSOPEN='|~/.lessfilter %s'
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+### Add color to man
+if [[ -f $(command -v most) ]]; then
+  export MANPAGER="$(command -v most) -s"
+fi
+
+# Set Vim as defaut editor
+if [[ -f $(command -v vim) ]]; then
+  export EDITOR='vim'
+elif [[ -f $(command -v vi) ]]; then
+  export EDITOR='vi'
+elif [[ -f $(command -v nano) ]]; then
+  export EDITOR='nano'
+fi
+
+# Vim folders
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Add bin annd .local/bin to PATH
+[[ -s "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
+[[ -s "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+
+# Add RVM to PATH for scripting.
+# Make sure this is the last PATH variable change.
+[[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
+
+# Add completion for RVM
+[[ -r "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
+# Make RVM a function
+[[ -r "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+### adb-fastboot for android devices
+[[ -d "$HOME/bin/adb-fastboot/" ]] && export PATH="$HOME/bin/adb-fastboot/:$PATH"
+
+#############################
+##### Aliases & Helpers #####
+#############################
+alias weekNumber='date +%V'
+alias wn='weekNumber'
+
+alias ls='ls -AFv --color=tty'
+alias lsa='ls -AFlhv --color=tty'
+alias ll='ls -alFv'
+alias la='ls -AFv'
+alias l='ls -CFv'
+alias df='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
+alias du='du -h'
+alias free='free -h'
+
+# cheat settings
+if [[ -x $(command -v cheat) ]]; then
+  export CHEAT_COLORS=true
+  export CHEAT_COLORSCHEME=dark
+
+  function _cheat_autocomplete {
+    sheets=$(cheat -l | cut -d' ' -f1)
+    COMPREPLY=()
+    if [[ "$COMP_CWORD" = 1 ]]; then
+      IFS=" " read -r -a COMPREPLY <<< "$(compgen -W "$sheets" -- "$2")"
+    fi
+  }
+
+  complete -F _cheat_autocomplete cheat
+fi
+
+# Easy DL
+if [[ -f $(command -v aria2c) ]]; then
+  alias dlt='aria2c --seed-time=0'
+fi
+
+# Setup movies filder name for handy ytdl
+if [[ -d $HOME/Movies ]];then
+  export movie_folder=Movies
+elif [[ -d $HOME/Videos ]];then
+  export movie_folder=Videos
+fi
+
+### System maintenance
+if [[ -f $(command -v dnf) ]]; then
+  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && \
+                    flatpak update -y'
+elif [[ -f $(command -v apt) ]]; then
+  alias sys-update='sudo apt update -y && sudo apt upgrade -y && \
+                    sudo apt autoremove -y && flatpak update -y'
+fi
+
+### Buku https://github.com/jarun/Buku
+if [[ -f $(command -v buku) ]]; then
+  # Buku Completion
+  if [[ -f $HOME/bin/buku-completion.bash ]]; then
+# shellcheck source=/dev/null
+    source "$HOME/bin/buku-completion.bash"
+  else
+    BUKU='https://raw.githubusercontent.com/jarun/Buku/master'
+    curl $BUKU/auto-completion/bash/buku-completion.bash \
+      -o "$HOME/bin/buku-completion.bash"
+# shellcheck source=/dev/null
+    source "$HOME/bin/buku-completion.bash"
+  fi
+fi
+
+
+# Change all current files/folders to Title Case
+#function to_title_case {
+#  rename 'y/A-Z/a-z/' -- *
+#  rename 's/(^|[\s_-])([a-z])/$1\u$2/g' -- *
+#}
+
+
+### Git
+if [[ -f $(command -v git) ]]; then
+  # Git Completion
+  if [[ -f $HOME/bin/git-completion.bash ]]; then
+# shellcheck source=/dev/null
+    source "$HOME/bin/git-completion.bash"
+  else
+    GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
+    curl $GIT_COMPLETION/completion/git-completion.bash \
+      -o "$HOME/bin/git-completion.bash"
+# shellcheck source=/dev/null
+    source "$HOME/bin/git-completion.bash"
+  fi
+
+  alias got='git '
+  alias gti='git '
+  alias gut='git '
+
+  function LastCommitNumber () {
+    [[ -d .git ]] && git log -n 1 | head -n 1 | awk '{ print $NF }'
+  }
+
+  function UntouchedSinceALongTimeBranch () {
+    [[ -d .git ]] && \
+      # Local and Remote branch
+      for branch in $(git branch -a | sed 's/\*/ /g' | \
+                      awk '{ print $1 }' | grep -E -v -w 'HEAD|master')
+      do
+        echo -e "$(git show --format="%cr" "$branch" | head -n 1) \
+                \t$branch" | grep -E 'month[s]*|year[s]*'
+      done | awk '{ print $NF }' | sed 's|origin/||'
+  }
+
+  function CleanBranch () {
+    [[ -d .git ]] && \
+      branches=$(git remote prune origin --dry-run | grep 'origin/' | \
+                 awk -F '/' '{ print $2 }')
+    if [[ -n "$branches" ]]; then
+      echo "$branches"
+      echo -n "Did you want to clean all this branches (y|N):"
+      read -r yn
+      case $yn in
+        [yY] | [yY][Ee][Ss])
+          # Local and Remote branch
+          git remote prune origin
+          git branch -D "$(for branch in $branches; do 
+                             printf "%s " "$branch";
+                           done;)" 2> /dev/null
+          ;;
+        *)
+          exit 1
+          ;;
+      esac
+    else
+      echo "There is no branch to clean."
+    fi
+  }
+
+  function DeleteUnusedBranch () {
+    CleanBranch
+    git push origin "$(UntouchedSinceALongTimeBranch)" --delete --dry-run
+    echo -n "Did you want to delete all this remote branches (y|N):"
+    read -r yn
+    case $yn in
+      [yY] | [yY][Ee][Ss])
+        git push origin "$(UntouchedSinceALongTimeBranch)" --delete
+        ;;
+      *)
+        exit 1
+        ;;
+    esac
+  }
+
+  function GetBackToWork () {
+    if [[ "$(git log --pretty=oneline -n 1 | awk '{ print $2 }')" == "WIP" ]];then
+      git reset --soft HEAD~1 && git unstage
+    else
+      echo 'The last commit on this branch was not a "Work In Progress".'
+    fi
+  }
+fi
+
+### Docker & Docker-compose
+if [[ -f $(command -v docker) ]]; then
+  alias docAllStop='docker stop $(ActiveContainerIds)'
+  alias docRedisCli='docker exec -it $(redisContainerId) redis-cli'
+  alias docSidekiqLogs='docker logs -f $(sidekiqContainerId)'
+  alias restartSidekiqContainer='containerId=$(sidekiqContainerId) && \
+                                docker stop $containerId && \
+                                docker start $containerId'
+
+  if [[ -f $(command -v docker-compose) ]]; then
+    alias doc='docker-compose '
+    alias docDev='doc -f $(find . -iname *dev.yml)'
+    alias docDevRun='docdev run --rm '
+    alias docDevUp='docdev up'
+    alias docRun='doc run --rm '
+    alias docUp='doc up'
+  fi
+
+  function ActiveContainerIds () {
+    docker ps | grep -v CONTAINER | awk 'BEGIN { ORS=" " }; { print $1 }'
+  }
+
+  function ActiveContainerNames () {
+    docker ps | grep -v CONTAINER | awk 'BEGIN { ORS=" " }; { print $NF }'
+  }
+
+  function redisContainerId () {
+    docker ps | grep -m 1 redis | awk '{ print $NF }'
+  }
+
+  function sidekiqContainerId () {
+    docker ps | grep -m 1 sidekiq | awk '{ print $NF }'
+  }
+fi
+
+### Ruby
+#MyFiles="git status -s | awk '{ print $NF }' | grep .rb"
+#MyFilesAfterCommit="git diff-tree --no-commit-id --name-only -r \
+#                   $(LastCommitNumber) | grep .rb"
+
+#function RubocopMyFiles () {
+#  echo 'Rubocop:'
+#  for file in $(eval "$MyFiles"); do
+#    echo -e "\n$file: "
+#    rubocop "$file"
+#  done
+#  echo "---------------------------"
+#}
+
+#function RubocopAfterCommit () {
+#  LastCommitNumber
+#  echo 'Rubocop:'
+#  for file in $(eval "$MyFilesAfterCommit"); do
+#    echo -e "\n$file: "
+#    rubocop "$file"
+#  done;
+#  echo "---------------------------"
+#}
+
+#function ReekMyFiles () {
+#  echo 'Reek:'
+#  for file in $(eval "$MyFiles"); do
+#    echo -e "\n$file: "
+#    reek "$file"
+#  done
+#  echo "---------------------------"
+#}
+
+#function ReekAfterCommit () {
+#  LastCommitNumber
+#  echo 'Reek:'
+#  for file in $(eval "$MyFilesAfterCommit"); do
+#    echo -e "\n$file: "
+#    reek "$file"
+#  done
+#  echo "---------------------------"
+#}
+
+### Heroku
+#
+# .heroku_projects example:
+#   an heroku app name
+#   another heroku app name
+#   a third heroku app name
+function GetLastCredentials () {
+  if [[ -f "$HOME/.heroku_projects" ]]; then
+    "$HOME/.heroku_projects" | while IFS= read -r heroku_project
+    do
+      echo "/tmp/$heroku_project.env" && \
+      heroku config --app "$heroku_project" --shell > /tmp/"$heroku_project.env"
+    done
+  else
+    echo -e "Please add Heroku Project Name in \
+~/.heroku_projects.\n\tOne project name per line."
+  fi
+}
+
+### Ledger
+if [[ -f $(command -v ledger) ]]; then
+  if [[ -d $HOME/Documents/Administratif/Banques/ledger ]]; then
+    function LedgerNewEntry () {
+      cd "$HOME/Documents/Administratif/Banques/ledger/" || exit 1
+      vim "$(date +"%Y-%m").journal"
+      cd - >&/dev/null || exit 1
+    }
+    alias ledgerAccountStatus='ledger bal -X JPY --period $(date +"%Y-%m")'
+    alias ledgerNewEntry='LedgerNewEntry'
+  fi
+fi
+
+# Flatpak app aliases
+if [[ -d "/var/lib/flatpak/app/com.sublimetext.three" ]]; then
+  alias sublime='flatpak run com.sublimetext.three $1'
+fi
+if [[ -d "/var/lib/flatpak/app/org.videolan.VLC" ]]; then
+  alias vlc='flatpak run org.videolan.VLC $1'
+fi
+
+# Vim folders
+if [[ -f $(command -v vim) ]]; then
+  mkdir -p $HOME/.vim/{backup,bundle,spell,swap,undo}
+fi
+
+# Get Session Type
+function get_session_number () {
+  loginctl | awk '{print $1}' | head -n 2 | tail -n 1
+}
+alias get_session_type='loginctl show-session $(get_session_number) -p Type'
+
