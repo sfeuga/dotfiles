@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 if [ -f "$(command -v rougify)" ]; then
     highlighter='rougify --theme monokai'
 elif [ -f "$(command -v pygmentize)" ]; then
     highlighter='pygmentize -f 256'
+else
+  exit 1
 fi
 
 case "$1" in
@@ -28,11 +31,7 @@ case "$1" in
         $highlighter -l docker "$1";;
 
     *)
-        if grep -q "#\!/bin/bash" "$1" 2> /dev/null; then
-            $highlighter -l sh "$1"
-        else
-            exit 1
-        fi
+        exit 1
 esac
 
 exit 0
