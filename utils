@@ -1,3 +1,4 @@
+# shellcheck disable=SC2148
 # for setting history length see HISTSIZE and HISTFILESIZE in bash or zsh
 HISTSIZE=10000
 HISTFILESIZE=20000
@@ -5,34 +6,22 @@ HISTFILESIZE=20000
 # make less more friendly for non-text input files, see lesspipe(1)
 [[ -x $(command -v lesspipe) ]] && eval "$(SHELL=/bin/sh lesspipe)"
 [[ -x $(command -v lesspipe.sh) ]] && export LESSOPEN="|/usr/bin/lesspipe.sh %s"
-# Use .lessfilter to color less output (need rouge gem or pigmentyze python)
-#export LESS='-RN'
-#export LESSOPEN='|~/.lessfilter %s'
+export LESS=' -RN'
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 ### Add color to man
 if [[ -f $(command -v most) ]]; then
-  export MANPAGER="$(command -v most) -s"
+  MOST_PATH=$(command -v most)
+  export MANPAGER="$MOST_PATH -s"
 fi
-
-# Set Vim as defaut editor
-if [[ -f $(command -v vim) ]]; then
-  export EDITOR='vim'
-elif [[ -f $(command -v vi) ]]; then
-  export EDITOR='vi'
-elif [[ -f $(command -v nano) ]]; then
-  export EDITOR='nano'
-fi
-
-# Vim folders
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# Add bin annd .local/bin to PATH
+# Add bin and .local/bin to PATH
 [[ -s "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
 [[ -s "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
@@ -41,12 +30,18 @@ export LC_ALL=en_US.UTF-8
 [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
 
 # Add completion for RVM
-[[ -r "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
+export rvm_path="$HOME/.rvm"
+# shellcheck disable=SC1090
+[[ -r "$rvm_path/scripts/completion" ]] && . "$rvm_path/scripts/completion"
 # Make RVM a function
+# shellcheck disable=SC1090
 [[ -r "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 ### adb-fastboot for android devices
 [[ -d "$HOME/bin/adb-fastboot/" ]] && export PATH="$HOME/bin/adb-fastboot/:$PATH"
+
+### Add Rust Cargo to path
+[[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 
 #############################
 ##### Aliases & Helpers #####
@@ -59,9 +54,14 @@ alias lsa='ls -AFlhv --color=tty'
 alias ll='ls -alFv'
 alias la='ls -AFv'
 alias l='ls -CFv'
+alias ln="ln -v"
+alias mkdir="mkdir -p"
 alias df='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias du='du -h'
 alias free='free -h'
+alias boot.log='journalctl -b'
+alias dev='cd ~/Documents/Dev*/'
+alias path='echo $PATH | tr -s ":" "\n"'
 
 # cheat settings
 if [[ -x $(command -v cheat) ]]; then
@@ -85,19 +85,17 @@ if [[ -f $(command -v aria2c) ]]; then
 fi
 
 # Setup movies filder name for handy ytdl
-if [[ -d $HOME/Movies ]];then
+if [[ -d $HOME/Movies ]]; then
   export movie_folder=Movies
-elif [[ -d $HOME/Videos ]];then
+elif [[ -d $HOME/Videos ]]; then
   export movie_folder=Videos
 fi
 
 ### System maintenance
 if [[ -f $(command -v dnf) ]]; then
-  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && \
-                    flatpak update -y'
+  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y'
 elif [[ -f $(command -v apt) ]]; then
-  alias sys-update='sudo apt update -y && sudo apt upgrade -y && \
-                    sudo apt autoremove -y && flatpak update -y'
+  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y'
 fi
 
 ### Buku https://github.com/jarun/Buku
@@ -122,6 +120,23 @@ fi
 #  rename 's/(^|[\s_-])([a-z])/$1\u$2/g' -- *
 #}
 
+# Convert mkv titile to match file name
+function mkvtitle() {
+  if [[ -f "$(command -v mkvpropedit)" ]]; then
+    if [[ "$#" -gt "0" ]]; then
+      mkvpropedit "$1" -e info -s title="${f//\.mkv/}"
+      return
+    else
+      for f in *.mkv; do
+        mkvpropedit "$f" -e info -s title="${f//\.mkv/}"
+      done
+      return
+    fi
+  else
+    echo "Please, install mkvtoolnix"
+    return 1
+  fi
+}
 
 ### Git
 if [[ -f $(command -v git) ]]; then
@@ -168,8 +183,8 @@ if [[ -f $(command -v git) ]]; then
         [yY] | [yY][Ee][Ss])
           # Local and Remote branch
           git remote prune origin
-          git branch -D "$(for branch in $branches; do 
-                             printf "%s " "$branch";
+          git branch -D "$(for branch in $branches; do
+                             printf "%s " "$branch"
                            done;)" 2> /dev/null
           ;;
         *)
@@ -197,8 +212,19 @@ if [[ -f $(command -v git) ]]; then
   }
 
   function GetBackToWork () {
-    if [[ "$(git log --pretty=oneline -n 1 | awk '{ print $2 }')" == "WIP" ]];then
-      git reset --soft HEAD~1 && git unstage
+    local last_git_commit_message_first_word=''
+    local number_of_commit=''
+
+    last_git_commit_message_first_word="$(git log --pretty=oneline -n 1 | awk '{ print $2 }')"
+    number_of_commit=$(git log --pretty=oneline | wc -l)
+
+    if [[ "$last_git_commit_message_first_word" =~ "WIP" ]]; then
+      if [[ "$number_of_commit" -gt 1 ]]; then
+        cd "$(git rev-parse --show-toplevel)" && git pull --all
+        git reset --soft HEAD~1 && git unstage
+      else
+        true
+      fi
     else
       echo 'The last commit on this branch was not a "Work In Progress".'
     fi
@@ -210,9 +236,7 @@ if [[ -f $(command -v docker) ]]; then
   alias docAllStop='docker stop $(ActiveContainerIds)'
   alias docRedisCli='docker exec -it $(redisContainerId) redis-cli'
   alias docSidekiqLogs='docker logs -f $(sidekiqContainerId)'
-  alias restartSidekiqContainer='containerId=$(sidekiqContainerId) && \
-                                docker stop $containerId && \
-                                docker start $containerId'
+  alias restartSidekiqContainer='cId=$(sidekiqContainerId) && docker stop $cId && docker start $cId'
 
   if [[ -f $(command -v docker-compose) ]]; then
     alias doc='docker-compose '
@@ -260,7 +284,7 @@ fi
 #  for file in $(eval "$MyFilesAfterCommit"); do
 #    echo -e "\n$file: "
 #    rubocop "$file"
-#  done;
+#  done
 #  echo "---------------------------"
 #}
 
@@ -285,6 +309,7 @@ fi
 
 ### Heroku
 #
+# TODO check if heroku toolbelt is installed
 # .heroku_projects example:
 #   an heroku app name
 #   another heroku app name
@@ -297,35 +322,40 @@ function GetLastCredentials () {
       heroku config --app "$heroku_project" --shell > /tmp/"$heroku_project.env"
     done
   else
-    echo -e "Please add Heroku Project Name in \
-~/.heroku_projects.\n\tOne project name per line."
+    echo -e "Please add Heroku Project Name in ~/.heroku_projects.\n\tOne project name per line."
   fi
 }
 
 ### Ledger
-if [[ -f $(command -v ledger) ]]; then
-  if [[ -d $HOME/Documents/Administratif/Banques/ledger ]]; then
-    function LedgerNewEntry () {
+if [[ -f $(command -v ledger) ]] && \
+   [[ -d $HOME/Documents/Administratif/Banques/ledger ]] && \
+   [[ -f "$HOME/.ledgerrc" ]]; then
+  function LedgerNewEntry () {
+    (
       cd "$HOME/Documents/Administratif/Banques/ledger/" || exit 1
       vim "$(date +"%Y-%m").journal"
-      cd - >&/dev/null || exit 1
-    }
-    alias ledgerAccountStatus='ledger bal -X JPY --period $(date +"%Y-%m")'
-    alias ledgerNewEntry='LedgerNewEntry'
-  fi
+    )
+  }
+  alias ledgerAccountStatus='ledger bal -X JPY'
+  alias ledgerCurrentMonthAccountStatus='ledger bal -X JPY --period $(date +"%Y-%m")'
+  alias ledgerNewEntry='LedgerNewEntry'
 fi
 
 # Flatpak app aliases
-if [[ -d "/var/lib/flatpak/app/com.sublimetext.three" ]]; then
-  alias sublime='flatpak run com.sublimetext.three $1'
+if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/com.sublimetext.three.desktop" ]]; then
+  function sublime() {
+    flatpak run com.sublimetext.three "$1"
+  }
 fi
-if [[ -d "/var/lib/flatpak/app/org.videolan.VLC" ]]; then
-  alias vlc='flatpak run org.videolan.VLC $1'
+if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/org.videolan.VLC" ]]; then
+  function vlc() {
+    flatpak run org.videolan.VLC "$1"
+  }
 fi
 
-# Vim folders
-if [[ -f $(command -v vim) ]]; then
-  mkdir -p $HOME/.vim/{backup,bundle,spell,swap,undo}
+# Vim folders in case of not using nvim
+if [[ -f $(command -v vim) ]] && [[ ! -f $(command -v nvim) ]]; then
+  mkdir -p "$HOME"/.vim/{backup,bundle,spell,swap,undo}
 fi
 
 # Get Session Type
@@ -334,3 +364,139 @@ function get_session_number () {
 }
 alias get_session_type='loginctl show-session $(get_session_number) -p Type'
 
+# Edit Radio List
+# TODO check if gedit is installed, if not use the default editor
+alias radio_edit='gedit Music/Radio\ France.m3u8 /home/sfeuga/.gse-radio/channelList.json'
+
+# Translate aliases
+if [[ -f $(command -v trans) ]]; then
+  alias trans_en='trans en:fr+ja'
+  alias trans_fr='trans fr:en+ja'
+  alias trans_jp='trans ja:en+fr'
+fi
+
+# If no file(s) are passed to vim, check if a Session.vim exist, if yes, run it
+function vim_session() {
+  if [[ -f "Session.vim" ]]; then
+    if [[ "$#" -gt 1 ]]; then
+      editor=$1
+      shift
+      $editor "$@"
+    else
+      editor=$1
+      shift
+      $editor -S
+    fi
+  else
+    editor=$1
+    shift
+    $editor "$@"
+  fi
+}
+
+# Overide Default editor
+if [[ -f $(command -v nvim) ]]; then
+  alias vim='vim_session nvim'
+  if [[ -n "$NVIM_LISTEN_ADDRESS" ]]; then
+    if [[ -f $(command -v nvr) ]]; then
+      export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    else
+      echo -e "Please install neovim-remote by running the following command:\n" \
+        "\tFor Fedora:\tsudo dnf install python3-devel && " \
+          "pip3 install --user neovim-remote\n" \
+        "\tFor Ubuntu:\tsudo apt install python3-dev && " \
+          "pip3 install --user neovim-remote"
+    fi
+  else
+    export EDITOR='nvim'
+  fi
+  if [[ -f "$HOME/.dotfiles/config/nvim/init.vim" ]] && [[ ! -h "$HOME/.config/nvim/init.vim" ]]; then
+    if [[ -f $(command -v rcup) ]]; then
+      rcup
+    fi
+  elif [[ -f "$HOME/.dotfiles/config/nvim/init.vim" ]] && [[ -h "$HOME/.config/nvim/init.vim" ]]; then
+    alias vimconf='nvim $HOME/.dotfiles/config/nvim/init.vim'
+  fi
+  if [[ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]]; then
+    curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    nvim +PlugInstall
+  fi
+elif [[ -f $(command -v vim) ]] && [[ -f "$HOME/.vimrc" ]]; then
+  alias vim='vim_session vim'
+  alias vimconf='vim $HOME/.vimrc'
+  if [[ ! -f "$HOME/.vim/bundle/Vundle.vim" ]]; then
+    mkdir -p "$HOME/.vim/bundle"
+    git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
+    vim +PluginInstall +qall
+  fi
+else
+  export EDITOR='vi'
+fi
+
+# Easy install my ".desktop" files
+alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop\ files/* $HOME/.local/share/applications/'
+
+# Easy install my "Argos" files
+if [[ -f "$HOME/.local/share/gnome-shell/extensions/argos@pew.worldwidemann.com" ]]; then
+  alias add_my_argos_files='mkdir -p $HOME/.config/argos && cp -vf $HOME/bin/argos/* $HOME/.config/argos'
+fi
+
+# Easy Source shell rc file
+if [[ "$0" == "bash" ]]; then
+  alias shellrc='source $HOME/.bashrc'
+elif [[ "$0" == "zsh" ]]; then
+  alias shellrc='source $HOME/.zshrc'
+fi
+
+# Create a default Ruby project
+# Usage: mkdefault [type] "project name"
+#   If [type] not provide, default create only folder and .gitignore
+#   TODO implement optional [type]
+#     type available: go, rust, c, c++, perl, python, elixir
+function mkdefault() {
+  RUBY_VERSION=$(ruby -v | awk '{print $2}' | awk -F 'p' '{print $1}')
+  RUBY_BASE_VERSION="${RUBY_VERSION::-1}0"
+
+read -r -d '' HELP << EOF
+Usage:
+  mkdefault "project name"
+
+EOF
+
+read -r -d '' GEMFILE_CONTENT << EOF
+source "https://rubygems.org"
+
+ruby '~> $RUBY_BASE_VERSION'
+
+group :development, :test do
+  gem 'reek'
+  gem 'rubocop'
+  gem 'rubocop-performance'
+end
+
+EOF
+
+  if [[ "$#" -gt "1" ]]; then
+    echo "$HELP"
+  else
+    mkdir -p ./"$1"
+    (
+      cd ./"$1" || return
+      echo "$RUBY_VERSION" > .ruby-version
+      echo "$1" > .ruby-gemset
+      echo "require: rubocop-performance" > .rubocop.yml
+      echo "$GEMFILE_CONTENT" > Gemfile
+      gitignore --default
+      gitignore ruby
+    )
+  fi
+}
+
+##############################################
+### Do not put other lines after this code ###
+##############################################
+
+# Clean path
+clean_path=$(echo "$PATH" | tr -s ':' '\n' | sort -u | tr '\n' ':' | rev | cut -c 2- | rev)
+export PATH="$clean_path"

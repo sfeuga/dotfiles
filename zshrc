@@ -104,6 +104,10 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-if [ -f "$HOME/.shell_utils" ]; then
-  source "$HOME/.shell_utils"
+if [ -f "$HOME/.aliases" ]; then
+  source "$HOME/.aliases"
+fi
+
+if [ -f "$HOME/.utils" ]; then
+  source "$HOME/.utils"
 fi

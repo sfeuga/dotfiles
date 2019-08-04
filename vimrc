@@ -19,7 +19,7 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tomtom/tlib_vim'                                    " Some utility functions for VIM https://github.com/tomtom/tlib_vim
 "Plugin 'tpope/vim-cucumber'                                 " Syntax highlight, indent, and more https://github.com/tpope/vim-cucumber
 "Plugin 'tpope/vim-surround'                                 " Add mappings to delete, change and add surroundings https://github.com/tpope/vim-surround
-"Plugin 'vim-ruby/vim-ruby'                                  " Ruby plugin's https://github.com/vim-ruby/vim-ruby
+Plugin 'vim-ruby/vim-ruby'                                  " Ruby plugin's https://github.com/vim-ruby/vim-ruby
 Plugin 'Xuyuanp/nerdtree-git-plugin'                        " NerdTree-Git
 Plugin 'csexton/jekyll.vim'                                 " Automate common Jekyll tasks https://github.com/csexton/jekyll.vim
 Plugin 'ctrlpvim/ctrlp.vim'                                 " Full path fuzzy file, buffer, mru, tag, ... finder for Vim https://github.com/ctrlpvim/ctrlp.vim

@@ -4,7 +4,7 @@
   gpgsign = true
 [core]
   autocrlf = input
-  editor = vim
+  editor = nvim
   excludesfile = ~/.gitignore_global
   filemode = false
   trustctime = false
@@ -24,11 +24,14 @@
   co = checkout
   cp = cherry-pick
   dc = diff --cached
-  gd = !git diff --color | diff-highlight | less -r
-  gl = git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  gl = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   last = log -1 --stat
   st = status -sb
   unstage = reset HEAD --
+  ctags = !.git/hooks/ctags
+  mkg = !mkgitignore -d
+  log-graph = log --oneline --decorate --graph --all
+  tag-delete = push --delete origin $1 && git tag -d $1
 [gpg]
   program = /usr/bin/gpg
 [init]

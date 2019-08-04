@@ -1,3 +1,4 @@
+# shellcheck disable=SC2148
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -23,8 +24,8 @@ shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=20000
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -76,6 +77,16 @@ xterm*|rxvt*)
     ;;
 esac
 
+# Set Defaut editor
+if [[ -f $(command -v vim) ]]; then
+  export EDITOR='vim'
+elif [[ -f $(command -v vi) ]]; then
+  export EDITOR='vi'
+  alias vim='vi'
+elif [[ -f $(command -v nano) ]]; then
+  export EDITOR='nano'
+fi
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     if test -r ~/.dircolors
@@ -118,7 +129,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -f "$HOME/.shell_utils" ]; then
+if [ -f "$HOME/.utils" ]; then
 # shellcheck source=/dev/null
-    source "$HOME/.shell_utils"
+    source "$HOME/.utils"
 fi
+
+if [ -f "$HOME/.aliases" ]; then
+# shellcheck source=/dev/null
+    source "$HOME/.aliases"
+fi
+
+# Make gnome terminal open tabs in the same path
+source /etc/profile.d/vte.sh

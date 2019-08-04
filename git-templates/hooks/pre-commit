@@ -1,17 +1,5 @@
 #!/bin/sh
 
-# To enable this hook, move and chmod +x it in ".git/hooks/".
-
-# Define prompt color
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-DEFAULT='\033[0m'
-
-# Check if rubocop is installed
-echo 'Check if rubocop is installed'
-rubocop -v >/dev/null 2>&1 || { echo >&2 "${YELLOW}Rubocop need to be (re)installed.${DEFAULT}"; exit 1; }
-
-echo 'Rubocop:'
-# lastest files list   | only Ruby  | only files name   | execute rubocop autofix
-git status --porcelain | grep ".rb" | awk '{print $NF}' | xargs rubocop 2>&1 || { echo >&2 "${RED}Please, fix detected offense(s) before commit."; exit 1; }
+set -e
+[ ! -f Gemfile ] || git diff --exit-code --cached -- Gemfile >/dev/null || bundle check
+exec "$(git --exec-path)/../../share/git-core/templates/hooks/pre-commit.sample"
