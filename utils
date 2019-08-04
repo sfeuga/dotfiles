@@ -4,8 +4,13 @@ HISTSIZE=10000
 HISTFILESIZE=20000
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[[ -x $(command -v lesspipe) ]] && eval "$(SHELL=/bin/sh lesspipe)"
-[[ -x $(command -v lesspipe.sh) ]] && export LESSOPEN="|/usr/bin/lesspipe.sh %s"
+if [[ -x $(command -v lesspipe.sh) ]]; then
+  export LESSOPEN="|/usr/bin/lesspipe.sh %s"
+elif [[ -x $(command -v lesspipe) ]]; then
+  eval "$(SHELL=/bin/sh lesspipe)"
+elif [[ -f "$HOME/.lessfilter" ]]; then
+  export LESSOPEN='|$HOME/.lessfilter %s'
+fi
 export LESS=' -RN'
 
 # colored GCC warnings and errors
