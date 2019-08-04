@@ -65,7 +65,9 @@ alias df='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias du='du -h'
 alias free='free -h'
 alias boot.log='journalctl -b'
-alias dev='cd ~/Documents/Dev*/'
+alias dev='cd $HOME/Documents/Dev*/'
+alias blog='cd $HOME/Documents/Dev*/sfeuga.com/blog.sfeuga.com/'
+alias dotfiles='cd $HOME/.dotfiles/'
 alias path='echo $PATH | tr -s ":" "\n"'
 
 # cheat settings
