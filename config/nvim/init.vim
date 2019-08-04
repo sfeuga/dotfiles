@@ -76,6 +76,7 @@ set confirm                       " Instead of failing because of unsaved change
                                   "   raise a dialogue to save changed files
 set nopaste                       " 'paste' should not be set in your config
 autocmd FocusLost * :wa           " Save all files on losing focus
+autocmd TermOpen * startinsert    " Enter in Terminal-mode automatically
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -218,8 +219,8 @@ nnoremap    8                   *<Esc>:noh<CR>
 " Jump between pairs of keywords easily
 nmap        <C-m>               %
 " Vsplit a new Terminal
-nnoremap    <Leader>t           :vsplit\|te<CR>a
-nnoremap    <Leader>T           :10split\|te<CR>a
+nnoremap    <Leader>t           :vsplit\|te<CR>
+nnoremap    <Leader>T           :10split\|te<CR>
 
 """ File type mapping
 autocmd FileType ruby compiler ruby                                 " Set MRI as default ruby compiler
