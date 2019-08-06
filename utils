@@ -481,7 +481,20 @@ group :development, :test do
   gem 'reek'
   gem 'rubocop'
   gem 'rubocop-performance'
+  gem 'rspec'
+  gem 'emoji-rspec'
 end
+
+EOF
+
+read -r -d '' RSPEC_CONTENT << EOF
+--require emoji-rspec --format adventure
+
+EOF
+
+read -r -d '' RUBOCOP_CONTENT << EOF
+require:
+  - rubocop-performance
 
 EOF
 
@@ -493,10 +506,12 @@ EOF
       cd ./"$1" || return
       echo "$RUBY_VERSION" > .ruby-version
       echo "$1" > .ruby-gemset
-      echo "require: rubocop-performance" > .rubocop.yml
+      echo "$RUBOCOP_CONTENT" > .rubocop.yml
       echo "$GEMFILE_CONTENT" > Gemfile
+      echo $"$RSPEC_CONTENT" > .rspec
       gitignore --default
       gitignore ruby
+
     )
   fi
 }
