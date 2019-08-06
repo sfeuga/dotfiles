@@ -32,9 +32,12 @@ Plug 'tpope/vim-endwise'                                                " Adding
 Plug 'tpope/vim-fugitive'                                               " Git wrapper so awesome, it should be illegal  https://github.com/tpope/vim-fugitive
 Plug 'tpope/vim-rails', { 'for': 'ruby' }                               " Ruby on Rails power tools                     https://github.com/tpope/vim-rails
 Plug 'tpope/vim-rake', { 'for': 'ruby' }                                " Like rails.vim without the rails              https://github.com/tpope/vim-rake
+Plug 'tpope/vim-rhubarb'                                                " GitHub extension for fugitive.vim             https://github.com/tpope/vim-rhubarb
+Plug 'tpope/vim-rvm'                                                    " Switch Ruby versions from inside Vim          https://github.com/tpope/vim-rvm
 Plug 'tpope/vim-surround'                                               " Quoting/parenthesizing made simple            https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                             " Pairs of handy bracket mappings               https://github.com/tpope/vim-unimpaired
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                             " Provides motions and text objects for Ruby    https://github.com/vim-ruby/vim-ruby
+Plug 'thoughtbot/vim-rspec'                                             " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -107,11 +110,18 @@ set lazyredraw                    " Redraw only when we need to
 autocmd TermOpen * setlocal wrap  " Wrap text in terminal
 
 " Format the status line
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ Line:\ %l
-" Change the status line based on mode
-"au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
-"au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
+set statusline=                               " Clean statusline
+set statusline+=%h%m%r                        " ???
+set statusline+=%<%f                          " Filename
+set statusline+=%=                            " SET right column
+if exists(":Rvm")
+  set statusline+=%{rvm#statusline()}           " Ruby Version
+endif
+if exists(":Gstatus")
+  set statusline+=%{FugitiveStatusline()}       " Long Git Branch Name
+"  set statusline+=%{FugitiveHead()}             " Short Git Branch Name
+endif
+set statusline+=\ %-14.(%l,%c%V%)\ %P         " Default Vim statusline
 
 """ Code folding
 set foldenable                    " Enable folding
@@ -119,7 +129,7 @@ set foldmethod=indent             " Fold based on indentation (indent, marker, m
 set foldlevelstart=10             " Open most folds by default
 set foldnestmax=10                " 10 nested fold max
 " Space open/closes folds
-nnoremap    <space>             za
+nnoremap    +                   za
 
 """ Encoding
 set encoding=utf-8
@@ -173,7 +183,7 @@ imap        dw                  <ESC>dw
 " Quick Change
 imap        cw                  <ESC>cw
 " U or r to redo
-nmap        r                   :redo<CR>
+nnoremap    r                   :redo<CR>
 " List all buffers
 nnoremap    <Leader>b           :buffers<CR>
 " Keep search matches in the middle of the window.
@@ -201,23 +211,20 @@ tnoremap    <C-L>               <C-\><C-N><C-W>l
 nmap        <C-A-H>             gT
 " ⇨
 nmap        <C-A-L>             gt
-nmap        <Leader>t           gt
 " Switch between the last two files
 nnoremap    <Leader><Leader>    <C-^>
 " Remove the Windows "^M" - when the encodings gets messed up
-noremap     <Leader>m           mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+nnoremap    <Leader><Leader>m   mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " Easy exit terminal-mode
 tnoremap    <Esc>               <C-\><C-n>
 " Sends an escape key to the terminal
-tnoremap    <C-A-E>             <Esc>
+tnoremap    <A-E>               <Esc>
 " Send Ctrl-L to the terminal
-tnoremap    <C-A-L>             <C-l>
+tnoremap    <A-L>               <C-l>
 " Send Ctrl-K to the terminal
-tnoremap    <C-A-K>             <C-k>
+tnoremap    <A-K>               <C-k>
 " This unsets the last search pattern register by hitting return
 nnoremap    8                   *<Esc>:noh<CR>
-" Jump between pairs of keywords easily
-nmap        <C-m>               %
 " Vsplit a new Terminal
 nnoremap    <Leader>t           :vsplit\|te<CR>
 nnoremap    <Leader>T           :10split\|te<CR>
@@ -380,13 +387,25 @@ if exists(":RunReek")
   nnoremap  <Leader>re          :RunReek<CR>
 endif
 
+"" Rhubarb
+
+"" Rspec
+if &rtp =~ 'vim-rspec'
+  nnoremap <Leader>te :call RunCurrentSpecFile()<CR>
+  nnoremap <Leader>sp :call RunNearestSpec()<CR>
+  nnoremap <Leader>ls :call RunLastSpec()<CR>
+  nnoremap <Leader>as :call RunAllSpecs()<CR>
+endif
+
 "" RuboCop
 if exists(":RuboCop")
   let g:vimrubocop_keymap = 0
-  nnoremap  <Leader>r           :RuboCop<CR>
+  nnoremap  <Leader>ru          :RuboCop<CR>
 endif
 
 "" Ruby
+
+"" Rvm
 
 "" Surround
 if &rtp =~ 'vim-surround'
@@ -406,7 +425,7 @@ endif
 """ My functions
 " Delete trailing white space on save
 " Useful for Python, Ruby and CoffeeScript
-func! DeleteTrailingWS()
+function! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
   exe "normal `z"
