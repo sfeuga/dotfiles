@@ -179,7 +179,7 @@ if [[ -f $(command -v git) ]]; then
   alias gut='git '
 
   function LastCommitNumber () {
-    [[ -d .git ]] && git log -n 1 | head -n 1 | awk '{ print $NF }'
+    [[ -d .git ]] && git log --pretty=format:%H -n 1
   }
 
   function UntouchedSinceALongTimeBranch () {
