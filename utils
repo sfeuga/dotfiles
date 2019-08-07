@@ -355,12 +355,12 @@ fi
 # Flatpak app aliases
 if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/com.sublimetext.three.desktop" ]]; then
   function sublime() {
-    flatpak run com.sublimetext.three "$1"
+    flatpak run com.sublimetext.three "$@"
   }
 fi
 if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/org.videolan.VLC" ]]; then
   function vlc() {
-    flatpak run org.videolan.VLC "$1"
+    flatpak run org.videolan.VLC "$@"
   }
 fi
 
