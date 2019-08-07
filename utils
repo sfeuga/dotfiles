@@ -376,8 +376,7 @@ function get_session_number () {
 alias get_session_type='loginctl show-session $(get_session_number) -p Type'
 
 # Edit Radio List
-# TODO check if gedit is installed, if not use the default editor
-alias radio_edit='gedit Music/Radio\ France.m3u8 /home/sfeuga/.gse-radio/channelList.json'
+alias radio_edit='$EDITOR Music/Radio\ France.m3u8 /home/sfeuga/.gse-radio/channelList.json'
 
 # Translate aliases
 if [[ -f $(command -v trans) ]]; then
