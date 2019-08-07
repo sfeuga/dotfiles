@@ -89,7 +89,10 @@ fi
 
 # Easy DL
 if [[ -f $(command -v aria2c) ]]; then
-  alias dlt='aria2c --seed-time=0'
+  alias tdl='aria2c --seed-time=0'
+fi
+if [[ -f $(command -v youtube-dl) ]]; then
+  alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 fi
 
 # Setup movies filder name for handy ytdl
