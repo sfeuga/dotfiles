@@ -522,9 +522,10 @@ EOF
       echo "$RUBOCOP_CONTENT" > .rubocop.yml
       echo "$GEMFILE_CONTENT" > Gemfile
       echo $"$RSPEC_CONTENT" > .rspec
-      gitignore --default
-      gitignore ruby
-
+      if [[ "$(command -v mkgitignore)" ]]; then
+        mkgitignore --default
+        mkgitignore ruby
+      fi
     )
   fi
 }
