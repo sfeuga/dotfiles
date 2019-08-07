@@ -234,21 +234,30 @@ if [[ -f $(command -v git) ]]; then
   }
 
   function GetBackToWork () {
-    local last_git_commit_message_first_word=''
-    local number_of_commit=''
+    if [[ -d .git ]]; then
+      local last_commit_message=''
+      local number_of_commit=''
 
-    last_git_commit_message_first_word="$(git log --pretty=oneline -n 1 | awk '{ print $2 }')"
-    number_of_commit=$(git log --pretty=oneline | wc -l)
+      last_commit_message="$(git log --pretty=format:%s -n 1)"
+      number_of_commit="$(git log --pretty=oneline | wc -l)"
 
-    if [[ "$last_git_commit_message_first_word" =~ "WIP" ]]; then
-      if [[ "$number_of_commit" -gt 1 ]]; then
-        cd "$(git rev-parse --show-toplevel)" && git pull --all
-        git reset --soft HEAD~1 && git unstage
+      if [[ "$last_commit_message" =~ .*[wW][iI][pP].* ]]; then
+        if [[ "$number_of_commit" -gt 1 ]]; then
+          (
+            cd "$(git rev-parse --show-toplevel)" && git pull --all
+            git reset --soft HEAD~1 && git unstage
+          )
+        else
+          (
+            cd "$(git rev-parse --show-toplevel)" && git pull --all
+            git update-ref -d HEAD && git unstage
+          )
+        fi
       else
-        true
+        echo -e 'The last commit on this branch not contain the magic word (WiP).'
       fi
     else
-      echo 'The last commit on this branch was not a "Work In Progress".'
+      echo -e "This folder is not a git repository."
     fi
   }
 fi
