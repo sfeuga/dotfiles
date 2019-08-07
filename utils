@@ -339,21 +339,26 @@ fi
 #}
 
 ### Heroku
-#
-# TODO check if heroku toolbelt is installed
 # .heroku_projects example:
 #   an heroku app name
 #   another heroku app name
 #   a third heroku app name
-function GetLastCredentials () {
-  if [[ -f "$HOME/.heroku_projects" ]]; then
-    "$HOME/.heroku_projects" | while IFS= read -r heroku_project
-    do
-      echo "/tmp/$heroku_project.env" && \
-      heroku config --app "$heroku_project" --shell > /tmp/"$heroku_project.env"
-    done
-  else
-    echo -e "Please add Heroku Project Name in ~/.heroku_projects.\n\tOne project name per line."
+function GetLastCredentials() {
+  if [[ -f "$(command -v heroku)" ]]; then
+    if heroku --version &> /dev/null; then
+      if [[ -f "$HOME/.heroku_projects" ]]; then
+        "$HOME/.heroku_projects" | while IFS= read -r heroku_project
+        do
+          local date
+          date=$(date +"%Y%m%d_%H%M%S")
+          echo "/tmp/$heroku_project.env"
+          heroku config --app "$heroku_project" \
+                        --shell > "$HOME/$heroku_project-$date.env"
+        done
+      else
+        echo -e "Please add Heroku Project Name in ~/.heroku_projects.\n\tOne project name per line."
+      fi
+    fi
   fi
 }
 
