@@ -163,15 +163,28 @@ function mkvtitle() {
 ### Git
 if [[ -f $(command -v git) ]]; then
   # Git Completion
-  if [[ -f $HOME/bin/git-completion.bash ]]; then
-# shellcheck source=/dev/null
-    source "$HOME/bin/git-completion.bash"
-  else
-    GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
-    curl $GIT_COMPLETION/completion/git-completion.bash \
-      -o "$HOME/bin/git-completion.bash"
-# shellcheck source=/dev/null
-    source "$HOME/bin/git-completion.bash"
+  if [[ "$0" == "bash" ]]; then
+    if [[ -f $HOME/bin/git-completion.bash ]]; then
+      # shellcheck source=/dev/null
+      source "$HOME/bin/git-completion.bash"
+    else
+      GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
+      curl $GIT_COMPLETION/completion/git-completion.bash \
+        -o "$HOME/bin/git-completion.bash"
+      # shellcheck source=/dev/null
+      source "$HOME/bin/git-completion.bash"
+    fi
+  elif [[ "$0" == "zsh" ]]; then
+    if [[ -f $HOME/bin/git-completion.zsh ]]; then
+      # shellcheck source=/dev/null
+      source "$HOME/bin/git-completion.zsh"
+    else
+      GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
+      curl $GIT_COMPLETION/completion/git-completion.zsh \
+        -o "$HOME/bin/git-completion.zsh"
+      # shellcheck source=/dev/null
+      source "$HOME/bin/git-completion.zsh"
+    fi
   fi
 
   alias got='git '
