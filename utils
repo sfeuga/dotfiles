@@ -113,25 +113,36 @@ fi
 if [[ -f $(command -v buku) ]]; then
   # Buku Completion
   if [[ -f $HOME/bin/buku-completion.bash ]]; then
-# shellcheck source=/dev/null
+    # shellcheck source=/dev/null
     source "$HOME/bin/buku-completion.bash"
   else
     BUKU='https://raw.githubusercontent.com/jarun/Buku/master'
     curl $BUKU/auto-completion/bash/buku-completion.bash \
       -o "$HOME/bin/buku-completion.bash"
-# shellcheck source=/dev/null
+    # shellcheck source=/dev/null
     source "$HOME/bin/buku-completion.bash"
   fi
 fi
 
-
 # Change all current files/folders to Title Case
-#function to_title_case {
-#  rename 'y/A-Z/a-z/' -- *
-#  rename 's/(^|[\s_-])([a-z])/$1\u$2/g' -- *
-#}
+function to_title_case {
+  if [[ -f "$(command -v rename)" ]]; then
+    if [[ "$#" -gt "0" ]]; then
+      rename 'y/A-Z/a-z/' -- "$1"
+      rename 's/(^|[\s_-])([a-z])/$1\u$2/g' -- "$1"
+      return
+    else
+      rename 'y/A-Z/a-z/' -- *
+      rename 's/(^|[\s_-])([a-z])/$1\u$2/g' -- *
+      return
+    fi
+  else
+    echo "Please, install rename"
+    return 1
+  fi
+}
 
-# Convert mkv titile to match file name
+# Convert mkv title to match file name
 function mkvtitle() {
   if [[ -f "$(command -v mkvpropedit)" ]]; then
     if [[ "$#" -gt "0" ]]; then
