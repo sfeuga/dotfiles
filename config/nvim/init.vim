@@ -1,4 +1,4 @@
-" Minimalist Vim Plugin Manager     https://github.com/junegunn/vim-plug
+" Minimalist Vim Plugin Manager                                                                                         https://github.com/junegunn/vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
 "Plug 'taglist.vim', { 'on': 'TlistToggle' }                             " Source code browser                           https://www.vim.org/scripts/script.php?script_id=273
 "Plug 'slashmili/alchemist.vim'                                          " Elixir Integration                            https://github.com/slashmili/alchemist.vim
@@ -44,11 +44,11 @@ call plug#end()
 
 """ General
 "set timeout timeoutlen=500 ttimeoutlen=100
-syntax on                         " Enable syntax highlighting
-set autoread                      " Set autoread when files changed from outside
-set wildmenu                      " Show menu with tab completion
-set wildmode=list:longest,full    " Command <Tab> completion, list matches, then
-                                  "   longest common part, then all.
+syntax on                                     " Enable syntax highlighting
+set autoread                                  " Set autoread when files changed from outside
+set wildmenu                                  " Show menu with tab completion
+set wildmode=list:longest,full                " Command <Tab> completion, list matches, then
+                                              "   longest common part, then all.
 set wildignore+=*.swp
 set wildignore+=*.DS_Store
 set wildignore+=.svn,CVS,.git
@@ -65,21 +65,21 @@ set wildignore+=*.tgz
 set wildignore+=*.exe,*.dll
 set wildignore+=*\\tmp\\*,*/tmp/*
 set mouse-=a
-set scrolloff=3                   " Minimum lines to keep above and below cursor
-set list                          " Display invisible characters
-set listchars=tab:>·              " Highlight problematic white space
-"set listchars=eol:¬,tab:>·        " Highlight problematic white space
-filetype on                       " Enable file type detection
-filetype indent on                " Enable file type-specific indenting
-filetype plugin on                " Enable file type-specific plugins
-set ffs=unix,dos,mac              " Use Unix as the standard file type
-set nostartofline                 " Stop certain movements from always going to
-                                  "   the first character of a line
-set confirm                       " Instead of failing because of unsaved changes,
-                                  "   raise a dialogue to save changed files
-set nopaste                       " 'paste' should not be set in your config
-autocmd FocusLost * :wa           " Save all files on losing focus
-autocmd TermOpen * startinsert    " Enter in Terminal-mode automatically
+set scrolloff=3                               " Minimum lines to keep above and below cursor
+set list                                      " Display invisible characters
+set listchars=tab:>·                          " Highlight problematic white space
+"set listchars=eol:¬,tab:>·                    " Highlight problematic white space
+filetype on                                   " Enable file type detection
+filetype indent on                            " Enable file type-specific indenting
+filetype plugin on                            " Enable file type-specific plugins
+set ffs=unix,dos,mac                          " Use Unix as the standard file type
+set nostartofline                             " Stop certain movements from always going to
+                                              "   the first character of a line
+set confirm                                   " Instead of failing because of unsaved changes,
+                                              "   raise a dialogue to save changed files
+set nopaste                                   " 'paste' should not be set in your config
+autocmd FocusLost * :wa                       " Save all files on losing focus
+autocmd TermOpen * startinsert                " Enter in Terminal-mode automatically
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -88,46 +88,52 @@ autocmd BufReadPost *
       \ endif
 
 "" user interface
-set splitbelow                    " Open new split panes to bottom, which feels more natural than Vim’s default
-set splitright                    " Open new split panes to right, which feels more natural than Vim’s default
+set splitbelow                                " Open new split panes to bottom, which feels more natural than Vim’s default
+set splitright                                " Open new split panes to right, which feels more natural than Vim’s default
 
 """ Theming
-set termguicolors                 " Enables the true color support
-set t_Co=256                      " Enable support for 256-color terminal
+set termguicolors                             " Enables the true color support
+set t_Co=256                                  " Enable support for 256-color terminal
 if &rtp =~ 'molokai'
   colorscheme molokai
 endif
 let g:rehash256 = 1
 hi Normal             guibg=NONE
 hi Visual guifg=White guibg=#576F72
-set number                        " Display line numbers on the left
-set numberwidth=5                 " Line number width
-set laststatus=2                  " Always display the status line
-set cursorline                    " Highlight current line
-set ruler                         " Always show current position
-set textwidth=80                  " Line wrap at 80 chars
-set lazyredraw                    " Redraw only when we need to
-autocmd TermOpen * setlocal wrap  " Wrap text in terminal
+set number                                    " Display line numbers on the left
+set numberwidth=5                             " Line number width
+set cursorline                                " Highlight current line
+set ruler                                     " Always show current position
+set textwidth=80                              " Line wrap at 80 chars
+set lazyredraw                                " Redraw only when we need to
+set undofile                                  " Persistent undo after close Vim
+autocmd TermOpen * setlocal wrap              " Wrap text in terminal
 
 " Format the status line
+set laststatus=2                              " Always display the status line
 set statusline=                               " Clean statusline
 set statusline+=%h%m%r                        " ???
 set statusline+=%<%f                          " Filename
 set statusline+=%=                            " SET right column
 if exists(":Rvm")
-  set statusline+=%{rvm#statusline()}           " Ruby Version
+  set statusline+=%{rvm#statusline()}         " Ruby Version
 endif
 if exists(":Gstatus")
-  set statusline+=%{FugitiveStatusline()}       " Long Git Branch Name
-"  set statusline+=%{FugitiveHead()}             " Short Git Branch Name
+  set statusline+=%{FugitiveStatusline()}     " Long Git Branch Name
+"  set statusline+=%{FugitiveHead()}           " Short Git Branch Name
 endif
 set statusline+=\ %-14.(%l,%c%V%)\ %P         " Default Vim statusline
+set statusline+=\ \%{wordcount()[\"words\"]}  " Add Word Count
+
+" Format the tab line
+set showtabline=2                             " Always show tab bar
 
 """ Code folding
-set foldenable                    " Enable folding
-set foldmethod=indent             " Fold based on indentation (indent, marker, manual, expr, syntax, diff)
-set foldlevelstart=10             " Open most folds by default
-set foldnestmax=10                " 10 nested fold max
+set foldenable                                " Enable folding
+set foldmethod=indent                         " Fold based on indentation (indent, marker, manual, expr, syntax, diff)
+set foldlevelstart=10                         " Open most folds by default
+set foldnestmax=10                            " 10 nested fold max
+set foldcolumn=1
 " Space open/closes folds
 nnoremap    +                   za
 
@@ -141,14 +147,14 @@ set tabstop=4
 set expandtab
 set shiftwidth=2
 set smarttab
-set backspace=indent,eol,start    " Backspace through everything in insert mode
+set backspace=indent,eol,start                " Backspace through everything in insert mode
 
 """ Search
-set hlsearch                      " Highlight matches
-set incsearch                     " Incremental searching
-set ignorecase                    " Searches are case insensitive...
-set smartcase                     " ... unless they contain at least one capital
-set inccommand=split              " Get interactive feedback as we compose our substitute command
+set hlsearch                                  " Highlight matches
+set incsearch                                 " Incremental searching
+set ignorecase                                " Searches are case insensitive...
+set smartcase                                 " ... unless they contain at least one capital
+set inccommand=split                          " Get interactive feedback as we compose our substitute command
 set diffopt +=iwhite
 
 """ Word completion
@@ -224,10 +230,13 @@ tnoremap    <A-L>               <C-l>
 " Send Ctrl-K to the terminal
 tnoremap    <A-K>               <C-k>
 " This unsets the last search pattern register by hitting return
-nnoremap    8                   *<Esc>:noh<CR>
+nnoremap    8                   <Esc>:noh<CR>
 " Vsplit a new Terminal
 nnoremap    <Leader>t           :vsplit\|te<CR>
 nnoremap    <Leader>T           :10split\|te<CR>
+
+" D will duplicate selection at the beginnig of the next line
+vmap D y'>o<ESC>p
 
 """ File type mapping
 autocmd FileType ruby compiler ruby                                 " Set MRI as default ruby compiler
@@ -423,6 +432,9 @@ endif
 "" Unimpaired
 
 """ My functions
+" Easy edit Vimrc
+command! Vimrc :vs $MYVIMRC
+
 " Delete trailing white space on save
 " Useful for Python, Ruby and CoffeeScript
 function! DeleteTrailingWS()
