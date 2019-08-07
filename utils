@@ -3,7 +3,7 @@
 HISTSIZE=10000
 HISTFILESIZE=20000
 
-# make less more friendly for non-text input files, see lesspipe(1)
+# Make less more friendly for non-text input files, see lesspipe(1)
 if [[ -x $(command -v lesspipe.sh) ]]; then
   export LESSOPEN="|/usr/bin/lesspipe.sh %s"
 elif [[ -x $(command -v lesspipe) ]]; then
@@ -13,7 +13,7 @@ elif [[ -f "$HOME/.lessfilter" ]]; then
 fi
 export LESS=' -RN'
 
-# colored GCC warnings and errors
+# Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 ### Add color to man
@@ -31,7 +31,7 @@ export LC_ALL=en_US.UTF-8
 [[ -s "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Add RVM to PATH for scripting.
-# Make sure this is the last PATH variable change.
+#   Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
 
 # Add completion for RVM
@@ -450,10 +450,10 @@ if [[ -f $(command -v nvim) ]]; then
       export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
     else
       echo -e "Please install neovim-remote by running the following command:\n" \
-        "\tFor Fedora:\tsudo dnf install python3-devel && " \
-          "pip3 install --user neovim-remote\n" \
-        "\tFor Ubuntu:\tsudo apt install python3-dev && " \
-          "pip3 install --user neovim-remote"
+              "\tFor Fedora:\tsudo dnf install python3-devel && " \
+              "pip3 install --user neovim-remote\n" \
+              "\tFor Ubuntu:\tsudo apt install python3-dev && " \
+              "pip3 install --user neovim-remote"
     fi
   else
     export EDITOR='nvim'
@@ -483,7 +483,7 @@ else
 fi
 
 # Easy install my ".desktop" files
-alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop\ files/* $HOME/.local/share/applications/'
+alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop*/* $HOME/.l*/s*/app*/'
 
 # Easy install my "Argos" files
 if [[ -f "$HOME/.local/share/gnome-shell/extensions/argos@pew.worldwidemann.com" ]]; then
