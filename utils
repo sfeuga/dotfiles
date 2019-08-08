@@ -119,15 +119,28 @@ fi
 ### Buku https://github.com/jarun/Buku
 if [[ -f $(command -v buku) ]]; then
   # Buku Completion
-  if [[ -f $HOME/bin/buku-completion.bash ]]; then
-    # shellcheck source=/dev/null
-    source "$HOME/bin/buku-completion.bash"
-  else
-    BUKU='https://raw.githubusercontent.com/jarun/Buku/master'
-    curl $BUKU/auto-completion/bash/buku-completion.bash \
-      -o "$HOME/bin/buku-completion.bash"
-    # shellcheck source=/dev/null
-    source "$HOME/bin/buku-completion.bash"
+  if [[ "$shell_type" == "bash" ]]; then
+    if [[ -f $HOME/bin/buku-completion.bash ]]; then
+      # shellcheck source=/dev/null
+      source "$HOME/bin/buku-completion.bash"
+    else
+      BUKU='https://raw.githubusercontent.com/jarun/Buku/master'
+      curl $BUKU/auto-completion/bash/buku-completion.bash \
+        -o "$HOME/bin/buku-completion.bash"
+      # shellcheck source=/dev/null
+      source "$HOME/bin/buku-completion.bash"
+    fi
+  elif [[ "$shell_type" == "zsh" ]]; then
+    if [[ -f $HOME/bin/_buku ]]; then
+      # shellcheck source=/dev/null
+      source "$HOME/bin/_buku"
+    else
+      BUKU='https://raw.githubusercontent.com/jarun/Buku/master'
+      curl $BUKU/auto-completion/zsh/_buku \
+        -o "$HOME/bin/_buku"
+      # shellcheck source=/dev/null
+      source "$HOME/bin/_buku"
+    fi
   fi
 fi
 
