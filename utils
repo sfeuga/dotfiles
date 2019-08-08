@@ -183,7 +183,7 @@ function mkvtitle() {
 ### Git
 if [[ -f $(command -v git) ]]; then
   # Git Completion
-  if [[ "$0" == "bash" ]]; then
+  if [[ "$shell_type" == "bash" ]]; then
     if [[ -f $HOME/bin/git-completion.bash ]]; then
       # shellcheck source=/dev/null
       source "$HOME/bin/git-completion.bash"
@@ -194,7 +194,7 @@ if [[ -f $(command -v git) ]]; then
       # shellcheck source=/dev/null
       source "$HOME/bin/git-completion.bash"
     fi
-  elif [[ "$0" == "zsh" ]]; then
+  elif [[ "$shell_type" == "zsh" ]]; then
     if [[ -f $HOME/bin/git-completion.zsh ]]; then
       # shellcheck source=/dev/null
       source "$HOME/bin/git-completion.zsh"
