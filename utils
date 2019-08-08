@@ -84,6 +84,7 @@ if [[ -x $(command -v cheat) ]]; then
   export CHEAT_COLORSCHEME=dark
 
   function _cheat_autocomplete {
+    local sheets
     sheets=$(cheat -l | cut -d' ' -f1)
     COMPREPLY=()
     if [[ "$COMP_CWORD" = 1 ]]; then
@@ -228,6 +229,7 @@ if [[ -f $(command -v git) ]]; then
 
   function CleanBranch () {
     [[ -d .git ]] && \
+      local branches
       branches=$(git remote prune origin --dry-run | grep 'origin/' | \
                  awk -F '/' '{ print $2 }')
     if [[ -n "$branches" ]]; then
@@ -445,6 +447,7 @@ fi
 
 # If no file(s) are passed to vim, check if a Session.vim exist, if yes, run it
 function vim_session() {
+  local editor
   if [[ -f "Session.vim" ]]; then
     if [[ "$#" -gt 1 ]]; then
       editor=$1
@@ -523,6 +526,9 @@ fi
 #   TODO implement optional [type]
 #     type available: go, rust, c, c++, perl, python, elixir
 function mkdefault() {
+  local RUBY_VERSION
+  local RUBY_BASE_VERSION
+
   RUBY_VERSION=$(ruby -v | awk '{print $2}' | awk -F 'p' '{print $1}')
   RUBY_BASE_VERSION="${RUBY_VERSION::-1}0"
 
