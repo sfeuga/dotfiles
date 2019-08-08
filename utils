@@ -3,6 +3,13 @@
 HISTSIZE=10000
 HISTFILESIZE=20000
 
+# Define if I run Bash or Zsh
+if [[ "$0" == "bash" ]]; then
+  shell_type='bash'
+elif [[ "$0" == "zsh" ]]; then
+  shell_type='zsh'
+fi
+
 # Make less more friendly for non-text input files, see lesspipe(1)
 if [[ -x $(command -v lesspipe.sh) ]]; then
   export LESSOPEN="|/usr/bin/lesspipe.sh %s"
