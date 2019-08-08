@@ -331,7 +331,12 @@ if [[ -f $(command -v docker) ]]; then
 fi
 
 ### Ruby
-#MyFiles="git status -s | awk '{ print $NF }' | grep .rb"
+# Rubocop
+if [[ "$(command -v rubocop)" ]]; then
+  # Use available CPUs to execute inspection in parallel
+  alias rubocop='rubocop --parallel'
+fi
+#MyFiles="git status -s | awk '{ print $NF }'"
 #MyFilesAfterCommit="git diff-tree --no-commit-id --name-only -r \
 #                   $(LastCommitNumber) | grep .rb"
 
