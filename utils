@@ -403,7 +403,7 @@ if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/org.videolan.VLC
 fi
 
 # Vim folders in case of not using nvim
-if [[ -f $(command -v vim) ]] && [[ ! -f $(command -v nvim) ]]; then
+if [[ ! -f $(command -v nvim) ]] && [[ -f $(command -v vim) ]] ; then
   mkdir -p "$HOME"/.vim/{backup,bundle,spell,swap,undo}
 fi
 
