@@ -336,47 +336,6 @@ if [[ "$(command -v rubocop)" ]]; then
   # Use available CPUs to execute inspection in parallel
   alias rubocop='rubocop --parallel'
 fi
-#MyFiles="git status -s | awk '{ print $NF }'"
-#MyFilesAfterCommit="git diff-tree --no-commit-id --name-only -r \
-#                   $(LastCommitNumber) | grep .rb"
-
-#function RubocopMyFiles () {
-#  echo 'Rubocop:'
-#  for file in $(eval "$MyFiles"); do
-#    echo -e "\n$file: "
-#    rubocop "$file"
-#  done
-#  echo "---------------------------"
-#}
-
-#function RubocopAfterCommit () {
-#  LastCommitNumber
-#  echo 'Rubocop:'
-#  for file in $(eval "$MyFilesAfterCommit"); do
-#    echo -e "\n$file: "
-#    rubocop "$file"
-#  done
-#  echo "---------------------------"
-#}
-
-#function ReekMyFiles () {
-#  echo 'Reek:'
-#  for file in $(eval "$MyFiles"); do
-#    echo -e "\n$file: "
-#    reek "$file"
-#  done
-#  echo "---------------------------"
-#}
-
-#function ReekAfterCommit () {
-#  LastCommitNumber
-#  echo 'Reek:'
-#  for file in $(eval "$MyFilesAfterCommit"); do
-#    echo -e "\n$file: "
-#    reek "$file"
-#  done
-#  echo "---------------------------"
-#}
 
 ### Heroku
 # .heroku_projects example:
