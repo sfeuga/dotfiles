@@ -498,9 +498,9 @@ if [[ -f "$HOME/.local/share/gnome-shell/extensions/argos@pew.worldwidemann.com"
 fi
 
 # Easy Source shell rc file
-if [[ "$0" == "bash" ]]; then
+if [[ "$shell_type" == "bash" ]]; then
   alias shellrc='source $HOME/.bashrc'
-elif [[ "$0" == "zsh" ]]; then
+elif [[ "$shell_type" == "zsh" ]]; then
   alias shellrc='source $HOME/.zshrc'
 fi
 
