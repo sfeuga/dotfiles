@@ -25,6 +25,7 @@ Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }        " Code s
 Plug 'reedes/vim-lexical'                                               " Build on Vim’s spell/thes/dict completion     https://github.com/reedes/vim-lexical
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }                  " A tree explorer plugin                        https://github.com/scrooloose/nerdtree
 Plug 'terryma/vim-multiple-cursors'                                     " True Sublime Text style multiple selections   https://github.com/terryma/vim-multiple-cursors
+Plug 'thoughtbot/vim-rspec'                                             " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                               " My favorite theme !                           https://github.com/tomasr/molokai
 Plug 'tpope/vim-bundler'                                                " Lightweight support for Ruby's Bundler        https://github.com/tpope/vim-bundler
 Plug 'tpope/vim-cucumber', { 'for': 'feature' }                         " Syntax highlight, indent, and more            https://github.com/tpope/vim-cucumber
@@ -37,18 +38,16 @@ Plug 'tpope/vim-rvm'                                                    " Switch
 Plug 'tpope/vim-surround'                                               " Quoting/parenthesizing made simple            https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                             " Pairs of handy bracket mappings               https://github.com/tpope/vim-unimpaired
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                             " Provides motions and text objects for Ruby    https://github.com/vim-ruby/vim-ruby
-Plug 'thoughtbot/vim-rspec'                                             " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ General
 "set timeout timeoutlen=500 ttimeoutlen=100
-syntax on                                     " Enable syntax highlighting
-set autoread                                  " Set autoread when files changed from outside
-set wildmenu                                  " Show menu with tab completion
-set wildmode=list:longest,full                " Command <Tab> completion, list matches, then
-                                              "   longest common part, then all.
+syntax on                                       " Enable syntax highlighting
+set autoread                                    " Set autoread when files changed from outside
+set wildmenu                                    " Show menu with tab completion
+set wildmode=list:longest,full                  " Command <Tab> completion, list matches, then
+                                                "   longest common part, then all.
 set wildignore+=*.swp
 set wildignore+=*.DS_Store
 set wildignore+=.svn,CVS,.git
@@ -64,22 +63,22 @@ set wildignore+=*.tar,*.gz
 set wildignore+=*.tgz
 set wildignore+=*.exe,*.dll
 set wildignore+=*\\tmp\\*,*/tmp/*
-set mouse-=a
-set scrolloff=3                               " Minimum lines to keep above and below cursor
-set list                                      " Display invisible characters
-set listchars=tab:>·                          " Highlight problematic white space
-"set listchars=eol:¬,tab:>·                    " Highlight problematic white space
-filetype on                                   " Enable file type detection
-filetype indent on                            " Enable file type-specific indenting
-filetype plugin on                            " Enable file type-specific plugins
-set ffs=unix,dos,mac                          " Use Unix as the standard file type
-set nostartofline                             " Stop certain movements from always going to
-                                              "   the first character of a line
-set confirm                                   " Instead of failing because of unsaved changes,
-                                              "   raise a dialogue to save changed files
-set nopaste                                   " 'paste' should not be set in your config
-autocmd FocusLost * :wa                       " Save all files on losing focus
-autocmd TermOpen * startinsert                " Enter in Terminal-mode automatically
+set mouse-=a                                    " Disable mouse integration in vim
+set scrolloff=3                                 " Minimum lines to keep above and below cursor
+set list                                        " Display invisible characters
+set listchars=tab:>·                            " Highlight problematic white space
+"set listchars=eol:¬,tab:>·                      " Highlight problematic white space
+filetype on                                     " Enable file type detection
+filetype indent on                              " Enable file type-specific indenting
+filetype plugin on                              " Enable file type-specific plugins
+set ffs=unix,dos,mac                            " Use Unix as the standard file type
+set nostartofline                               " Stop certain movements from always going to
+                                                "   the first character of a line
+set confirm                                     " Instead of failing because of unsaved changes,
+                                                "   raise a dialogue to save changed files
+set nopaste                                     " 'paste' should not be set in your config
+autocmd FocusLost * :wa                         " Save all files on losing focus
+autocmd TermOpen * startinsert                  " Enter in Terminal-mode automatically
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -87,81 +86,98 @@ autocmd BufReadPost *
       \     exe "normal! g`\"" |
       \ endif
 
-"" user interface
-set splitbelow                                " Open new split panes to bottom, which feels more natural than Vim’s default
-set splitright                                " Open new split panes to right, which feels more natural than Vim’s default
+""" user interface
+set splitbelow                                  " Open new split panes to bottom
+set splitright                                  " Open new split panes to right
 
 """ Theming
-set termguicolors                             " Enables the true color support
-set t_Co=256                                  " Enable support for 256-color terminal
+set termguicolors                               " Enables the true color support
+set t_Co=256                                    " Enable support for 256-color terminal
 if &rtp =~ 'molokai'
   colorscheme molokai
 endif
 let g:rehash256 = 1
 hi Normal             guibg=NONE
 hi Visual guifg=White guibg=#576F72
-set number                                    " Display line numbers on the left
-set numberwidth=5                             " Line number width
-set cursorline                                " Highlight current line
-set ruler                                     " Always show current position
-set textwidth=80                              " Line wrap at 80 chars
-set lazyredraw                                " Redraw only when we need to
-set undofile                                  " Persistent undo after close Vim
-autocmd TermOpen * setlocal wrap              " Wrap text in terminal
+set number                                      " Display line numbers on the left
+set numberwidth=5                               " Line number width
+set cursorline                                  " Highlight current line
+set ruler                                       " Always show current position
+set textwidth=80                                " Line wrap at 80 chars
+set lazyredraw                                  " Redraw only when we need to
+set undofile                                    " Persistent undo after close Vim
+autocmd TermOpen * setlocal wrap                " Wrap text in terminal
 
-" Format the status line
-set laststatus=2                              " Always display the status line
-set statusline=                               " Clean statusline
-set statusline+=%h%m%r                        " ???
-set statusline+=%<%f                          " Filename
-set statusline+=%=                            " SET right column
-if exists(":Rvm")
-  set statusline+=%{rvm#statusline()}         " Ruby Version
+""" Format the status line
+set laststatus=2                                " Always display the status line
+set statusline=                                 " Clean statusline
+"set statusline+=%h                              " help flag
+"set statusline+=%m                              " modified flag
+"set statusline+=%r                              " readonly flag
+set statusline+=%{ReadOnly()}                   " Display lock if icon file is readonly
+set statusline+=%<%f                            " Filename with path from opened folder
+"set statusline+=%<%F                            " Filename with full relative path
+"set statusline+=%<%t                            " Filename
+set statusline+=%=                              " Left/Right separator
+if &runtimepath =~ 'vim-rvm'
+  "set statusline+=%<%{rvm#string()}             " Ruby Version (without '[  ]')
+  "set statusline+=%<%{rvm#statusline()}         " Ruby Version
+  set statusline+=%<%{rvm#statusline_ft_ruby()} " Ruby Version only if ruby file
 endif
-if exists(":Gstatus")
-  set statusline+=%{FugitiveStatusline()}     " Long Git Branch Name
-"  set statusline+=%{FugitiveHead()}           " Short Git Branch Name
+if &runtimepath =~ 'vim-fugitive'
+  "set statusline+=%{FugitiveStatusline()}       " Long Git Branch Name
+  set statusline+=%<%{fugitive#Head()}          " Short Git Branch Name
 endif
-set statusline+=\ %-14.(%l,%c%V%)\ %P         " Default Vim statusline
-set statusline+=\ \%{wordcount()[\"words\"]}  " Add Word Count
+set statusline+=\ \|\                           " Separator
+"set statusline+=\ \%{wordcount()[\"bytes\"]}b   " Bytes Count
+"set statusline+=\%{wordcount()[\"chars\"]}c     " Characters Count
+"set statusline+=\%{wordcount()[\"words\"]}w     " Words Count
+set statusline+=\%{wordcount()[CountWoC()]}     " Characters Count or Words Count in Visual Mode
+set statusline+=\ \|\                           " Separator
+set statusline+=%l                              " Line number
+"set statusline+=%l/%L                           " Line number/Total lines
+set statusline+=,%c                             " Column position
+"set statusline+=\ \|\                           " Separator
+"set statusline+=%{strlen(&fenc)?&fenc:'none'}   " File encoding
+"set statusline+=,%{&ff}                         " File format
+"set statusline+=%y                              " Filetype
+"set statusline+=\ %P                            " Position %
 
-" Format the tab line
-set showtabline=2                             " Always show tab bar
+""" Format the tab line
+set showtabline=2                               " Always show tab bar
 
 """ Code folding
-set foldenable                                " Enable folding
-set foldmethod=indent                         " Fold based on indentation (indent, marker, manual, expr, syntax, diff)
-set foldlevelstart=10                         " Open most folds by default
-set foldnestmax=10                            " 10 nested fold max
-set foldcolumn=1
-" Space open/closes folds
-nnoremap    +                   za
+set foldenable                                  " Enable folding
+set foldmethod=indent                           " Fold based on indentation (indent, marker, manual, expr, syntax, diff)
+set foldlevelstart=10                           " Open most folds by default
+set foldnestmax=10                              " 10 nested fold max
+set foldcolumn=1                                " Add a 1 char margin to the foldcolumn
 
 """ Encoding
 set encoding=utf-8
 
 """ Tabs and spacing
-set autoindent
-set cindent
-set tabstop=4
-set expandtab
-set shiftwidth=2
-set smarttab
-set backspace=indent,eol,start                " Backspace through everything in insert mode
+set autoindent                                  " Always indent
+set cindent                                     " C style indentation
+set tabstop=2                                   " 1 tab == 2 spaces
+set expandtab                                   " Convert tab to space
+set shiftwidth=2                                " 1 tab == 2 spaces
+set smarttab                                    " Inserts blanks according to 'shiftwidth'
+set backspace=indent,eol,start                  " Backspace through everything in insert mode
 
 """ Search
-set hlsearch                                  " Highlight matches
-set incsearch                                 " Incremental searching
-set ignorecase                                " Searches are case insensitive...
-set smartcase                                 " ... unless they contain at least one capital
-set inccommand=split                          " Get interactive feedback as we compose our substitute command
-set diffopt +=iwhite
+set hlsearch                                    " Highlight matches
+set incsearch                                   " Incremental searching
+set ignorecase                                  " Searches are case insensitive...
+set smartcase                                   " ... unless they contain at least one capital
+set inccommand=split                            " Get interactive feedback as we compose our substitute command
+set diffopt +=iwhite                            " Diff mode: Ignore changes in amount of white space
 
 """ Word completion
-set complete=.,b,u,]
-set completeopt=menu,preview
+set complete=.,b,u,]                            "
+set completeopt=menu,preview                    "
 
-" Paste toggle in insert mode
+""" Paste toggle in insert mode
 set pastetoggle=<C-A-P>
 
 """ Remap Keyboard
@@ -188,13 +204,32 @@ nmap        :W                  :w<CR>:mksession<CR>
 imap        dw                  <ESC>dw
 " Quick Change
 imap        cw                  <ESC>cw
-" U or r to redo
+" r to redo
 nnoremap    r                   :redo<CR>
 " List all buffers
 nnoremap    <Leader>b           :buffers<CR>
 " Keep search matches in the middle of the window.
 nnoremap    n                   nzzzv
 nnoremap    N                   Nzzzv
+" + toggle open/closes folds
+nnoremap    +                   za
+" Easy resize windows
+inoremap    <A-right>           <Esc>:vertical resize +5<CR>i
+vnoremap    <A-right>           <Esc>:vertical resize +5<CR>v
+nnoremap    <A-right>           <Esc>:vertical resize +5<CR>n
+tnoremap    <A-right>           <C-\><C-n>:vertical resize +5<CR>a
+inoremap    <A-left>            <Esc>:vertical resize -5<CR>i
+vnoremap    <A-left>            <Esc>:vertical resize -5<CR>v
+nnoremap    <A-left>            <Esc>:vertical resize -5<CR>n
+tnoremap    <A-left>            <C-\><C-n>:vertical resize -5<CR>a
+inoremap    <A-up>              <ESC>:resize +5<CR>i
+vnoremap    <A-up>              <ESC>:resize +5<CR>v
+nnoremap    <A-up>              <ESC>:resize +5<CR>n
+tnoremap    <A-up>              <C-\><C-n>:resize +5<CR>a
+inoremap    <A-down>            <ESC>:resize -5<CR>i
+vnoremap    <A-down>            <ESC>:resize -5<CR>v
+nnoremap    <A-down>            <ESC>:resize -5<CR>n
+tnoremap    <A-down>            <C-\><C-n>:resize -5<CR>a
 " Smart way to move between windows
 " ⇦
 inoremap    <C-H>               <C-\><C-N><C-W>h
@@ -219,6 +254,10 @@ nmap        <C-A-H>             gT
 nmap        <C-A-L>             gt
 " Switch between the last two files
 nnoremap    <Leader><Leader>    <C-^>
+" Next Buffer
+nnoremap    <C-N>               :bnext<CR>
+" Previous Buffer
+nnoremap    <C-P>               :bprevious<CR>
 " Remove the Windows "^M" - when the encodings gets messed up
 nnoremap    <Leader><Leader>m   mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " Easy exit terminal-mode
@@ -230,13 +269,14 @@ tnoremap    <A-L>               <C-l>
 " Send Ctrl-K to the terminal
 tnoremap    <A-K>               <C-k>
 " This unsets the last search pattern register by hitting return
+vnoremap    8                   <Esc>:noh<CR>
 nnoremap    8                   <Esc>:noh<CR>
 " Vsplit a new Terminal
 nnoremap    <Leader>t           :vsplit\|te<CR>
 nnoremap    <Leader>T           :10split\|te<CR>
 
 " D will duplicate selection at the beginnig of the next line
-vmap D y'>o<ESC>p
+vnoremap    D                   y'>o<ESC>p
 
 """ File type mapping
 autocmd FileType ruby compiler ruby                                 " Set MRI as default ruby compiler
@@ -262,7 +302,7 @@ autocmd VimEnter,BufRead,BufNewFile *.m{d,kd,kdn,dwn,mdown,arkdown} set filetype
 
 """ Plugins Parameters
 "" Auto Pairs
-if &rtp =~ 'auto-pairs'
+if &runtimepath =~ 'auto-pairs'
 "  " Disable <M-p>, <M-e>, <M-b> and <M-n> shortcuts
 "  let g:AutoPairsShortcutToggle = ''
 endif
@@ -273,7 +313,7 @@ endif
 if exists(":CtrlP")
   let g:ctrlp_cmd = 'CtrlPMixed'
   let g:ctrlp_working_path_mode = 'ra'
-  nnoremap    <C-p>       :CtrlPMixed<CR>
+  nnoremap  <C-p>               :CtrlPMixed<CR>
 endif
 
 "" Cucumber
@@ -295,7 +335,7 @@ if exists(":JekyllBuild")
 endif
 
 "" Ledger
-if &rtp =~ 'vim-ledger'
+if &runtimepath =~ 'vim-ledger'
   au BufNewFile,BufRead *.ldg,*.ledger,*.journal setf ledger | comp ledger
   let g:ledger_maxwidth = 80
   " Map :da to <ESC>:put =strftime('%Y/%m/%d') for quick insert current date
@@ -307,7 +347,7 @@ if &rtp =~ 'vim-ledger'
 endif
 
 "" Lexical
-if &rtp =~ 'vim-lexical'
+if &runtimepath =~ 'vim-lexical'
   augroup lexical
     autocmd!
     autocmd FileType gitcommit call lexical#init()
@@ -349,7 +389,7 @@ endif
 "" Multiple-Cursors
 
 "" Neomake
-if &rtp =~ 'neomake'
+if &runtimepath =~ 'neomake'
   function! MyOnBattery()
     return readfile('/sys/class/power_supply/AC/online') == ['0']
   endfunction
@@ -376,7 +416,7 @@ if exists(":NERDTreeToggle")
 endif
 
 "" NerdTree-Git
-if &rtp =~ 'nerdtree-git-plugin'
+if &runtimepath =~ 'nerdtree-git-plugin'
   let g:NERDTreeIndicatorMapCustom = {
         \ "Clean"     : "~",
         \ "Deleted"   : "‼",
@@ -399,11 +439,11 @@ endif
 "" Rhubarb
 
 "" Rspec
-if &rtp =~ 'vim-rspec'
-  nnoremap <Leader>te :call RunCurrentSpecFile()<CR>
-  nnoremap <Leader>sp :call RunNearestSpec()<CR>
-  nnoremap <Leader>ls :call RunLastSpec()<CR>
-  nnoremap <Leader>as :call RunAllSpecs()<CR>
+if &runtimepath =~ 'vim-rspec'
+  nnoremap  <Leader>te          :call RunCurrentSpecFile()<CR>
+  nnoremap  <Leader>sp          :call RunNearestSpec()<CR>
+  nnoremap  <Leader>ls          :call RunLastSpec()<CR>
+  nnoremap  <Leader>as          :call RunAllSpecs()<CR>
 endif
 
 "" RuboCop
@@ -420,12 +460,12 @@ endif
 if &rtp =~ 'vim-surround'
 " Type command + one of the following "'[{|< or any HTML tag
   " Add new surround to current word
-  nmap      ls                  yss
-  nmap      ws                  ysiw
+  nnoremap  ls                  yss
+  nnoremap  ws                  ysiw
 endif
 
 "" Taglist
-"nnoremap    <Leader>tl  :TlistToggle<CR>
+"nnoremap    <Leader>tl          :TlistToggle<CR>
 
 "" Textobj-User
 
@@ -433,7 +473,7 @@ endif
 
 """ My functions
 " Easy edit Vimrc
-command! Vimrc :vs $MYVIMRC
+command!    Vimrc               :vs $MYVIMRC
 
 " Delete trailing white space on save
 " Useful for Python, Ruby and CoffeeScript
@@ -442,8 +482,8 @@ function! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-autocmd BufWrite *.*        :call DeleteTrailingWS()
-autocmd BufWrite .*         :call DeleteTrailingWS()
+autocmd BufWrite *.*            :call DeleteTrailingWS()
+autocmd BufWrite .*             :call DeleteTrailingWS()
 
 " Add SheBang automatically on new files
 augroup Shebang
@@ -455,3 +495,31 @@ augroup Shebang
   autocmd BufNewFile *.zsh                  0put =\"#!/usr/bin/env zsh\<nl>\"|$
   autocmd BufNewFile *.tcsh                 0put =\"#!/usr/bin/env tcsh\<nl>\"|$
 augroup END
+
+" Display a lock icon if current file is readonly or not modifiable
+function! ReadOnly()
+  if &readonly || !&modifiable
+    return ''
+  else
+    return ''
+endfunction
+
+" Return word numbers in Visual mode
+function! CountWoC()
+  if mode() == "v" || mode() == "V"
+    return "words"
+  else
+    return "chars"
+  endif
+endfunction
+
+" Test Funtion to explore VimL
+function! AddBrackets(someText)
+  let isgitrepo = system('echo -n $(git rev-parse --is-inside-work-tree)')
+  let toreturn = "[" . a:someText . "]\ \|\ "
+  if isgitrepo == "true"
+    return toreturn
+  else
+    return ''
+  endif
+endfunction
