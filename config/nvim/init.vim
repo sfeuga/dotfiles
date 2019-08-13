@@ -213,6 +213,8 @@ nnoremap    n                   nzzzv
 nnoremap    N                   Nzzzv
 " + toggle open/closes folds
 nnoremap    +                   za
+" Insert digraph
+inoremap    <Leader>k           <C-K>
 " Easy resize windows
 inoremap    <A-right>           <Esc>:vertical resize +5<CR>i
 vnoremap    <A-right>           <Esc>:vertical resize +5<CR>v
