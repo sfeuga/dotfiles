@@ -95,9 +95,11 @@ set termguicolors                               " Enables the true color support
 set t_Co=256                                    " Enable support for 256-color terminal
 if &rtp =~ 'molokai'
   colorscheme molokai
+  let g:rehash256 = 1
 endif
-let g:rehash256 = 1
+" No Background color
 hi Normal             guibg=NONE
+" In Visual mode apply this to see what's selected
 hi Visual guifg=White guibg=#576F72
 set number                                      " Display line numbers on the left
 set numberwidth=5                               " Line number width
