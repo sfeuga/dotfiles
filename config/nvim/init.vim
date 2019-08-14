@@ -181,6 +181,12 @@ set completeopt=menu,preview                    "
 set pastetoggle=<C-A-P>
 
 """ Remap Keyboard
+" [nvixso](nore)map
+"  │       └ don't recurse
+"  │
+"  └ normal, visual, insert,
+"    eX mode, select, operator-pending
+"
 " Change help key to escape
 inoremap    <F1>                <ESC>
 nnoremap    <F1>                <ESC>
