@@ -472,6 +472,9 @@ fi
 # Easy install my ".desktop" files
 alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop*/* $HOME/.l*/s*/app*/'
 
+# Easy install my fonts
+alias add_my_fonts='mkdir -p ~/.local/share/fonts && cp -vf $HOME/bin/fonts/* ~/.local/share/fonts && fc-cache -f'
+
 # Easy install my "Argos" files
 if [[ -f "$HOME/.local/share/gnome-shell/extensions/argos@pew.worldwidemann.com" ]]; then
   alias add_my_argos_files='mkdir -p $HOME/.config/argos && cp -vf $HOME/bin/argos/* $HOME/.config/argos'
