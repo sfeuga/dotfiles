@@ -101,6 +101,8 @@ endif
 hi Normal             guibg=NONE
 " In Visual mode apply this to see what's selected
 hi Visual guifg=White guibg=#576F72
+" Display trailing witespace
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 set number                                      " Display line numbers on the left
 set numberwidth=5                               " Line number width
 set cursorline                                  " Highlight current line
