@@ -550,6 +550,11 @@ EOF
   fi
 }
 
+alias backup_data_checksum='rsync -vcaruz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
+alias backup_home_checksum='rsync -vcaruz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
+alias backup_data='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
+alias backup_home='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
+
 ##############################################
 ### Do not put other lines after this code ###
 ##############################################
