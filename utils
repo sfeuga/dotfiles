@@ -61,7 +61,7 @@ export rvm_path="$HOME/.rvm"
 alias weekNumber='date +%V'
 alias wn='weekNumber'
 
-alias ls='ls -AFv --color=tty'
+alias ls='ls -ACF --color=tty'
 alias lsa='ls -AFlhv --color=tty'
 alias ll='ls -alFv'
 alias la='ls -AFv'
@@ -77,6 +77,7 @@ alias blog='cd $HOME/Documents/Dev*/sfeuga.com/blog.sfeuga.com/'
 alias dotfiles='cd $HOME/.dotfiles/'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias rvm-global-install='for l in $(cat $HOME/.rvm/gemsets/global.gems); do rvm @global do gem install $l; done'
+alias wg='wget -c'
 
 # cheat settings
 if [[ -x $(command -v cheat) ]]; then
