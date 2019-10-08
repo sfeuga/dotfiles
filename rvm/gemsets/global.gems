@@ -1,12 +1,15 @@
-gem-ctags
-gem-wrappers
 bundler
 dotenv
+emoji-rspec
+gem-ctags
+gem-wrappers
+jekyll
 neovim
 pry
-rake
+rails
 rake
 reek
+rspec
 rubocop
 rubocop-i18n
 rubocop-md
@@ -19,5 +22,3 @@ rubocop-thread_safety
 rubygems-bundler
 rvm
 thor
-rspec
-emoji-rspec

@@ -1,12 +1,12 @@
 require:
   - rubocop-performance
   - rubocop-thread_safety
-  - rubocop/require_tools
+#  - rubocop-i18n
 #  - rubocop-md
 #  - rubocop-rails
 #  - rubocop-rspec
-#  - rubocop-i18n
 #  - rubocop-sequel
+#  - rubocop/require_tools
 
 ### rubocop-i18n
 # You *must* choose GetText or Rails-i18n style checking

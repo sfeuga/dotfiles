@@ -69,9 +69,9 @@
 ],
 
   "lastplayed":{
-	"id": "46d02697-4c95-4236-c9ee-72cfc803a52f",
-	"name": "France Info",
-	"address": "http://direct.franceinfo.fr/live/franceinfo-midfi.mp3",
+	"id": "46d02696-4c97-4257-b9ee-73cfc803a52f",
+	"name": "France Inter",
+	"address": "http://direct.franceinter.fr/live/franceinter-midfi.mp3",
 	"encoding": false
 }
 }

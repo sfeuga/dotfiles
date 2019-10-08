@@ -1,21 +1,22 @@
 " Minimalist Vim Plugin Manager                                                                                         https://github.com/junegunn/vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
-"Plug 'taglist.vim', { 'on': 'TlistToggle' }                             " Source code browser                           https://www.vim.org/scripts/script.php?script_id=273
-"Plug 'slashmili/alchemist.vim'                                          " Elixir Integration                            https://github.com/slashmili/alchemist.vim
 "Plug 'garbas/vim-snipmate'                                              " Mimic TextMate's snippets features            https://github.com/garbas/vim-snipmate
 "Plug 'godlygeek/tabular'                                                " Aligning text                                 https://github.com/godlygeek/tabular
 "Plug 'honza/vim-snippets'                                               " Snippets files for programming languages      https://github.com/honza/vim-snippets
 "Plug 'kassio/neoterm'                                                   " Wrapper of some :terminal functions           https://github.com/kassio/neoterm
 "Plug 'mileszs/ack.vim'                                                  " :Ack [options] {pattern} [{directories}]      https://github.com/mileszs/ack.vim
 "Plug 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}          " Statusline plugin                             https://github.com/powerline/powerline
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }          " Add git status flags to NERDTree              https://github.com/Xuyuanp/nerdtree-git-plugin
+"Plug 'slashmili/alchemist.vim'                                          " Elixir Integration                            https://github.com/slashmili/alchemist.vim
+Plug 'blindfs/vim-taskwarrior'                                          " A vim interface for taskwarrior               https://github.com/blindfs/vim-taskwarrior
 Plug 'csexton/jekyll.vim'                                               " Automate common Jekyll tasks                  https://github.com/csexton/jekyll.vim
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }            " Fuzzy file, buffer, mru, tag... finder        https://github.com/ctrlpvim/ctrlp.vim
 Plug 'editorconfig/editorconfig-vim'                                    " EditorConfig Vim Plugin                       https://github.com/editorconfig/editorconfig-vim
 Plug 'jiangmiao/auto-pairs'                                             " Insert/Delete '[', '(', '{'... in pair        https://github.com/jiangmiao/auto-pairs
 Plug 'kana/vim-textobj-user'                                            " Create your own text objects                  https://github.com/kana/vim-textobj-user
-Plug 'ledger/vim-ledger'                                                " Ledger filetype for Vim                       https://github.com/ledger/vim-ledger
+Plug 'keith/rspec.vim'                                                  " Improved syntax highlighting for rspec        https://github.com/keith/rspec.vim
+Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }       " Ledger filetype for Vim                       https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                    " Make the yanked region apparent!              https://github.com/machakann/vim-highlightedyank
+Plug 'mattesgroeger/vim-bookmarks'                                      " Allows toggling bookmarks per line            https://github.com/mattesgroeger/vim-bookmarks
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }                " Custom text object for selecting ruby blocks  https://github.com/nelstrom/vim-textobj-rubyblock
 Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }    " Cypher Vim Syntax                             https://github.com/neo4j-contrib/cypher-vim-syntax
 Plug 'neomake/neomake'                                                  " Syntax checking hacks                         https://github.com/neomake/neomake
@@ -25,9 +26,9 @@ Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }        " Code s
 Plug 'reedes/vim-lexical'                                               " Build on Vim’s spell/thes/dict completion     https://github.com/reedes/vim-lexical
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }                  " A tree explorer plugin                        https://github.com/scrooloose/nerdtree
 Plug 'terryma/vim-multiple-cursors'                                     " True Sublime Text style multiple selections   https://github.com/terryma/vim-multiple-cursors
-Plug 'thoughtbot/vim-rspec'                                             " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
+Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                         " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                               " My favorite theme !                           https://github.com/tomasr/molokai
-Plug 'tpope/vim-bundler'                                                " Lightweight support for Ruby's Bundler        https://github.com/tpope/vim-bundler
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }                             " Lightweight support for Ruby's Bundler        https://github.com/tpope/vim-bundler
 Plug 'tpope/vim-cucumber', { 'for': 'feature' }                         " Syntax highlight, indent, and more            https://github.com/tpope/vim-cucumber
 Plug 'tpope/vim-endwise'                                                " Adding end after if, do, def                  https://github.com/tpope/vim-endwise
 Plug 'tpope/vim-fugitive'                                               " Git wrapper so awesome, it should be illegal  https://github.com/tpope/vim-fugitive
@@ -38,9 +39,12 @@ Plug 'tpope/vim-rvm'                                                    " Switch
 Plug 'tpope/vim-surround'                                               " Quoting/parenthesizing made simple            https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                             " Pairs of handy bracket mappings               https://github.com/tpope/vim-unimpaired
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                             " Provides motions and text objects for Ruby    https://github.com/vim-ruby/vim-ruby
+Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                 " Source code browser                           https://vimawesome.com/plugin/taglist-vim
+Plug 'xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }          " Add git status flags to NERDTree              https://github.com/Xuyuanp/nerdtree-git-plugin
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 """ General
 "set timeout timeoutlen=500 ttimeoutlen=100
 syntax on                                       " Enable syntax highlighting
@@ -79,6 +83,12 @@ set confirm                                     " Instead of failing because of 
 set nopaste                                     " 'paste' should not be set in your config
 autocmd FocusLost * :wa                         " Save all files on losing focus
 autocmd TermOpen * startinsert                  " Enter in Terminal-mode automatically
+
+" Automatically install missing plugins on startup
+autocmd VimEnter *
+      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+      \|   PlugInstall --sync | q
+      \| endif
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -178,8 +188,20 @@ set inccommand=split                            " Get interactive feedback as we
 set diffopt +=iwhite                            " Diff mode: Ignore changes in amount of white space
 
 """ Word completion
-set complete=.,b,u,]                            "
-set completeopt=menu,preview                    "
+set complete=.,b,u,t,kspell                     " How keyword completion works when CTRL-P or CTRL-N are used
+                                                " Valid options are:
+                                                "   .       scan the current buffer
+                                                "   w       scan buffers from other windows
+                                                "   b       scan other loaded buffers that are in the buffer list
+                                                "   u       scan the unloaded buffers that are in the buffer list
+                                                "   U       scan the buffers that are not in the buffer list
+                                                "   k       scan the files given with the 'dictionary' option
+                                                "   kspell  use the currently active spell checking
+                                                "   s       scan the files given with the 'thesaurus' option
+                                                "   i       scan current and included files
+                                                "   d       scan current and included files for defined name or macro
+                                                "   t       tag completion
+set completeopt=menu,preview                    " Options for Insert mode completion (menu, menuone, longest, preview)
 
 """ Paste toggle in insert mode
 set pastetoggle=<C-A-P>
@@ -217,7 +239,7 @@ imap        cw                  <ESC>cw
 " r to redo
 nnoremap    r                   :redo<CR>
 " List all buffers
-nnoremap    <Leader>b           :buffers<CR>
+nnoremap    <Leader>b           :buffers!<CR>
 " Keep search matches in the middle of the window.
 nnoremap    n                   nzzzv
 nnoremap    N                   Nzzzv
@@ -261,31 +283,31 @@ nnoremap    <C-L>               <C-W>l
 tnoremap    <C-L>               <C-\><C-N><C-W>l
 " Smart way to move between tabs
 " ⇦
-nmap        <C-A-H>             gT
+nnoremap    <Leader><Leader>b   gT
 " ⇨
-nmap        <C-A-L>             gt
+nnoremap    <Leader><Leader>n   gt
 " Switch between the last two files
 nnoremap    <Leader><Leader>    <C-^>
 " Next Buffer
-nnoremap    <C-N>               :bnext<CR>
+nnoremap    <Leader>n           :bnext<CR>
 " Previous Buffer
-nnoremap    <C-P>               :bprevious<CR>
+nnoremap    <Leader>b           :bprevious<CR>
 " Remove the Windows "^M" - when the encodings gets messed up
 nnoremap    <Leader><Leader>m   mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " Easy exit terminal-mode
 tnoremap    <Esc>               <C-\><C-n>
 " Sends an escape key to the terminal
-tnoremap    <A-E>               <Esc>
+tnoremap    <Leader>e           <Esc>
 " Send Ctrl-L to the terminal
-tnoremap    <A-L>               <C-l>
+tnoremap    <Leader>l           <C-l>
 " Send Ctrl-K to the terminal
-tnoremap    <A-K>               <C-k>
+tnoremap    <Leader>k           <C-k>
 " This unsets the last search pattern register by hitting return
 vnoremap    8                   <Esc>:noh<CR>
 nnoremap    8                   <Esc>:noh<CR>
 " Vsplit a new Terminal
 nnoremap    <Leader>t           :vsplit\|te<CR>
-nnoremap    <Leader>T           :10split\|te<CR>
+nnoremap    <Leader>T           :15split\|te<CR>
 
 " D will duplicate selection at the beginnig of the next line
 vnoremap    D                   y'>o<ESC>p
@@ -319,6 +341,8 @@ if &runtimepath =~ 'auto-pairs'
 "  let g:AutoPairsShortcutToggle = ''
 endif
 
+"" Bookmarks
+
 "" Bundler
 
 "" Ctrl-P
@@ -335,6 +359,10 @@ endif
 "" Editorconfig-Vim
 
 "" Endwise
+
+"" ft_rust
+" run |:RustFmt| automatically when saving a buffer
+let g:rustfmt_autosave = 1
 
 "" Fugitive
 
@@ -418,7 +446,8 @@ endif
 
 "" NerdTree
 if exists(":NERDTreeToggle")
-  map       <Leader>n           :NERDTreeToggle<CR>
+  map       <Leader>tr          :NERDTreeToggle<CR>
+  " Quit vim if NerdTree is the last opened window
   autocmd bufenter *
         \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
         \     q |
@@ -477,13 +506,36 @@ if &rtp =~ 'vim-surround'
 endif
 
 "" Taglist
-"nnoremap    <Leader>tl          :TlistToggle<CR>
+if exists(":TlistToggle")
+  nnoremap  <Leader>tl          :TlistToggle<CR>
+endif
 
 "" Textobj-User
 
 "" Unimpaired
 
 """ My functions
+" Press [gx] to open the GitHub URL for a plugin or a commit with the default browser
+function! s:plug_gx()
+  let line = getline('.')
+  let sha  = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
+  let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
+                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
+  if uri !~ 'github.com'
+    return
+  endif
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = empty(sha) ? 'https://github.com/'.repo
+                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
+  call netrw#BrowseX(url, 0)
+endfunction
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+
 " Easy edit Vimrc
 command!    Vimrc               :vs $MYVIMRC
 
@@ -511,7 +563,7 @@ augroup END
 " Display a lock icon if current file is readonly or not modifiable
 function! ReadOnly()
   if &readonly || !&modifiable
-    return ''
+    return ' '
   else
     return ''
 endfunction
@@ -525,6 +577,52 @@ function! CountWoC()
   endif
 endfunction
 
+" Number of Buffers : Buffer Number
+function! StatlineBufCount()
+  if !exists("s:statline_n_buffers")
+    let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
+  endif
+  return s:statline_n_buffers
+endfunction
+
+if !exists('g:statline_show_n_buffers')
+  let g:statline_show_n_buffers = 1
+endif
+
+if g:statline_show_n_buffers
+  set statusline+=\ \|\ [%{StatlineBufCount()}\:%n]%<
+  " Only calculate buffers after adding/removing buffers
+  augroup statline_nbuf
+    autocmd!
+    autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
+  augroup END
+else
+  set statusline+=\ [%n]%<
+endif
+
+" Code of character under cursor
+if !exists('g:statline_show_charcode')
+  let g:statline_show_charcode = 0
+endif
+
+if g:statline_show_charcode
+  " (b:num, B:hex)
+  "set statusline+=%9(\ \%b/0x\%B%)
+  set statusline+=\ \|\ %(\%b/0x\%B%)
+endif
+
+function! ToggleCharacterCode()
+  if g:statline_show_charcode
+    echo "disable"
+    "let g:statline_show_charcode = 0
+    "source $MYVIMRC
+  else
+    echo "enable"
+    "let g:statline_show_charcode = 1
+    "source $MYVIMRC
+  endif
+endfunction
+
 " Test Funtion to explore VimL
 function! AddBrackets(someText)
   let isgitrepo = system('echo -n $(git rev-parse --is-inside-work-tree)')
@@ -535,3 +633,4 @@ function! AddBrackets(someText)
     return ''
   endif
 endfunction
+

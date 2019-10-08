@@ -1,13 +1,25 @@
 # shellcheck disable=SC2148
 # for setting history length see HISTSIZE and HISTFILESIZE in bash or zsh
-HISTSIZE=10000
-HISTFILESIZE=20000
+HISTSIZE=1000000
+HISTFILESIZE=1000000
+#HISTIGNORE="&:[ \t]*:ls:ls *:cd:cd *:history:history *:rm:rm *:ps:ps *"
+HISTIGNORE="&:[ \t]*:history:history *:rm:ps:ps *:less:less *:cat:cat *:most:most *"
+HISTIGNORE+=":cheat *:man *:head *:tail *:locate *"
+HISTIGNORE+=":pwd:[fb]g:exit:clear:reset:df:du:free:top:htop:sudo updatedb"
+HISTTIMEFORMAT="%Y%m%d %T "
+#HISTCONTROL=ignoreboth:erasedups:ignoredups:ignorespace:histappend
+# Append history on every command
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
+### Easy source local shell config file
 # Define if I run Bash or Zsh
-if [[ "$0" == "bash" ]]; then
+if [[ "$0" =~ "bash" ]]; then
   shell_type='bash'
-elif [[ "$0" == "zsh" ]]; then
+  alias shellrc='source $HOME/.bashrc'
+elif [[ "$0" =~ "zsh" ]]; then
   shell_type='zsh'
+  alias shellrc='source $HOME/.zshrc'
 fi
 
 # Make less more friendly for non-text input files, see lesspipe(1)
@@ -58,28 +70,144 @@ export rvm_path="$HOME/.rvm"
 #############################
 ##### Aliases & Helpers #####
 #############################
-alias weekNumber='date +%V'
-alias wn='weekNumber'
+# Setup movies filder name for handy ytdl
+if [[ -d $HOME/Movies ]]; then
+  export movie_folder=Movies
+elif [[ -d $HOME/Videos ]]; then
+  export movie_folder=Videos
+fi
 
-alias ls='ls -ACF --color=tty'
-alias lsa='ls -AFlhv --color=tty'
-alias ll='ls -alFv'
-alias la='ls -AFv'
-alias l='ls -CFv'
-alias ln="ln -v"
-alias mkdir="mkdir -p"
+### Aliases
+alias Date='date +"%Y/%m/%d %V %H:%M:%S"'
+alias boot.log='journalctl -b'
 alias df='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias du='du -h'
 alias free='free -h'
-alias boot.log='journalctl -b'
-alias dev='cd $HOME/Documents/Dev*/'
-alias blog='cd $HOME/Documents/Dev*/sfeuga.com/blog.sfeuga.com/'
-alias dotfiles='cd $HOME/.dotfiles/'
+alias l='ls -CFv'
+alias la='ls -AFv'
+alias ll='ls -alFv'
+alias ln='ln -v'
+alias ls='ls -ACF --color=tty'
+alias lsa='ls -AFlhv --color=tty'
+alias mkdir='mkdir -p'
 alias path='echo $PATH | tr -s ":" "\n"'
-alias rvm-global-install='for l in $(cat $HOME/.rvm/gemsets/global.gems); do rvm @global do gem install $l; done'
-alias wg='wget -c'
+alias wget='wget -c'
 
-# cheat settings
+alias Blog='Dev && cd /sf*/blog*/'
+alias Dev='cd $HOME/Doc*/Dev*/'
+alias Dotfiles='cd $HOME/.dot*/'
+alias Rails='Dev && cd rails/'
+
+# Easy DL
+if [[ -f $(command -v aria2c) ]]; then
+  alias tdl='aria2c --seed-time=0'
+fi
+if [[ -f $(command -v youtube-dl) ]]; then
+  alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
+fi
+
+# Easy install my ".desktop" files
+alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop*/* $HOME/.l*/s*/app*/'
+
+# Easy install my fonts
+alias add_my_fonts='mkdir -p $HOME/.local/share/fonts && cp -vf $HOME/bin/fonts/* $HOME/.l*/s*/fonts/ && sudo fc-cache -f'
+
+# Easy install my "Argos" files
+if [[ -f "$HOME/.local/share/gnome-shell/extensions/argos@pew.worldwidemann.com" ]]; then
+  alias add_my_argos_files='mkdir -p $HOME/.config/argos && cp -vf $HOME/bin/argos/* $HOME/.config/argos'
+fi
+
+### Backups
+# TODO Change this to handle path and options and config file
+alias backup_data_checksum='rsync -vcaruz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
+alias backup_home_checksum='rsync -vcaruz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
+alias backup_data='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
+alias backup_home='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
+
+# Edit Radio List
+alias radio_edit='$EDITOR Music/Radio\ France.m3u8 /home/sfeuga/.gse-radio/channelList.json'
+
+# Translate aliases
+if [[ -f $(command -v trans) ]]; then
+  alias trans_en='trans en:fr+ja'
+  alias trans_fr='trans fr:en+ja'
+  alias trans_jp='trans ja:en+fr'
+fi
+
+# Get Session Type
+function get_session_number () {
+  loginctl | awk '{print $1}' | head -n 2 | tail -n 1
+}
+alias get_session_type='loginctl show-session $(get_session_number) -p Type'
+
+### System maintenance
+if [[ -f $(command -v dnf) ]] && [[ -f $(command -v flatpak) ]] && [[ -f $(command -v fwupdmgr) ]]; then
+  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y && fwupdmgr update'
+elif [[ -f $(command -v dnf) ]] && [[ -f $(command -v flatpak) ]]; then
+  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y'
+elif [[ -f $(command -v dnf) ]] && [[ -f $(command -v fwupdmgr) ]]; then
+  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && fwupdmgr update'
+elif [[ -f $(command -v dnf) ]]; then
+  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y'
+elif [[ -f $(command -v apt) ]] && [[ -f $(command -v flatpak) ]] && [[ -f $(command -v fwupdmgr) ]]; then
+  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y && fwupdmgr update'
+elif [[ -f $(command -v apt) ]] && [[ -f $(command -v flatpak) ]]; then
+  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y'
+elif [[ -f $(command -v apt) ]] && [[ -f $(command -v fwupdmgr) ]]; then
+  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && fwupdmgr update'
+elif [[ -f $(command -v apt) ]]; then
+  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y'
+fi
+
+### Serve command
+function serve() {
+  # Check if a server is already running
+  is_running=$(nc -z localhost 3000; echo $?)
+  if [[ "$is_running" == 0 ]]; then
+    echo "A server is already running on port 3000."
+    return 1
+  fi
+
+  # Determine if it's Rails or Jekyllrb to start
+  if [[ -f "Gemfile" ]]; then
+    project_type=$(grep -s -E "^gem .?rails.?|^gem .?jekyll.?" Gemfile | awk '{print $2}' | sed 's/,//' | sed 's/"//g' | sed "s/'//g")
+  else
+    project_type=''
+  fi
+
+  # Change Terminal Tab title
+  if [[ "$project_type" ]] && [[ "$KONSOLE_VERSION" ]]; then
+    echo "$project_type detected"
+    echo -ne "\033]30;${project_type^} Server\007"
+  elif [[ "$project_type" ]] && [[ "$GNOME_TERMINAL_SERVICE" ]]; then
+    echo "$project_type detected"
+    printf "\e]2;%s\a" "${project_type^} Server"
+  fi
+
+  # Finally start the server
+  case "$project_type" in
+    rails )
+      rails server -p 3000 && echo -ne "\033]30;%d : %n\007"
+      ;;
+    jekyll )
+      jekyll serve --port 3000 --livereload && echo -ne "\033]30;%d : %n\007"
+      ;;
+    * )
+      echo "There is no service to start."
+      ;;
+  esac
+}
+
+### Set tab title in gnome terminal
+function set-title() {
+  if [[ -z "$ORIG" ]]; then
+    ORIG=$PS1
+  fi
+  TITLE="\[\e]2;$*\a\]"
+  PS1=${ORIG}${TITLE}
+}
+
+### cheat settings
 if [[ -x $(command -v cheat) ]]; then
   export CHEAT_COLORS=true
   export CHEAT_COLORSCHEME=dark
@@ -94,28 +222,6 @@ if [[ -x $(command -v cheat) ]]; then
   }
 
   complete -F _cheat_autocomplete cheat
-fi
-
-# Easy DL
-if [[ -f $(command -v aria2c) ]]; then
-  alias tdl='aria2c --seed-time=0'
-fi
-if [[ -f $(command -v youtube-dl) ]]; then
-  alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
-fi
-
-# Setup movies filder name for handy ytdl
-if [[ -d $HOME/Movies ]]; then
-  export movie_folder=Movies
-elif [[ -d $HOME/Videos ]]; then
-  export movie_folder=Videos
-fi
-
-### System maintenance
-if [[ -f $(command -v dnf) ]]; then
-  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y'
-elif [[ -f $(command -v apt) ]]; then
-  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y'
 fi
 
 ### Buku https://github.com/jarun/Buku
@@ -146,6 +252,52 @@ if [[ -f $(command -v buku) ]]; then
   fi
 fi
 
+# Global Gem manager
+function rvm_global_gem() {
+  read -r -d '' HELP << EOF
+Usage: rvm_global_gem [OPTION]... [GEM_NAME]...
+Manage Global Gem list
+
+  -a, --add gem_name\tadd following gem filename to global list
+  -i, --install\t\tinstall all global gems
+  -l, --list\t\tlist all global gems
+      --help\t\tdisplay this message
+
+Examples:
+  rvm_global_gem -l\t\tlist all global gem
+  rvm_global_gem -a pry\t\tadd pry gem filename to global list
+EOF
+
+  if [[ "$#" -gt "2" ]]; then
+    echo -e "$HELP"
+    return 1
+  fi
+  case $1 in
+    --add | -a)
+      echo "$2" >> "$HOME/.rvm/gemsets/global.gems"
+      return 0
+      ;;
+    --install | -i)
+      rvm_global_gem_install="rvm @global do gem install $(cat $HOME/.rvm/gemsets/global.gems | sort -u | tr '\n' ' ')"
+      $rvm_global_gem_install
+      return 0
+      ;;
+    --list | -l)
+      cat "$HOME/.rvm/gemsets/global.gems" | sort -u
+      return 0
+      ;;
+    --help)
+      echo -e "$HELP"
+      return 0
+      ;;
+    *)
+      echo -e "$1 is not a valid option.\n"
+      echo -e "$HELP"
+      return 1
+      ;;
+  esac
+}
+
 # Change all current files/folders to Title Case
 function to_title_case {
   if [[ -f "$(command -v rename)" ]]; then
@@ -164,7 +316,7 @@ function to_title_case {
   fi
 }
 
-# Convert mkv title to match file name
+# Change mkv title to match file name
 function mkvtitle() {
   if [[ -f "$(command -v mkvpropedit)" ]]; then
     if [[ "$#" -gt "0" ]]; then
@@ -180,6 +332,28 @@ function mkvtitle() {
     echo "Please, install mkvtoolnix"
     return 1
   fi
+}
+
+# Set Kodi title style on file and folders recursively in the current directory
+function toKodi() {
+  for folder in *; do
+    cd "$folder" || exit 1
+    for f in *; do
+      filename=${f::-4}
+      extension=$(echo "$f" | rev | awk -F '.' '{print $1}' | rev)
+      filenb=${f::2}
+      filename_length=${#filename}
+      Episode="E"
+
+      if [[ "$filename_length" -lt "3" ]]; then
+        mv "$f" "$folder$Episode$filename.$extension"
+      else
+        title=${f:3:-4}
+        mv "$f" "$title $folder$Episode$filenb.$extension"
+      fi
+    done
+    cd .. || exit 1
+  done
 }
 
 ### Git
@@ -208,10 +382,6 @@ if [[ -f $(command -v git) ]]; then
       source "$HOME/bin/git-completion.zsh"
     fi
   fi
-
-  alias got='git '
-  alias gti='git '
-  alias gut='git '
 
   function LastCommitNumber () {
     [[ -d .git ]] && git log --pretty=format:%H -n 1
@@ -378,36 +548,46 @@ if [[ -f $(command -v ledger) ]] && \
 fi
 
 # Flatpak app aliases
-if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/com.sublimetext.three.desktop" ]]; then
+flatpak_applications_folder="$HOME/.local/share/flatpak/exports/share/applications"
+if [[ -f "$flatpak_applications_folder/fr.handbrake.ghb.desktop" ]]; then
+  function handbrake() {
+    flatpak run --command=HandBrakeCLI fr.handbrake.ghb
+  }
+fi
+if [[ -f "$flatpak_applications_folder/com.sublimetext.three.desktop" ]]; then
   function sublime() {
     flatpak run com.sublimetext.three "$@"
   }
 fi
-if [[ -f "$HOME/.local/share/flatpak/exports/share/applications/org.videolan.VLC" ]]; then
+if [[ -f "$flatpak_applications_folder/org.videolan.VLC" ]]; then
   function vlc() {
     flatpak run org.videolan.VLC "$@"
+  }
+fi
+if [[ -f "$flatpak_applications_folder/org.gimp.GIMP.desktop" ]]; then
+  function gimp() {
+    flatpak run org.gimp.GIMP "$@"
+  }
+fi
+if [[ -f "$flatpak_applications_folder/org.inkscape.Inkscape.desktop" ]]; then
+  function inkscape() {
+    flatpak run org.inkscape.Inkscape "$@"
+  }
+fi
+if [[ -f "$flatpak_applications_folder/org.kde.krita.desktop" ]]; then
+  function krita() {
+    flatpak run org.kde.krita "$@"
+  }
+fi
+if [[ -f "$flatpak_applications_folder/org.mypaint.MyPaint.desktop" ]]; then
+  function mypaint() {
+    flatpak run org.mypaint.MyPaint "$@"
   }
 fi
 
 # Vim folders in case of not using nvim
 if [[ ! -f $(command -v nvim) ]] && [[ -f $(command -v vim) ]] ; then
   mkdir -p "$HOME"/.vim/{backup,bundle,spell,swap,undo}
-fi
-
-# Get Session Type
-function get_session_number () {
-  loginctl | awk '{print $1}' | head -n 2 | tail -n 1
-}
-alias get_session_type='loginctl show-session $(get_session_number) -p Type'
-
-# Edit Radio List
-alias radio_edit='$EDITOR Music/Radio\ France.m3u8 /home/sfeuga/.gse-radio/channelList.json'
-
-# Translate aliases
-if [[ -f $(command -v trans) ]]; then
-  alias trans_en='trans en:fr+ja'
-  alias trans_fr='trans fr:en+ja'
-  alias trans_jp='trans ja:en+fr'
 fi
 
 # If no file(s) are passed to vim, check if a Session.vim exist, if yes, run it
@@ -454,6 +634,7 @@ if [[ -f $(command -v nvim) ]]; then
     alias vimconf='nvim $HOME/.dotfiles/config/nvim/init.vim'
   fi
   if [[ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]]; then
+    echo "Install Plug and all NeoVim plugins"
     curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     nvim +PlugInstall +qall
@@ -463,22 +644,12 @@ elif [[ -f $(command -v vim) ]] && [[ -f "$HOME/.vimrc" ]]; then
   alias vimconf='vim $HOME/.vimrc'
   if [[ ! -f "$HOME/.vim/bundle/Vundle.vim" ]]; then
     mkdir -p "$HOME/.vim/bundle"
+    echo "Install Vundle and all Vim plugins"
     git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
     vim +PluginInstall +qall
   fi
 else
   export EDITOR='vi'
-fi
-
-# Easy install my ".desktop" files
-alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop*/* $HOME/.l*/s*/app*/'
-
-# Easy install my fonts
-alias add_my_fonts='mkdir -p ~/.local/share/fonts && cp -vf $HOME/bin/fonts/* ~/.local/share/fonts && sudo fc-cache -f'
-
-# Easy install my "Argos" files
-if [[ -f "$HOME/.local/share/gnome-shell/extensions/argos@pew.worldwidemann.com" ]]; then
-  alias add_my_argos_files='mkdir -p $HOME/.config/argos && cp -vf $HOME/bin/argos/* $HOME/.config/argos'
 fi
 
 # Easy Source shell rc file
@@ -502,7 +673,7 @@ function mkdefault() {
 
 read -r -d '' HELP << EOF
 Usage:
-  mkdefault "project name"
+  mkdefault [project_name]
 
 EOF
 
@@ -512,12 +683,17 @@ source "https://rubygems.org"
 ruby '~> $RUBY_BASE_VERSION'
 
 group :development, :test do
+  gem 'emoji-rspec'
+  gem 'pry'
   gem 'reek'
+  gem 'rspec'
   gem 'rubocop'
   gem 'rubocop-performance'
-  gem 'rspec'
-  gem 'emoji-rspec'
 end
+
+EOF
+
+read -r -d '' REEK_CONTENT << EOF
 
 EOF
 
@@ -534,27 +710,97 @@ EOF
 
   if [[ "$#" -gt "1" ]]; then
     echo "$HELP"
-  else
+  elif [[ "$#" -eq "1" ]]; then
     mkdir -p ./"$1"
     (
       cd ./"$1" || return
-      echo "$RUBY_VERSION" > .ruby-version
       echo "$1" > .ruby-gemset
-      echo "$RUBOCOP_CONTENT" > .rubocop.yml
       echo "$GEMFILE_CONTENT" > Gemfile
-      echo $"$RSPEC_CONTENT" > .rspec
+      echo "$REEK_CONTENT" > .reek.yml
+      echo "$RSPEC_CONTENT" > .rspec
+      echo "$RUBOCOP_CONTENT" > .rubocop.yml
+      echo "$RUBY_VERSION" > .ruby-version
       if [[ "$(command -v mkgitignore)" ]]; then
-        mkgitignore --default
-        mkgitignore ruby
+        if [[ $(grep -c Rails config.ru) -gt "0" ]]; then
+          mkgitignore --default -k ruby,rails,node
+        else
+          mkgitignore --default -k ruby
+        fi
       fi
     )
+  else
+    if [[ ! -f ".ruby-gemset" ]]; then
+      basename "$PWD" > .ruby-gemset
+    fi
+    if [[ ! -f "Gemfile" ]]; then
+      echo "$GEMFILE_CONTENT" > Gemfile
+    fi
+    if [[ ! -f ".reek.yml" ]]; then
+      echo "$REEK_CONTENT" > .reek.yml
+    fi
+    if [[ ! -f ".rspec" ]]; then
+      echo "$RSPEC_CONTENT" > .rspec
+    fi
+    if [[ ! -f ".rubocop.yml" ]]; then
+      echo "$RUBOCOP_CONTENT" > .rubocop.yml
+      if [[ $(grep -c Rails config.ru) -gt "0" ]]; then
+        echo -e "  - rubocop-rails\n\nMetrics/LineLength:\n  Enabled: false\n\nStyle/Documentation:\n  Enabled: false\n\nMetrics/CyclomaticComplexity:\n  Enabled: false\n\nMetrics/MethodLength:\n  Enabled: false\n\nMetrics/PerceivedComplexity:\n  Enabled: false\n\nStyle/IfUnlessModifier:\n  Enabled: false\n\nRails/Present:\n  Enabled: false\n\nMetrics/AbcSize:\n  Enabled: false\n\nStyle/ClassAndModuleChildren:\n  Enabled: false\n\nStyle/NumericLiterals:\n  Enabled: false\n" >> .rubocop.yml
+      fi
+    else
+      if [[ $(grep -c Rails config.ru) -gt "0" ]]; then
+        echo -e "  - rubocop-rails\n\nMetrics/LineLength:\n  Enabled: false\n\nStyle/Documentation:\n  Enabled: false\n\nMetrics/CyclomaticComplexity:\n  Enabled: false\n\nMetrics/MethodLength:\n  Enabled: false\n\nMetrics/PerceivedComplexity:\n  Enabled: false\n\nStyle/IfUnlessModifier:\n  Enabled: false\n\nRails/Present:\n  Enabled: false\n\nMetrics/AbcSize:\n  Enabled: false\n\nStyle/ClassAndModuleChildren:\n  Enabled: false\n\nStyle/NumericLiterals:\n  Enabled: false\n" >> .rubocop.yml
+      fi
+    fi
+    if [[ ! -f ".ruby-version" ]]; then
+      echo "$RUBY_VERSION" > .ruby-version
+    fi
+    if [[ "$(command -v mkgitignore)" ]]; then
+      if [[ $(grep -c Rails config.ru) -gt "0" ]]; then
+        mkgitignore --default -k ruby,rails,node
+      else
+        mkgitignore --default -k ruby
+      fi
+    fi
   fi
 }
 
-alias backup_data_checksum='rsync -vcaruz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
-alias backup_home_checksum='rsync -vcaruz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
-alias backup_data='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
-alias backup_home='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
+### nvm (Node Version Manager)
+#### https://github.com/nvm-sh/nvm
+if [[ -d "$HOME/.nvm" ]]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+else
+  echo "Install NVM"
+  export NVM_DIR="$HOME/.nvm" && (
+    git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+    cd "$NVM_DIR"
+    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+  ) && \. "$NVM_DIR/nvm.sh"
+fi
+
+### gvm (Go Version Manager)
+#### https://github.com/moovweb/gvm
+if [[ ! -d "/home/sfeuga/.gvm" ]]; then
+  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+else
+  [[ -s "/home/sfeuga/.gvm/scripts/gvm" ]] && source "/home/sfeuga/.gvm/scripts/gvm"
+fi
+
+### Autodesk Setup
+#### Maya
+if [[ -d "/usr/autodesk/maya" ]]; then
+  export MAYA_LOCATION="/usr/autodesk/maya"
+  export PATH="$MAYA_LOCATION/bin:$PATH"
+#  MAYA_PLUG_IN_PATH="$MAYA_LOCATION/plug-ins:$MAYA_LOCATION/bin/plug-ins"
+#  MAYA_MODULE_PATH="$MAYA_LOCATION/modules"
+#  MAYA_SCRIPT_PATH="$MAYA_LOCATION/scripts"
+#  XBMLANGPATH="$MAYA_LOCATION/icons"
+fi
+
+### SideFX Houdini
+[[ -s "/opt/hfs17.5/" ]] && (cd /opt/hfs17.5/ && source houdini_setup_bash &>/dev/null)
+
 
 ##############################################
 ### Do not put other lines after this code ###
