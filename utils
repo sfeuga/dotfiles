@@ -799,6 +799,7 @@ if [[ -d "/usr/autodesk/maya" ]]; then
 fi
 
 ### SideFX Houdini
+export PATH="/usr/lib/sesi:$PATH"
 [[ -s "/opt/hfs17.5/" ]] && (cd /opt/hfs17.5/ && source houdini_setup_bash &>/dev/null)
 
 
