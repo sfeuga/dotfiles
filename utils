@@ -799,9 +799,25 @@ if [[ -d "/usr/autodesk/maya" ]]; then
 fi
 
 ### SideFX Houdini
-export PATH="/usr/lib/sesi:$PATH"
-[[ -s "/opt/hfs17.5/" ]] && (cd /opt/hfs17.5/ && source houdini_setup_bash &>/dev/null)
+if [[ -d "/opt/hfs17.5/" ]] && [[ -d "/usr/lib/sesi" ]]; then
+  export PATH="/usr/lib/sesi:$PATH"
+  [[ -s "/opt/hfs17.5/" ]] && (cd /opt/hfs17.5/ && source houdini_setup_bash &>/dev/null)
+fi
 
+### Headus UVLayout Pro 2.09.04
+if [[ -d "$HOME/bin/uvlayout-pro/bin" ]]; then
+  export PATH="/home/sfeuga/bin/uvlayout-pro/bin:$PATH"
+fi
+
+### TopoGun 2
+if [[ -d "$HOME/bin/topogun_2_00_linux" ]]; then
+  export PATH="/home/sfeuga/bin/topogun_2_00_linux:$PATH"
+fi
+
+### AnimeStudioPro 5.6
+if [[ -d "/home/sfeuga/bin/AnimeStudioPro" ]]; then
+  export PATH="/home/sfeuga/bin/AnimeStudioPro:$PATH"
+fi
 
 ##############################################
 ### Do not put other lines after this code ###
