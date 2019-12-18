@@ -80,8 +80,8 @@ fi
 ### Aliases
 alias Date='date +"%Y/%m/%d %V %H:%M:%S"'
 alias boot.log='journalctl -b'
-alias df='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
-alias du='du -h'
+alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
+alias du='\du -hs * | \sort -hr'
 alias free='free -h'
 alias l='ls -CFv'
 alias la='ls -AFv'
@@ -582,6 +582,11 @@ fi
 if [[ -f "$flatpak_applications_folder/org.mypaint.MyPaint.desktop" ]]; then
   function mypaint() {
     flatpak run org.mypaint.MyPaint "$@"
+  }
+fi
+if [[ -f "$flatpak_applications_folder/org.gnu.emacs.desktop" ]]; then
+  function emacs() {
+    flatpak run org.gnu.emacs "$@"
   }
 fi
 
