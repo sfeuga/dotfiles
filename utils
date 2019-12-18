@@ -93,6 +93,8 @@ alias mkdir='mkdir -p'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias wget='wget -c'
 
+alias sound="echo -ne '\007'"
+
 alias Blog='Dev && cd /sf*/blog*/'
 alias Dev='cd $HOME/Doc*/Dev*/'
 alias Dotfiles='cd $HOME/.dot*/'
