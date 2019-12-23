@@ -551,10 +551,8 @@ fi
 
 # Flatpak app aliases
 flatpak_applications_folder="$HOME/.local/share/flatpak/exports/share/applications"
-if [[ -f "$flatpak_applications_folder/fr.handbrake.ghb.desktop" ]]; then
-  function handbrake() {
-    flatpak run --command=HandBrakeCLI fr.handbrake.ghb
-  }
+if [[ -f "$HOME/.local/share/flatpak/app/fr.handbrake.ghb/x86_64/stable/active/files/bin/HandBrakeCLI" ]]; then
+  alias handbrakeCLI="$HOME/.local/share/flatpak/app/fr.handbrake.ghb/x86_64/stable/active/files/bin/HandBrakeCLI"
 fi
 if [[ -f "$flatpak_applications_folder/com.sublimetext.three.desktop" ]]; then
   function sublime() {
