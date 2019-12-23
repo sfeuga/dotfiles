@@ -559,7 +559,7 @@ if [[ -f "$flatpak_applications_folder/com.sublimetext.three.desktop" ]]; then
     flatpak run com.sublimetext.three "$@"
   }
 fi
-if [[ -f "$flatpak_applications_folder/org.videolan.VLC" ]]; then
+if [[ -f "$flatpak_applications_folder/org.videolan.VLC.desktop" ]]; then
   function vlc() {
     flatpak run org.videolan.VLC "$@"
   }
