@@ -430,16 +430,7 @@ endif
 
 "" Neomake
 if &runtimepath =~ 'neomake'
-  function! MyOnBattery()
-    return readfile('/sys/class/power_supply/AC/online') == ['0']
-  endfunction
-  " Full config: when writing or reading a buffer, and on changes in insert and
-  "   normal mode (after 1s; no delay when writing)
-  if MyOnBattery()
-    call neomake#configure#automake('w')
-  else
-    call neomake#configure#automake('nrwi', 1000)
-  endif
+  call neomake#configure#automake('nrwi', 1000)
   " open the list automatically
   let g:neomake_open_list = 0
 endif
