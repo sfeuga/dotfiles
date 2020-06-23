@@ -44,10 +44,15 @@
   unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
   wip = !git add -u && git commit -m "WIP"
 [gpg]
-  program = /usr/bin/gpg
+  program = gpg
 [init]
   templatedir = ~/.git-templates
 [user]
   email = sfeuga@member.fsf.org
   name = Stéphane FEUGA OSHIMA
-  signingkey = AA4DC3EE3C40787D
+  signingkey = BDDC7B1F47955833
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
