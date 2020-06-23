@@ -24,10 +24,9 @@ if [[ -f $(command -v most) ]]; then
   export MANPAGER="$MOST_PATH -s"
 fi
 
-# Add RVM to PATH for scripting.
+### Add RVM to PATH
 #   Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
-
 # Add completion for RVM
 export rvm_path="$HOME/.rvm"
 # shellcheck disable=SC1090
@@ -36,8 +35,16 @@ export rvm_path="$HOME/.rvm"
 # shellcheck disable=SC1090
 [[ -r "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-### Add Rust Cargo to path
+### Add Rust Cargo to PATH
 [[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+
+### Add NVM to PATH
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+### Add GVM to PATH
+[[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
 
 ### Aliases
 alias date='\date +"%Y/%m/%d %V %H:%M:%S"'
