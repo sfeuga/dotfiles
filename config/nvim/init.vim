@@ -1,44 +1,44 @@
 " Minimalist Vim Plugin Manager                                                                                         https://github.com/junegunn/vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
+"Plug 'blindfs/vim-taskwarrior'                                          " A vim interface for taskwarrior               https://github.com/blindfs/vim-taskwarrior
+"Plug 'csexton/jekyll.vim'                                               " Automate common Jekyll tasks                  https://github.com/csexton/jekyll.vim
 "Plug 'garbas/vim-snipmate'                                              " Mimic TextMate's snippets features            https://github.com/garbas/vim-snipmate
 "Plug 'godlygeek/tabular'                                                " Aligning text                                 https://github.com/godlygeek/tabular
 "Plug 'honza/vim-snippets'                                               " Snippets files for programming languages      https://github.com/honza/vim-snippets
 "Plug 'kassio/neoterm'                                                   " Wrapper of some :terminal functions           https://github.com/kassio/neoterm
+"Plug 'keith/rspec.vim'                                                  " Improved syntax highlighting for rspec        https://github.com/keith/rspec.vim
+"Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }       " Ledger filetype for Vim                       https://github.com/ledger/vim-ledger
 "Plug 'mileszs/ack.vim'                                                  " :Ack [options] {pattern} [{directories}]      https://github.com/mileszs/ack.vim
+"Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }                " Custom text object for selecting ruby blocks  https://github.com/nelstrom/vim-textobj-rubyblock
+"Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }    " Cypher Vim Syntax                             https://github.com/neo4j-contrib/cypher-vim-syntax
+"Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }              " Runs RuboCop                                  https://github.com/ngmy/vim-rubocop
 "Plug 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}          " Statusline plugin                             https://github.com/powerline/powerline
+"Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }        " Code smell detector for Ruby                  https://github.com/rainerborene/vim-reek
 "Plug 'slashmili/alchemist.vim'                                          " Elixir Integration                            https://github.com/slashmili/alchemist.vim
-Plug 'blindfs/vim-taskwarrior'                                          " A vim interface for taskwarrior               https://github.com/blindfs/vim-taskwarrior
-Plug 'csexton/jekyll.vim'                                               " Automate common Jekyll tasks                  https://github.com/csexton/jekyll.vim
+"Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                         " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
+"Plug 'tpope/vim-bundler', { 'for': 'ruby' }                             " Lightweight support for Ruby's Bundler        https://github.com/tpope/vim-bundler
+"Plug 'tpope/vim-cucumber', { 'for': 'feature' }                         " Syntax highlight, indent, and more            https://github.com/tpope/vim-cucumber
+"Plug 'tpope/vim-rails', { 'for': 'ruby' }                               " Ruby on Rails power tools                     https://github.com/tpope/vim-rails
+"Plug 'tpope/vim-rake', { 'for': 'ruby' }                                " Like rails.vim without the rails              https://github.com/tpope/vim-rake
+"Plug 'tpope/vim-rvm'                                                    " Switch Ruby versions from inside Vim          https://github.com/tpope/vim-rvm
+"Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                             " Provides motions and text objects for Ruby    https://github.com/vim-ruby/vim-ruby
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }            " Fuzzy file, buffer, mru, tag... finder        https://github.com/ctrlpvim/ctrlp.vim
 Plug 'editorconfig/editorconfig-vim'                                    " EditorConfig Vim Plugin                       https://github.com/editorconfig/editorconfig-vim
 Plug 'jiangmiao/auto-pairs'                                             " Insert/Delete '[', '(', '{'... in pair        https://github.com/jiangmiao/auto-pairs
 Plug 'kana/vim-textobj-user'                                            " Create your own text objects                  https://github.com/kana/vim-textobj-user
-Plug 'keith/rspec.vim'                                                  " Improved syntax highlighting for rspec        https://github.com/keith/rspec.vim
-Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }       " Ledger filetype for Vim                       https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                    " Make the yanked region apparent!              https://github.com/machakann/vim-highlightedyank
 Plug 'mattesgroeger/vim-bookmarks'                                      " Allows toggling bookmarks per line            https://github.com/mattesgroeger/vim-bookmarks
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }                " Custom text object for selecting ruby blocks  https://github.com/nelstrom/vim-textobj-rubyblock
-Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }    " Cypher Vim Syntax                             https://github.com/neo4j-contrib/cypher-vim-syntax
 Plug 'neomake/neomake'                                                  " Syntax checking hacks                         https://github.com/neomake/neomake
-Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }              " Runs RuboCop                                  https://github.com/ngmy/vim-rubocop
 Plug 'pbrisbin/vim-mkdir'                                               " Auto create directories at buffer save        https://github.com/pbrisbin/vim-mkdir
-Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }        " Code smell detector for Ruby                  https://github.com/rainerborene/vim-reek
 Plug 'reedes/vim-lexical'                                               " Build on Vim’s spell/thes/dict completion     https://github.com/reedes/vim-lexical
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }                  " A tree explorer plugin                        https://github.com/scrooloose/nerdtree
 Plug 'terryma/vim-multiple-cursors'                                     " True Sublime Text style multiple selections   https://github.com/terryma/vim-multiple-cursors
-Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                         " Lightweight RSpec runner                      https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                               " My favorite theme !                           https://github.com/tomasr/molokai
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }                             " Lightweight support for Ruby's Bundler        https://github.com/tpope/vim-bundler
-Plug 'tpope/vim-cucumber', { 'for': 'feature' }                         " Syntax highlight, indent, and more            https://github.com/tpope/vim-cucumber
 Plug 'tpope/vim-endwise'                                                " Adding end after if, do, def                  https://github.com/tpope/vim-endwise
 Plug 'tpope/vim-fugitive'                                               " Git wrapper so awesome, it should be illegal  https://github.com/tpope/vim-fugitive
-Plug 'tpope/vim-rails', { 'for': 'ruby' }                               " Ruby on Rails power tools                     https://github.com/tpope/vim-rails
-Plug 'tpope/vim-rake', { 'for': 'ruby' }                                " Like rails.vim without the rails              https://github.com/tpope/vim-rake
 Plug 'tpope/vim-rhubarb'                                                " GitHub extension for fugitive.vim             https://github.com/tpope/vim-rhubarb
-Plug 'tpope/vim-rvm'                                                    " Switch Ruby versions from inside Vim          https://github.com/tpope/vim-rvm
 Plug 'tpope/vim-surround'                                               " Quoting/parenthesizing made simple            https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                             " Pairs of handy bracket mappings               https://github.com/tpope/vim-unimpaired
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                             " Provides motions and text objects for Ruby    https://github.com/vim-ruby/vim-ruby
 Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                 " Source code browser                           https://vimawesome.com/plugin/taglist-vim
 Plug 'xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }          " Add git status flags to NERDTree              https://github.com/Xuyuanp/nerdtree-git-plugin
 call plug#end()
