@@ -24,8 +24,8 @@ shopt -s histappend
 export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=1000
-export HISTFILESIZE=2000
+export HISTSIZE=10000
+export HISTFILESIZE=20000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -76,6 +76,13 @@ shopt -s globstar
 #*)
 #  ;;
 #esac
+
+## Add Git to Prompt
+# https://fedoraproject.org/wiki/Git_quick_reference
+. /usr/share/git-core/contrib/completion/git-prompt.sh
+export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
 
 ## Set Defaut editor
 if [[ -f $(command -v nvim) ]]; then

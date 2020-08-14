@@ -22,50 +22,50 @@ elif [[ "$0" =~ "zsh" ]]; then
   alias shellrc='source $HOME/.zshrc'
 fi
 
-# Make less more friendly for non-text input files, see lesspipe(1)
-if [[ -x $(command -v lesspipe.sh) ]]; then
-  export LESSOPEN="|/usr/bin/lesspipe.sh %s"
-elif [[ -x $(command -v lesspipe) ]]; then
-  eval "$(SHELL=/bin/sh lesspipe)"
-elif [[ -f "$HOME/.lessfilter" ]]; then
-  export LESSOPEN="|$HOME/.lessfilter %s"
-fi
-export LESS=' -RN'
+#   # Make less more friendly for non-text input files, see lesspipe(1)
+#   if [[ -x $(command -v lesspipe.sh) ]]; then
+#     export LESSOPEN="|/usr/bin/lesspipe.sh %s"
+#   elif [[ -x $(command -v lesspipe) ]]; then
+#     eval "$(SHELL=/bin/sh lesspipe)"
+#   elif [[ -f "$HOME/.lessfilter" ]]; then
+#     export LESSOPEN="|$HOME/.lessfilter %s"
+#   fi
+#   export LESS=' -RN'
 
 # Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-### Add color to man
-if [[ -f $(command -v most) ]]; then
-  MOST_PATH=$(command -v most)
-  export MANPAGER="$MOST_PATH -s"
-fi
+#   ### Add color to man
+#   if [[ -f $(command -v most) ]]; then
+#     MOST_PATH=$(command -v most)
+#     export MANPAGER="$MOST_PATH -s"
+#   fi
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# Add bin and .local/bin to PATH
-[[ -s "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
-[[ -s "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+#   # Add bin and .local/bin to PATH
+#   [[ -s "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
+#   [[ -s "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
-# Add RVM to PATH for scripting.
-#   Make sure this is the last PATH variable change.
-[[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
-
-# Add completion for RVM
-export rvm_path="$HOME/.rvm"
-# shellcheck disable=SC1090
-[[ -r "$rvm_path/scripts/completion" ]] && . "$rvm_path/scripts/completion"
-# Make RVM a function
-# shellcheck disable=SC1090
-[[ -r "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+#   # Add RVM to PATH for scripting.
+#   #   Make sure this is the last PATH variable change.
+#   [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
+#   
+#   # Add completion for RVM
+#   export rvm_path="$HOME/.rvm"
+#   # shellcheck disable=SC1090
+#   [[ -r "$rvm_path/scripts/completion" ]] && . "$rvm_path/scripts/completion"
+#   # Make RVM a function
+#   # shellcheck disable=SC1090
+#   [[ -r "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 ### adb-fastboot for android devices
 [[ -d "$HOME/bin/adb-fastboot/" ]] && export PATH="$HOME/bin/adb-fastboot/:$PATH"
 
-### Add Rust Cargo to path
-[[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+#   ### Add Rust Cargo to path
+#   [[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 
 #############################
 ##### Aliases & Helpers #####
@@ -77,36 +77,35 @@ elif [[ -d $HOME/Videos ]]; then
   export movie_folder=Videos
 fi
 
-### Aliases
-alias Date='date +"%Y/%m/%d %V %H:%M:%S"'
-alias boot.log='journalctl -b'
-alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
-alias du='\du -hs * | \sort -hr'
-alias free='free -h'
-alias l='ls -CFv'
-alias la='ls -AFv'
-alias ll='ls -alFv'
-alias ln='ln -v'
-alias ls='ls -ACF --color=tty'
-alias lsa='ls -AFlhv --color=tty'
-alias mkdir='mkdir -p'
-alias path='echo $PATH | tr -s ":" "\n"'
-alias wget='wget -c'
-
-alias sound="echo -ne '\007'"
+#   ### Aliases
+#   alias date='\date +"%Y/%m/%d %V %H:%M:%S"'
+#   alias boot.log='journalctl -b'
+#   alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
+#   alias du='\du -hs * | \sort -hr'
+#   alias free='\free -h'
+#   alias l='ls -CFv --color=auto'
+#   alias la='ls -AFv --color=auto'
+#   alias ll='ls -alFv --color=auto'
+#   alias ln='ln -v'
+#   alias ls='\ls -ACF --color=auto'
+#   alias lsa='ls -AFlhv --color=auto'
+#   alias mkdir='\mkdir -p'
+#   alias path='echo $PATH | tr -s ":" "\n"'
+#   alias wget='\wget -c'
+#   alias sound="echo -ne '\007'"
 
 alias Blog='Dev && cd /sf*/blog*/'
 alias Dev='cd $HOME/Doc*/Dev*/'
 alias Dotfiles='cd $HOME/.dot*/'
 alias Rails='Dev && cd rails/'
 
-# Easy DL
-if [[ -f $(command -v aria2c) ]]; then
-  alias tdl='aria2c --seed-time=0'
-fi
-if [[ -f $(command -v youtube-dl) ]]; then
-  alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
-fi
+#   # Easy DL
+#   if [[ -f $(command -v aria2c) ]]; then
+#     alias tdl='aria2c --seed-time=0'
+#   fi
+#   if [[ -f $(command -v youtube-dl) ]]; then
+#     alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
+#   fi
 
 # Easy install my ".desktop" files
 alias add_my_desktop_files='mkdir -p $HOME/.local/share/applications/ && cp -vf $HOME/bin/Desktop*/* $HOME/.l*/s*/app*/'
@@ -126,15 +125,12 @@ alias backup_home_checksum='rsync -vcaruz --progress --exclude="lost+found" --ex
 alias backup_data='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" /mnt/datas/ /run/media/sfeuga/10Tb\ -\ Backup/'
 alias backup_home='rsync -varuz --progress --exclude="lost+found" --exclude=".Trash-1000" --exclude="$HOME/Music" --exclude="$HOME/Videos" $HOME /run/media/sfeuga/10Tb\ -\ Backup/'
 
-# Edit Radio List
-alias radio_edit='$EDITOR Music/Radio\ France.m3u8 /home/sfeuga/.gse-radio/channelList.json'
-
-# Translate aliases
-if [[ -f $(command -v trans) ]]; then
-  alias trans_en='trans en:fr+ja'
-  alias trans_fr='trans fr:en+ja'
-  alias trans_jp='trans ja:en+fr'
-fi
+#   # Translate aliases
+#   if [[ -f $(command -v trans) ]]; then
+#     alias trans_en='trans en:fr+ja'
+#     alias trans_fr='trans fr:en+ja'
+#     alias trans_jp='trans ja:en+fr'
+#   fi
 
 # Get Session Type
 function get_session_number () {
@@ -144,21 +140,45 @@ alias get_session_type='loginctl show-session $(get_session_number) -p Type'
 
 ### System maintenance
 if [[ -f $(command -v dnf) ]] && [[ -f $(command -v flatpak) ]] && [[ -f $(command -v fwupdmgr) ]]; then
-  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y && fwupdmgr update'
+  alias sys-update='sudo dnf update -y \
+                    && sudo dnf remove -y $(dnf repoquery --installonly --latest-limit=-2 -q) \
+                    && sudo dnf autoremove -y \
+                    && flatpak update -y \
+                    && fwupdmgr update'
 elif [[ -f $(command -v dnf) ]] && [[ -f $(command -v flatpak) ]]; then
-  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y'
+  alias sys-update='sudo dnf update -y \
+                    && sudo dnf remove -y $(dnf repoquery --installonly --latest-limit=-2 -q) \
+                    && sudo dnf autoremove -y \
+                    && flatpak update -y'
 elif [[ -f $(command -v dnf) ]] && [[ -f $(command -v fwupdmgr) ]]; then
-  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y && fwupdmgr update'
+  alias sys-update='sudo dnf update -y \
+                    && sudo dnf remove -y $(dnf repoquery --installonly --latest-limit=-2 -q) \
+                    && sudo dnf autoremove -y \
+                    && fwupdmgr update'
 elif [[ -f $(command -v dnf) ]]; then
-  alias sys-update='sudo dnf update -y && sudo dnf autoremove -y'
+  alias sys-update='sudo dnf update -y \
+                    && sudo dnf remove -y $(dnf repoquery --installonly --latest-limit=-2 -q) \
+                    && sudo dnf autoremove -y'
 elif [[ -f $(command -v apt) ]] && [[ -f $(command -v flatpak) ]] && [[ -f $(command -v fwupdmgr) ]]; then
-  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y && fwupdmgr update'
+  alias sys-update='sudo apt update -y \
+                    && sudo apt upgrade -y \
+                    && sudo apt autoremove -y \
+                    && flatpak update -y \
+                    && fwupdmgr update'
 elif [[ -f $(command -v apt) ]] && [[ -f $(command -v flatpak) ]]; then
-  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y'
+  alias sys-update='sudo apt update -y \
+                    && sudo apt upgrade -y \
+                    && sudo apt autoremove -y \
+                    && flatpak update -y'
 elif [[ -f $(command -v apt) ]] && [[ -f $(command -v fwupdmgr) ]]; then
-  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && fwupdmgr update'
+  alias sys-update='sudo apt update -y \
+                    && sudo apt upgrade -y \
+                    && sudo apt autoremove -y \
+                    && fwupdmgr update'
 elif [[ -f $(command -v apt) ]]; then
-  alias sys-update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y'
+  alias sys-update='sudo apt update -y \
+                    && sudo apt upgrade -y \
+                    && sudo apt autoremove -y'
 fi
 
 ### Serve command
@@ -361,28 +381,15 @@ function toKodi() {
 ### Git
 if [[ -f $(command -v git) ]]; then
   # Git Completion
-  if [[ "$shell_type" == "bash" ]]; then
-    if [[ -f $HOME/bin/git-completion.bash ]]; then
-      # shellcheck source=/dev/null
-      source "$HOME/bin/git-completion.bash"
-    else
-      GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
-      curl $GIT_COMPLETION/completion/git-completion.bash \
-        -o "$HOME/bin/git-completion.bash"
-      # shellcheck source=/dev/null
-      source "$HOME/bin/git-completion.bash"
-    fi
-  elif [[ "$shell_type" == "zsh" ]]; then
-    if [[ -f $HOME/bin/git-completion.zsh ]]; then
-      # shellcheck source=/dev/null
-      source "$HOME/bin/git-completion.zsh"
-    else
-      GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
-      curl $GIT_COMPLETION/completion/git-completion.zsh \
-        -o "$HOME/bin/git-completion.zsh"
-      # shellcheck source=/dev/null
-      source "$HOME/bin/git-completion.zsh"
-    fi
+  if [[ -f $HOME/bin/git-completion.bash ]]; then
+    # shellcheck source=/dev/null
+    source "$HOME/bin/git-completion.bash"
+  else
+    GIT_COMPLETION='https://raw.githubusercontent.com/git/git/master/contrib'
+    curl $GIT_COMPLETION/completion/git-completion.bash \
+      -o "$HOME/bin/git-completion.bash"
+    # shellcheck source=/dev/null
+    source "$HOME/bin/git-completion.bash"
   fi
 
   function LastCommitNumber () {

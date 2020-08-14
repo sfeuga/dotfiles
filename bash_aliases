@@ -47,7 +47,7 @@ export NVM_DIR="$HOME/.nvm"
 [[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
 
 ### Aliases
-alias date='\date +"%Y/%m/%d %V %H:%M:%S"'
+alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias boot.log='journalctl -b'
 alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias free='\free -h'
@@ -61,10 +61,12 @@ alias mkdir='\mkdir -p'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias wget='\wget -c'
 alias sound="echo -ne '\007'"
+alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
 
 # Easy DL
 if [[ -f $(command -v aria2c) ]]; then
   alias tdl='aria2c -j 100 --allow-overwrite=true --seed-time=0'
+  alias tdls='aria2c -j 100 --allow-overwrite=true --seed-ratio=5'
 fi
 if [[ -f $(command -v youtube-dl) ]]; then
   alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
