@@ -22,6 +22,7 @@ Plug 'jmckiern/vim-venter'                                              " Horizo
 Plug 'kana/vim-textobj-user'                                            " Create your own text objects                  https://github.com/kana/vim-textobj-user
 Plug 'kassio/neoterm'                                                   " Wrapper of some :terminal functions           https://github.com/kassio/neoterm
 Plug 'keith/rspec.vim'                                                  " Improved syntax highlighting for rspec        https://github.com/keith/rspec.vim
+Plug 'lambdalisue/suda.vim'                                             " Add missing !sudo tee % feature               https://github.com/lambdalisue/suda.vim
 Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }       " Ledger filetype for Vim                       https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                    " Make the yanked region apparent!              https://github.com/machakann/vim-highlightedyank
 Plug 'mattesgroeger/vim-bookmarks'                                      " Allows toggling bookmarks per line            https://github.com/mattesgroeger/vim-bookmarks
@@ -522,6 +523,11 @@ endif
 "" Venter
 if exists(":Venter")
   nnoremap  <Leader>c           :VenterToggle<CR>
+endif
+
+"" Suda
+if &rtp =~ 'suda'
+  let g:suda_smart_edit = 1
 endif
 
 """ My functions
