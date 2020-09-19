@@ -43,6 +43,8 @@
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
   wip = !git add -u && git commit -m "WIP"
+	sync = sync-repo
+	cob = checkout-new-branch
 [gpg]
   program = gpg
 [init]
