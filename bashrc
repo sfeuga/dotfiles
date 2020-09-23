@@ -151,5 +151,5 @@ fi
 export PATH
 
 if [[ -e "/usr/bin/kitty" && -n "$(echo $TERMINFO)" ]]; then
-  source $(kitty + complete setup bash)
+  source <(kitty + complete setup bash)
 fi
