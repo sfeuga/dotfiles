@@ -149,3 +149,7 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
   PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
+
+if [[ -e "/usr/bin/kitty" && -n "$(echo $TERMINFO)" ]]; then
+  source $(kitty + complete setup bash)
+fi
