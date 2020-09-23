@@ -65,8 +65,8 @@ alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
 
 # Easy DL
 if [[ -f $(command -v aria2c) ]]; then
-  alias tdl='aria2c -j 100 --allow-overwrite=true --seed-time=0'
-  alias tdls='aria2c -j 100 --allow-overwrite=true --seed-ratio=5'
+  alias 2dl='aria2c -j 100 --allow-overwrite=true --seed-time=0'
+  alias 2dls='aria2c -j 100 --allow-overwrite=true --seed-ratio=5'
 fi
 if [[ -f $(command -v youtube-dl) ]]; then
   alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
@@ -78,3 +78,4 @@ if [[ -f $(command -v trans) ]]; then
   alias trans_fr='trans fr:en+ja'
   alias trans_jp='trans ja:en+fr'
 fi
+
