@@ -1,33 +1,21 @@
 " Minimalist Vim Plugin Manager                                                                                         https://github.com/junegunn/vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
-"Plug 'blindfs/vim-taskwarrior'                                         " A vim interface for taskwarrior                https://github.com/blindfs/vim-taskwarrior
-"Plug 'garbas/vim-snipmate'                                             " Mimic TextMate's snippets features             https://github.com/garbas/vim-snipmate
-"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown' } " Preview markdown         https://github.com/iamcco/markdown-preview.nvim
-"Plug 'mileszs/ack.vim'                                                 " :Ack [options] {pattern} [{directories}]       https://github.com/mileszs/ack.vim
-"Plug 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}         " Statusline plugin                              https://github.com/powerline/powerline
-Plug 'JuliaEditorSupport/julia-vim'                                    " Julia support for Vim                          https://github.com/JuliaEditorSupport/julia-vim
-Plug 'akiomik/git-gutter-vim'                                          " Update gutter with Git informations            https://github.com/akiomik/git-gutter-vim
 Plug 'aliou/bats.vim'                                                  " Add syntax files for Bats test files           https://github.com/aliou/bats.vim
-Plug 'csexton/jekyll.vim'                                              " Automate common Jekyll tasks                   https://github.com/csexton/jekyll.vim
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }           " Fuzzy file, buffer, mru, tag... finder         https://github.com/ctrlpvim/ctrlp.vim
 Plug 'drichardson/vex.vim'                                             " VEX support for Vim                            https://github.com/drichardson/vim-vex
 Plug 'editorconfig/editorconfig-vim'                                   " EditorConfig Vim Plugin                        https://github.com/editorconfig/editorconfig-vim
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }                     " Go language support for Vim                    https://github.com/fatih/vim-go
 Plug 'freitass/todo.txt-vim'                                           " Add syntax highlighting to todo.txt files      https://github.com/freitass/todo.txt-vim
 Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
-Plug 'honza/vim-snippets'                                              " Snippets files for programming languages       https://github.com/honza/vim-snippets
+Plug 'itchyny/vim-gitbranch'                                           " Returns the name of the git branch             https://github.com/itchyny/vim-gitbranch
 Plug 'jamessan/vim-gnupg'                                              " Transparent editing of gpg encrypted files     https://github.com/jamessan/vim-gnupg
 Plug 'jiangmiao/auto-pairs'                                            " Insert/Delete '[', '(', '{'... in pair         https://github.com/jiangmiao/auto-pairs
 Plug 'jmckiern/vim-venter'                                             " Horizontally centers the current window        https://github.com/JMcKiern/vim-venter
-Plug 'kana/vim-textobj-user'                                           " Create your own text objects                   https://github.com/kana/vim-textobj-user
-Plug 'kassio/neoterm'                                                  " Wrapper of some :terminal functions            https://github.com/kassio/neoterm
 Plug 'keith/rspec.vim'                                                 " Improved syntax highlighting for rspec         https://github.com/keith/rspec.vim
 Plug 'lambdalisue/suda.vim'                                            " Add missing !sudo tee % feature                https://github.com/lambdalisue/suda.vim
 Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }      " Ledger filetype for Vim                        https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                   " Make the yanked region apparent!               https://github.com/machakann/vim-highlightedyank
 Plug 'mattesgroeger/vim-bookmarks'                                     " Allows toggling bookmarks per line             https://github.com/mattesgroeger/vim-bookmarks
 Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }                 " Generate table of contents for Markdown files  https://github.com/mzlogin/vim-markdown-toc
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }               " Custom text object for selecting ruby blocks   https://github.com/nelstrom/vim-textobj-rubyblock
 Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }   " Cypher Vim Syntax                              https://github.com/neo4j-contrib/cypher-vim-syntax
 Plug 'neomake/neomake'                                                 " Syntax checking hacks                          https://github.com/neomake/neomake
 Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }             " Runs RuboCop                                   https://github.com/ngmy/vim-rubocop
@@ -38,21 +26,14 @@ Plug 'rhysd/git-messenger.vim'                                         " Reveal 
 Plug 'rhysd/vim-github-actions'                                        " Filetype support for GitHub Actions            https://github.com/rhysd/vim-github-actions
 Plug 'ryanoasis/vim-devicons'                                          " Adds filetype glyphs to various vim plugins    https://github.com/ryanoasis/vim-devicons
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }                 " A tree explorer plugin                         https://github.com/scrooloose/nerdtree
-Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }                    " Elixir Integration                             https://github.com/slashmili/alchemist.vim
-Plug 'terryma/vim-multiple-cursors'                                    " True Sublime Text style multiple selections    https://github.com/terryma/vim-multiple-cursors
 Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                              " My favorite theme !                            https://github.com/tomasr/molokai
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }                            " Lightweight support for Ruby's Bundler         https://github.com/tpope/vim-bundler
 Plug 'tpope/vim-cucumber', { 'for': 'feature' }                        " Syntax highlight, indent, and more             https://github.com/tpope/vim-cucumber
 Plug 'tpope/vim-endwise'                                               " Adding end after if, do, def                   https://github.com/tpope/vim-endwise
-Plug 'tpope/vim-fugitive'                                              " Git wrapper so awesome, it should be illegal   https://github.com/tpope/vim-fugitive
 Plug 'tpope/vim-rails', { 'for': 'ruby' }                              " Ruby on Rails power tools                      https://github.com/tpope/vim-rails
-Plug 'tpope/vim-rake', { 'for': 'ruby' }                               " Like rails.vim without the rails               https://github.com/tpope/vim-rake
-Plug 'tpope/vim-rhubarb'                                               " GitHub extension for fugitive.vim              https://github.com/tpope/vim-rhubarb
 Plug 'tpope/vim-rvm'                                                   " Switch Ruby versions from inside Vim           https://github.com/tpope/vim-rvm
 Plug 'tpope/vim-surround'                                              " Quoting/parenthesizing made simple             https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                            " Pairs of handy bracket mappings                https://github.com/tpope/vim-unimpaired
-Plug 'vim-crystal/vim-crystal', { 'for': 'crystal' }                   " Filetype support for Crystal prog lang         https://github.com/vim-crystal/vim-crystal
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                            " Provides motions and text objects for Ruby     https://github.com/vim-ruby/vim-ruby
 Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                " Source code browser                            https://vimawesome.com/plugin/taglist-vim
 Plug 'xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }         " Add git status flags to NERDTree               https://github.com/Xuyuanp/nerdtree-git-plugin
@@ -153,9 +134,8 @@ if &runtimepath =~ 'vim-rvm'
   "set statusline+=%<%{rvm#statusline()}                                " Ruby Version
   set statusline+=%<%{rvm#statusline_ft_ruby()}                        " Ruby Version only if ruby file
 endif
-if &runtimepath =~ 'vim-fugitive'
-  "set statusline+=%{FugitiveStatusline()}                              " Long Git Branch Name
-  set statusline+=%<%{fugitive#Head()}                                 " Short Git Branch Name
+if &runtimepath =~ 'vim-gitbranch'
+  set statusline+=%<%{gitbranch#name()}
 endif
 set statusline+=\ \|\                                                  " Separator
 "set statusline+=\ \%{wordcount()[\"bytes\"]}b                          " Bytes Count
@@ -182,6 +162,9 @@ set foldmethod=indent                                                  " Fold ba
 set foldlevelstart=10                                                  " Open most folds by default
 set foldnestmax=10                                                     " 10 nested fold max
 set foldcolumn=1                                                       " Add a 1 char margin to the foldcolumn
+
+""" Sign Column
+set signcolumn=yes                                                     " Always display sign column
 
 """ Encoding
 set encoding=utf-8
@@ -231,10 +214,6 @@ set pastetoggle=<C-A-P>
 "  └ normal, visual, insert,
 "    eX mode, select, operator-pending
 "
-" Change help key to escape
-inoremap    <F1>                <ESC>
-nnoremap    <F1>                <ESC>
-vnoremap    <F1>                <ESC>
 " <Tab><Tab> for word completion
 imap        <Tab><Tab>          <C-P>
 " Quick Quit
@@ -301,15 +280,15 @@ nnoremap    <C-L>               <C-W>l
 tnoremap    <C-L>               <C-\><C-N><C-W>l
 " Smart way to move between tabs
 " ⇦
-nnoremap    <Leader><Leader>b   gT
+nnoremap    <C-T>p              gT
 " ⇨
-nnoremap    <Leader><Leader>n   gt
+nnoremap    <C-T>               gt
 " Switch between the last two files
 nnoremap    <Leader><Leader>    <C-^>
 " Next Buffer
 nnoremap    <Leader>n           :bnext<CR>
 " Previous Buffer
-nnoremap    <Leader>b           :bprevious<CR>
+nnoremap    <Leader>p           :bprevious<CR>
 " Remove the Windows "^M" - when the encodings gets messed up
 nnoremap    <Leader><Leader>m   mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " Easy exit terminal-mode
@@ -324,8 +303,8 @@ tnoremap    <Leader>k           <C-k>
 vnoremap    8                   <Esc>:noh<CR>
 nnoremap    8                   <Esc>:noh<CR>
 " Vsplit a new Terminal
-nnoremap    <Leader>t           :vsplit\|te<CR>
-nnoremap    <Leader>tb          :15split\|te<CR>
+nnoremap    <F4>                :vsplit\|te<CR>
+nnoremap    <Leader>t           :15split\|te<CR>
 
 " D will duplicate selection at the beginnig of the next line
 vnoremap    D                   y'>o<ESC>p
@@ -353,17 +332,8 @@ autocmd VimEnter,BufRead,BufNewFile *.m{d,kd,kdn,dwn,mdown,arkdown}      set fil
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ Plugins Parameters
-"" JuliaEditorSupport/julia-vim
-
-"" akiomik/git-gutter-vim
 
 "" aliou/bats.vim
-
-"" csexton/jekyll.vim
-if exists(":JekyllBuild")
-  " Change this path to your jekyll blog directory
-  let g:jekyll_path = "$HOME/Documents/Development/sfeuga.com/blog.sfeuga.com"
-endif
 
 "" ctrlpvim/ctrlp.vim
 if exists(":CtrlP")
@@ -377,13 +347,11 @@ endif
 
 "" editorconfig/editorconfig-vim
 
-"" fatih/vim-go
-
 "" freitass/todo.txt-vim
 
 "" godlygeek/tabular
 
-"" honza/vim-snippets
+"" itchyny/vim-gitbranch
 
 "" jamessan/vim-gnupg
 
@@ -395,20 +363,11 @@ endif
 
 "" jmckiern/vim-venter
 if exists(":Venter")
-  nnoremap  <Leader>V           :VenterToggle<CR>
+  nnoremap  <F2>                :VenterToggle<CR>
+  nnoremap  <Leader>v           :VenterToggle<CR>
 endif
-
-"" kana/vim-textobj-user
-
-"" kassio/neoterm
 
 "" keith/rspec.vim
-if &runtimepath =~ 'vim-rspec'
-  nnoremap  <Leader>te          :call RunCurrentSpecFile()<CR>
-  nnoremap  <Leader>sp          :call RunNearestSpec()<CR>
-  nnoremap  <Leader>ls          :call RunLastSpec()<CR>
-  nnoremap  <Leader>as          :call RunAllSpecs()<CR>
-endif
 
 "" lambdalisue/suda.vim
 if &rtp =~ 'suda'
@@ -433,8 +392,6 @@ endif
 
 "" mzlogin/vim-markdown-toc
 
-"" nelstrom/vim-textobj-rubyblock
-
 "" neo4j-contrib/cypher-vim-syntax
 
 "" neomake/neomake
@@ -447,8 +404,8 @@ endif
 "" ngmy/vim-rubocop
 if exists(":RuboCop")
   let g:vimrubocop_keymap = 0
-  nnoremap  <Leader>R           :RuboCop<CR>
   nnoremap  <F6>                :RuboCop<CR>
+  nnoremap  <Leader>ru          :RuboCop<CR>
 endif
 
 "" pbrisbin/vim-mkdir
@@ -457,8 +414,8 @@ endif
 if exists(":RunReek")
   " Disable reek for > 1000 lines files
   let g:reek_line_limit = 1000
-  nnoremap  <Leader>RE          :RunReek<CR>
   nnoremap  <F7>                :RunReek<CR>
+  nnoremap  <Leader>re          :RunReek<CR>
 endif
 
 "" reedes/vim-lexical
@@ -505,38 +462,36 @@ endif
 
 "" scrooloose/nerdtree
 if exists(":NERDTreeToggle")
-  map       <Leader>T           :NERDTreeToggle<CR>
-  map       <F2>                :NERDTreeToggle<CR>
+  map       <F1>                :NERDTreeToggle<CR>
   " Quit vim if NerdTree is the last opened window
   autocmd bufenter *
         \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
         \     q |
         \ endif
-  let g:NERDTreeDirArrowExpandable = '+'
-  let g:NERDTreeDirArrowCollapsible = '>'
+  let g:NERDTreeDirArrowExpandable = '▷'
+  let g:NERDTreeDirArrowCollapsible = '▽'
+else
+  " Change help key to escape
+  inoremap    <F1>                <ESC>
+  nnoremap    <F1>                <ESC>
+  vnoremap    <F1>                <ESC>
 endif
 
-"" slashmili/alchemist.vim
-
-"" terryma/vim-multiple-cursors
-
 "" thoughtbot/vim-rspec
+if &runtimepath =~ 'vim-rspec'
+  nnoremap  <Leader>cs          :call RunCurrentSpecFile()<CR>
+  nnoremap  <Leader>ns          :call RunNearestSpec()<CR>
+  nnoremap  <Leader>ls          :call RunLastSpec()<CR>
+  nnoremap  <Leader>as          :call RunAllSpecs()<CR>
+endif
 
 "" tomasr/molokai
-
-"" tpope/vim-bundler
 
 "" tpope/vim-cucumber
 
 "" tpope/vim-endwise
 
-"" tpope/vim-fugitive
-
 "" tpope/vim-rails
-
-"" tpope/vim-rake
-
-"" tpope/vim-rhubarb
 
 "" tpope/vim-rvm
 
@@ -550,34 +505,31 @@ endif
 
 "" tpope/vim-unimpaired
 
-"" vim-crystal/vim-crystal
-
 "" vim-ruby/vim-ruby
 
 "" vim-scripts/taglist.vim
 if exists(":TlistToggle")
-  nnoremap  <Leader>ta          :TlistToggle<CR>
   nnoremap  <F3>                :TlistToggle<CR>
 endif
 
 "" xuyuanp/nerdtree-git-plugin
 if &runtimepath =~ 'nerdtree-git-plugin'
   let g:NERDTreeIndicatorMapCustom = {
-        \ "Clean"     : "~",
-        \ "Deleted"   : "!",
-        \ "Dirty"     : "x",
-        \ "Modified"  : "*",
-        \ "Renamed"   : ">",
-        \ "Staged"    : "+",
+        \ "Clean"     : "✓",
+        \ "Deleted"   : "-­",
+        \ "Dirty"     : "✗",
+        \ "Modified"  : "±",
+        \ "Renamed"   : "⇒",
+        \ "Staged"    : "◎",
         \ "Unknown"   : "?",
-        \ "Unmerged"  : "=",
+        \ "Unmerged"  : "∴",
         \ "Untracked" : "•" }
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ My functions
-" Press [gx] to open the GitHub URL for a plugin or a commit with the default browser
+" Press [gh] to open the GitHub URL for a plugin or a commit with the default browser
 function! s:plug_gx()
   let line = getline('.')
   let sha  = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
@@ -599,7 +551,14 @@ augroup PlugGx
 augroup END
 
 " Easy edit Vimrc
-command!    Vimrc               :vs $MYVIMRC
+command! Vimrc                  :e $MYVIMRC
+
+" Spell check your markdown and git commits
+augroup setSpelling
+  autocmd!
+  autocmd FileType gitcommit setlocal spell spelllang=en
+  autocmd FileType markdown setlocal spell spelllang=en,fr
+augroup END
 
 " Delete trailing white space on save
 " Useful for Python, Ruby and CoffeeScript
@@ -663,38 +622,3 @@ if g:statline_show_n_buffers
 else
   set statusline+=\ [%n]%<
 endif
-
-" Code of character under cursor
-if !exists('g:statline_show_charcode')
-  let g:statline_show_charcode = 0
-endif
-
-if g:statline_show_charcode
-  " (b:num, B:hex)
-  "set statusline+=%9(\ \%b/0x\%B%)
-  set statusline+=\ \|\ %(\%b/0x\%B%)
-endif
-
-function! ToggleCharacterCode()
-  if g:statline_show_charcode
-    echo "disable"
-    "let g:statline_show_charcode = 0
-    "source $MYVIMRC
-  else
-    echo "enable"
-    "let g:statline_show_charcode = 1
-    "source $MYVIMRC
-  endif
-endfunction
-
-" Test Funtion to explore VimL
-function! AddBrackets(someText)
-  let isgitrepo = system('echo -n $(git rev-parse --is-inside-work-tree)')
-  let toreturn = "[" . a:someText . "]\ \|\ "
-  if isgitrepo == "true"
-    return toreturn
-  else
-    return ''
-  endif
-endfunction
-
