@@ -1,1 +1,1 @@
-EXCLUDES="dotfiles:README.md dotfiles:.gitmodules"
+EXCLUDES="dotfiles:README.md dotfiles:LICENSE dotfiles:.gitmodules"
