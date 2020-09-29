@@ -62,6 +62,15 @@ alias path='echo $PATH | tr -s ":" "\n"'
 alias wget='\wget -c'
 alias sound="echo -ne '\007'"
 alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
+## Git aliases
+alias gts='git status'
+alias gtc='git commit -m '
+alias gtca='git commit --amend'
+alias gtcan='git commit --amend --not-edit'
+alias gtp='git push'
+alias gtpf='git push -f'
+alias gta='git add'
+alias gtl='git log'
 
 # Easy DL
 if [[ -f $(command -v aria2c) ]]; then
