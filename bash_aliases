@@ -49,6 +49,7 @@ export NVM_DIR="$HOME/.nvm"
 ### Aliases
 alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias boot.log='journalctl -b'
+alias cp='\cp -u'
 alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias free='\free -h'
 alias l='\ls -CFv --color=auto'
