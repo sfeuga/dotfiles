@@ -362,10 +362,6 @@ if &runtimepath =~ 'auto-pairs'
 endif
 
 "" jmckiern/vim-venter
-if exists(":Venter")
-  nnoremap  <F2>                :VenterToggle<CR>
-  nnoremap  <Leader>v           :VenterToggle<CR>
-endif
 
 "" keith/rspec.vim
 
