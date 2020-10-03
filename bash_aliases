@@ -71,7 +71,7 @@ alias gtc='git commit -m '
 alias gtca='git commit --amend'
 alias gtcan='git commit --amend --not-edit'
 alias gtd='git diff'
-alias gtl='git log --graph --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen| %cr %C(bold blue)| %an%Creset' --abbrev-commit --date=relative'
+alias gtl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen| %cr %C(bold blue)| %an%Creset' --abbrev-commit --date=relative"
 alias gtp='git push'
 alias gtpf='git push -f'
 alias gts='git status'
