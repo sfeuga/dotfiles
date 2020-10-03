@@ -79,6 +79,7 @@ alias gts='git status'
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
   alias icat='kitty +kitten icat'
+  alias fc-cache='\fc-cache -f && kitty + list-fonts --psnames'
 fi
 
 # Easy DL
