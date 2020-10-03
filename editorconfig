@@ -12,6 +12,11 @@ max_line_length = 120
 trim_trailing_whitespace = true
 
 # 4 space indentation
+[Makefile]
+indent_size = 4
+indent_style = tab
+
 [*.{html,py}]
 indent_size = 4
 indent_style = space
+
