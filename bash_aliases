@@ -65,18 +65,18 @@ alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
 alias snaplist='sudo btrfs subvolume list /'
 alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
 ## Git aliases
-alias gts='git status'
+alias gta='git add'
 alias gtc='git commit -m '
 alias gtca='git commit --amend'
 alias gtcan='git commit --amend --not-edit'
+alias gtd='git diff'
+alias gtl='git log'
 alias gtp='git push'
 alias gtpf='git push -f'
-alias gta='git add'
-alias gtl='git log'
+alias gts='git status'
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
   alias icat='kitty +kitten icat'
-  alias d='kitty +kitten diff'
 fi
 
 # Easy DL
