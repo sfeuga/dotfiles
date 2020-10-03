@@ -47,6 +47,7 @@ export NVM_DIR="$HOME/.nvm"
 [[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
 
 ### Aliases
+alias :q='exit'
 alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias boot.log='journalctl -b'
 alias cp='\cp -u'
