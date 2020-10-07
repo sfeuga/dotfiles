@@ -20,12 +20,12 @@ Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }   " Cypher 
 Plug 'neomake/neomake'                                                 " Syntax checking hacks                          https://github.com/neomake/neomake
 Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }             " Runs RuboCop                                   https://github.com/ngmy/vim-rubocop
 Plug 'pbrisbin/vim-mkdir'                                              " Auto create directories at buffer save         https://github.com/pbrisbin/vim-mkdir
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }                  " A tree explorer plugin                         https://github.com/scrooloose/nerdtree
 Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }       " Code smell detector for Ruby                   https://github.com/rainerborene/vim-reek
 Plug 'reedes/vim-lexical'                                              " Build on Vim’s spell/thes/dict completion      https://github.com/reedes/vim-lexical
 Plug 'rhysd/git-messenger.vim'                                         " Reveal Git message under the cursor            https://github.com/rhysd/git-messenger.vim
 Plug 'rhysd/vim-github-actions'                                        " Filetype support for GitHub Actions            https://github.com/rhysd/vim-github-actions
 Plug 'ryanoasis/vim-devicons'                                          " Adds filetype glyphs to various vim plugins    https://github.com/ryanoasis/vim-devicons
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }                 " A tree explorer plugin                         https://github.com/scrooloose/nerdtree
 Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                              " My favorite theme !                            https://github.com/tomasr/molokai
 Plug 'tpope/vim-cucumber', { 'for': 'feature' }                        " Syntax highlight, indent, and more             https://github.com/tpope/vim-cucumber
@@ -82,9 +82,9 @@ autocmd TermOpen * startinsert                                         " Enter i
 
 " Automatically install missing plugins on startup
 autocmd VimEnter *
-      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-      \|   PlugInstall --sync | q
-      \| endif
+      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) |
+      \    PlugInstall --sync | q |
+      \  endif
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -99,7 +99,7 @@ set splitright                                                         " Open ne
 """ Theming
 set termguicolors                                                      " Enables the true color support
 set t_Co=256                                                           " Enable support for 256-color terminal
-if &rtp =~ 'molokai'
+if &runtimepath =~ 'molokai'
   colorscheme molokai
   let g:rehash256 = 1
 endif
@@ -193,13 +193,14 @@ set complete=.,b,u,t,kspell                                            " How com
                                                                        "   .       scan the current buffer
                                                                        "   w       scan buffers from other windows
                                                                        "   b       scan other loaded buffers in buffer list
-                                                                       "   u       scan the unloaded buffers in buffer list
-                                                                       "   U       scan the buffers not in buffer list
-                                                                       "   k       scan the files given with 'dictionary' option
-                                                                       "   kspell  use the currently active spell checking
-                                                                       "   s       scan the files given with 'thesaurus' option
+                                                                       "   u       scan unloaded buffers in buffer list
+                                                                       "   U       scan buffers not in buffer list
+                                                                       "   k       scan files given with 'dictionary' option
+                                                                       "   kspell  use currently active spell checking
+                                                                       "   s       scan files given with 'thesaurus' option
                                                                        "   i       scan current & included files
-                                                                       "   d       scan current & included files for defined name or macro
+                                                                       "   d       scan current & included files for
+                                                                       "             defined name or macro
                                                                        "   t       tag completion
 set completeopt=menu,preview                                           " Options for Insert mode completion
                                                                        "   menu, menuone, longest, preview
@@ -366,7 +367,7 @@ endif
 "" keith/rspec.vim
 
 "" lambdalisue/suda.vim
-if &rtp =~ 'suda'
+if &runtimepath =~ 'suda'
   let g:suda_smart_edit = 1
 endif
 
@@ -405,6 +406,25 @@ if exists(":RuboCop")
 endif
 
 "" pbrisbin/vim-mkdir
+
+"" preservim/nerdtree
+if &runtimepath =~ 'nerdtree'
+  map       <F1>                :NERDTreeToggle<CR>
+
+  " Quit vim if NerdTree is the last opened window
+  autocmd bufenter *
+        \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
+        \     q |
+        \ endif
+
+  let g:NERDTreeDirArrowExpandable = '▷'
+  let g:NERDTreeDirArrowCollapsible = '▽'
+else
+  " Change help key to escape
+  inoremap    <F1>                <ESC>
+  nnoremap    <F1>                <ESC>
+  vnoremap    <F1>                <ESC>
+endif
 
 "" rainerborene/vim-reek
 if exists(":RunReek")
@@ -456,23 +476,6 @@ endif
 
 "" ryanoasis/vim-devicons
 
-"" scrooloose/nerdtree
-if exists(":NERDTreeToggle")
-  map       <F1>                :NERDTreeToggle<CR>
-  " Quit vim if NerdTree is the last opened window
-  autocmd bufenter *
-        \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
-        \     q |
-        \ endif
-  let g:NERDTreeDirArrowExpandable = '▷'
-  let g:NERDTreeDirArrowCollapsible = '▽'
-else
-  " Change help key to escape
-  inoremap    <F1>                <ESC>
-  nnoremap    <F1>                <ESC>
-  vnoremap    <F1>                <ESC>
-endif
-
 "" thoughtbot/vim-rspec
 if &runtimepath =~ 'vim-rspec'
   nnoremap  <Leader>cs          :call RunCurrentSpecFile()<CR>
@@ -492,7 +495,7 @@ endif
 "" tpope/vim-rvm
 
 "" tpope/vim-surround
-if &rtp =~ 'vim-surround'
+if &runtimepath =~ 'vim-surround'
 " Type command + one of the following "'[{|< or any HTML tag
   " Add new surround to current word
   nnoremap  ls                  yss
@@ -585,6 +588,7 @@ function! ReadOnly()
     return ' '
   else
     return ''
+  endif
 endfunction
 
 " Return word numbers in Visual mode
