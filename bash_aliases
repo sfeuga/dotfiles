@@ -70,7 +70,7 @@ alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
 alias gta='git add'
 alias gtc='git commit -m '
 alias gtca='git commit --amend'
-alias gtcan='git commit --amend --not-edit'
+alias gtcan='git commit --amend --no-edit'
 alias gtd='git diff'
 alias gtl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen| %cr %C(bold blue)| %an%Creset' --abbrev-commit --date=relative"
 alias gtp='git push'
