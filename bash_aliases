@@ -46,6 +46,15 @@ export NVM_DIR="$HOME/.nvm"
 ### Add GVM to PATH
 [[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
 
+### Add PostgreSQL to PATH
+if [[ -d "/usr/pgsql-14/bin" ]]; then
+  export PATH="/usr/pgsql-14/bin:$PATH"
+elif [[ -d "/usr/pgsql-13/bin" ]]; then
+  export PATH="/usr/pgsql-13/bin:$PATH"
+elif [[ -d "/usr/pgsql-12/bin" ]]; then
+  export PATH="/usr/pgsql-12/bin:$PATH"
+fi
+
 ### Aliases
 alias :q='exit'
 alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
