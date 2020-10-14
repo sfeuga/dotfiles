@@ -107,3 +107,13 @@ if [[ -f $(command -v trans) ]]; then
   alias trans_jp='trans ja:en+fr'
 fi
 
+# Folders
+if [[ -d "$HOME/Documents/Development/" ]]; then
+  alias dev='cd ~/Documents/Development/'
+fi
+if [[ -d "$HOME/Documents/Development/sfeuga.com/www.sfeuga.com/" ]]; then
+  alias web='cd ~/Documents/Development/sfeuga.com/www.sfeuga.com/'
+fi
+if [[ -d "$HOME/.dotfiles" ]]; then
+  alias dots='cd ~/.dotfiles && git status'
+fi
