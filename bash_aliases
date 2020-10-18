@@ -76,6 +76,8 @@ alias lsa='\ls -AFlhv --color=auto'
 alias mkdir='\mkdir -p'
 alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias path='echo $PATH | tr -s ":" "\n"'
+alias r='rails'
+alias rs='rails s'
 alias snaplist='sudo btrfs subvolume list /'
 alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
 alias sound="echo -ne '\007'"
