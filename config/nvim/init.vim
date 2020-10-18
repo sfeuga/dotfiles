@@ -14,6 +14,7 @@ Plug 'keith/rspec.vim'                                                 " Improve
 Plug 'lambdalisue/suda.vim'                                            " Add missing !sudo tee % feature                https://github.com/lambdalisue/suda.vim
 Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }      " Ledger filetype for Vim                        https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                   " Make the yanked region apparent!               https://github.com/machakann/vim-highlightedyank
+Plug 'matsub/github-actions.vim'                                       " Syntax files of GitHub Actions                 https://github.com/matsub/github-actions.vim
 Plug 'mattesgroeger/vim-bookmarks'                                     " Allows toggling bookmarks per line             https://github.com/mattesgroeger/vim-bookmarks
 Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }                 " Generate table of contents for Markdown files  https://github.com/mzlogin/vim-markdown-toc
 Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }   " Cypher Vim Syntax                              https://github.com/neo4j-contrib/cypher-vim-syntax
@@ -384,6 +385,8 @@ if &runtimepath =~ 'vim-ledger'
 endif
 
 "" machakann/vim-highlightedyank
+
+"" matsub/github-actions.vim
 
 "" mattesgroeger/vim-bookmarks
 
