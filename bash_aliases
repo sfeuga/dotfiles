@@ -55,13 +55,18 @@ elif [[ -d "/usr/pgsql-12/bin" ]]; then
   export PATH="/usr/pgsql-12/bin:$PATH"
 fi
 
+### Add Github gh completion
+if [[ -f $(command -v gh) ]]; then
+  eval "$(gh completion -s bash)"
+fi
+
 ### Aliases
 alias :q='exit'
-alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias boot.log='journalctl -b'
 alias cp='\cp -u'
 alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias free='\free -h'
+alias g='git'
 alias l='\ls -CFv --color=auto'
 alias la='\ls -AFv --color=auto'
 alias ll='\ls -alFv --color=auto'
@@ -69,22 +74,13 @@ alias ln='ln -v'
 alias ls='\ls -ACF --color=auto'
 alias lsa='\ls -AFlhv --color=auto'
 alias mkdir='\mkdir -p'
+alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias path='echo $PATH | tr -s ":" "\n"'
-alias wget='\wget -c'
-alias sound="echo -ne '\007'"
-alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
 alias snaplist='sudo btrfs subvolume list /'
 alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
-## Git aliases
-alias gta='git add'
-alias gtc='git commit -m '
-alias gtca='git commit --amend'
-alias gtcan='git commit --amend --no-edit'
-alias gtd='git diff'
-alias gtl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen| %cr %C(bold blue)| %an%Creset' --abbrev-commit --date=relative"
-alias gtp='git push'
-alias gtpf='git push -f'
-alias gts='git status'
+alias sound="echo -ne '\007'"
+alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
+alias wget='\wget -c'
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
   alias icat='kitty +kitten icat'

@@ -7,8 +7,8 @@
   editor = nvim
   excludesfile = ~/.gitignore_global
   filemode = false
-  trustctime = false
   pager = less -R
+  trustctime = false
 [color]
   ui = true
 [credential]
@@ -19,32 +19,40 @@
   prompt = false
   trustexitcode = false
 [alias]
-  br = branch
+  a = add
+  b = branch
   branches = branch -a
   bugrelease = "!sh -c 'git name-rev --tags --name-only  $(git log --grep ^$1: --pretty=\"format:%H\n\")' -"
-  ci = commit
+  c = commit
+  ca = commit --amend
+  can = commit --amend --no-edit
   cl = clone
+  cm = commit -m
   co = checkout
+  cob = checkout-new-branch
   cp = cherry-pick
   ctags = !.git/hooks/ctags
+  d = diff
   dc = diff --cached
+  f = pull
   findbug = "!sh -c 'git log --grep=^$1:' -"
-  gl = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  graph-log = log --oneline --decorate --graph --all
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   last = log -1 --stat
-  log-graph = log --oneline --decorate --graph --all
   lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
   mkg = !mkgitignore -d
+  p = push
+  pf = push -f
   pom = push origin master
   remotes = remote -v
-  st = status -sb
+  s = status -sb
   stashes = stash list
+  sync = sync-repo
   tag-delete = push --delete origin $1 && git tag -d $1
   tags = tag -l
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
   wip = !git add -u && git commit -m "WIP"
-  sync = sync-repo
-  cob = checkout-new-branch
 [gpg]
   program = gpg
 [init]
@@ -54,7 +62,7 @@
   name = Stéphane FEUGA OSHIMA
   signingkey = D1C1F8F1DB785DF5
 [filter "lfs"]
-  required = true
   clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
+  required = true
+  smudge = git-lfs smudge -- %f
