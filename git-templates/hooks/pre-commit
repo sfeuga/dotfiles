@@ -33,4 +33,6 @@ nb_of_files=$(echo "$files" | wc -w)
 #[ ! -f Gemfile ] || git diff --exit-code --cached -- Gemfile >/dev/null || bundle check
 
 # Run default precommit hook
-exec "$(git --exec-path)/../../share/git-core/templates/hooks/pre-commit.sample"
+#exec "$(git --exec-path)/../../share/git-core/templates/hooks/pre-commit.sample"
+
+rubocop .

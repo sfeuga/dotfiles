@@ -1,6 +1,6 @@
-require:
-  - rubocop-performance
-  - rubocop-thread_safety
+#require:
+#  - rubocop-performance
+#  - rubocop-thread_safety
 #  - rubocop-i18n
 #  - rubocop-md
 #  - rubocop-rails
