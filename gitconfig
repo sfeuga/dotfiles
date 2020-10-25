@@ -45,7 +45,9 @@
   pf = push -f
   pom = push origin master
   remotes = remote -v
-  s = status -sb
+  rpo = remote prune origin
+  s = status
+  sb = status -sb
   stashes = stash list
   sync = sync-repo
   tag-delete = push --delete origin $1 && git tag -d $1
