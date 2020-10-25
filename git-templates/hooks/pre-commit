@@ -36,3 +36,4 @@ nb_of_files=$(echo "$files" | wc -w)
 #exec "$(git --exec-path)/../../share/git-core/templates/hooks/pre-commit.sample"
 
 rubocop .
+haml-lint app/**/*.html.haml --reporter progress --exclude-linter RuboCop
