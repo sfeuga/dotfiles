@@ -1,9 +1,9 @@
-# shellcheck disable=SC2148
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
 ### shellcheck config ###
+# shellcheck disable=SC2148
 # shellcheck disable=SC2111 # Fix shellcheck issue with missing shebang
 # shellcheck disable=SC1117 # Disabled due to being too pedantic
 
@@ -26,6 +26,12 @@ export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=10000
 export HISTFILESIZE=20000
+
+# ignore some command in history
+HISTIGNORE="&:[ \t]*:history:history *:ps:ps *"
+HISTIGNORE+=":cheat *:man *"
+HISTIGNORE+=":pwd:[fb]g:exit:clear:reset:df:du:free:top:htop:sudo updatedb"
+HISTIGNORE+=":\:q:path:sysup"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -77,19 +83,39 @@ shopt -s globstar
 #  ;;
 #esac
 
-## Add Git to Prompt
-# https://fedoraproject.org/wiki/Git_quick_reference
-. /usr/share/git-core/contrib/completion/git-prompt.sh
-export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
+# If no file(s) are passed to vim, check if a Session.vim exist, if yes, run it
+function vim_session() {
+  local editor
+  if [[ -f "Session.vim" ]]; then
+    if [[ "$#" -gt 1 ]]; then
+      editor=$1
+      shift
+      $editor "$@"
+    else
+      editor=$1
+      shift
+      $editor -S
+    fi
+  else
+    editor=$1
+    shift
+    $editor "$@"
+  fi
+}
 
 ## Set Defaut editor
 if [[ -f $(command -v nvim) ]]; then
-  export EDITOR='nvim'
-  alias vim='nvim'
+  if [[ -n "$NVIM_LISTEN_ADDRESS" ]]; then
+    if [[ -f $(command -v nvr) ]]; then
+      export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    fi
+  else
+    export EDITOR='nvim'
+  fi
+  alias vim='vim_session nvim'
 elif [[ -f $(command -v vim) ]]; then
   export EDITOR='vim'
+  alias vim='vim_session vim'
 elif [[ -f $(command -v vi) ]]; then
   export EDITOR='vi'
   alias vim='vi'
@@ -106,10 +132,10 @@ if [ -x /usr/bin/dircolors ]; then
     eval "$(dircolors -b)"
   fi
 
-  alias grep='\grep --color=auto'
-  alias fgrep='\fgrep --color=auto'
-  alias egrep='\egrep --color=auto'
   alias diff='\diff --color=auto'
+  alias egrep='\egrep --color=auto'
+  alias fgrep='\fgrep --color=auto'
+  alias grep='\grep --color=auto'
 fi
 
 # Source global definitions
@@ -138,7 +164,6 @@ if [ -f "$HOME/.aliases" ]; then
 # shellcheck source=/dev/null
   source "$HOME/.aliases"
 fi
-
 if [ -f "$HOME/.bash_aliases" ]; then
 # shellcheck source=/dev/null
   source "$HOME/.bash_aliases"
@@ -151,8 +176,6 @@ fi
 export PATH
 
 if [[ -e "/usr/bin/kitty" && -n "$(echo $TERMINFO)" ]]; then
+# shellcheck source=/dev/null
   source <(kitty + complete setup bash)
 fi
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
