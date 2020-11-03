@@ -50,7 +50,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 
 # Generate color from $HOSTNAME
-hostnamecolor=$(echo "$HOSTNAME" | od | tr ' ' '\n' | awk '{total = total + $1}END{print 30 + (total % 6)}')
+usernamecolor=$(echo "$USERNAME" | od | tr ' ' '\n' | awk '{total = total + $1}END{print 30 + (total % 6)}')
 
 # Add "@hostname" if under ssh
 is_ssh() {
@@ -66,8 +66,18 @@ is_ruby_project() {
   fi
 }
 
+git_branch() {
+  echo -n "$(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s$(is_ruby_project))")"
+}
+
 # Set PS1
-export PS1="[\e[${hostnamecolor}m\u$(is_ssh)\e[0m \w$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s$(is_ruby_project))")]\$ "
+# way to shorten the depth of directory in command-line
+export PROMPT_DIRTRIM=2
+#export PROMPT_COMMAND="echo -n [$(date +%k:%m:%S)]"
+export PROMPT_COMMAND="git_branch"
+# shellcheck disable=SC2025
+export PS1='[\e[${usernamecolor}m\u$(is_ssh)\e[0m \w]\$ '
+
 
 ### Add Rust Cargo to PATH
 [[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
