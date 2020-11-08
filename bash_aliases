@@ -38,47 +38,6 @@ export rvm_path="$HOME/.rvm"
 # Make RVM a function
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-### Setup Bash Prompt
-#source "$rvm_path/contrib/ps1_functions"
-#ps1_set
-#echo $PS1
-
-## Add Git to Prompt
-# https://fedoraproject.org/wiki/Git_quick_reference
-. /usr/share/git-core/contrib/completion/git-prompt.sh
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-
-# Generate color from $HOSTNAME
-usernamecolor=$(echo "$USERNAME" | od | tr ' ' '\n' | awk '{total = total + $1}END{print 30 + (total % 6)}')
-
-# Add "@hostname" if under ssh
-is_ssh() {
-  if [[ "$(ps -o comm= -p $PPID)" =~ "ssh" ]]; then
-    echo "@\h"
-  fi
-}
-
-# Display ruby version if ruby project
-is_ruby_project() {
-  if [[ -s ".ruby-version" || -s "Gemfile" ]]; then
-    echo ":$(command -v rvm-prompt >/dev/null 2>&1 && printf "%s" "$(rvm-prompt)")"
-  fi
-}
-
-git_branch() {
-  echo -n "$(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s$(is_ruby_project))")"
-}
-
-# Set PS1
-# way to shorten the depth of directory in command-line
-export PROMPT_DIRTRIM=2
-#export PROMPT_COMMAND="echo -n [$(date +%k:%m:%S)]"
-export PROMPT_COMMAND="git_branch"
-# shellcheck disable=SC2025
-export PS1='[\e[${usernamecolor}m\u$(is_ssh)\e[0m \w]\$ '
-
-
 ### Add Rust Cargo to PATH
 [[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 
