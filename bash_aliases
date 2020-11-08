@@ -69,7 +69,6 @@ alias boot.log='journalctl -b'
 alias cp='\cp -u'
 alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias free='\free -h'
-alias g='git'
 alias l='\ls -CFv --color=auto'
 alias la='\ls -AFv --color=auto'
 alias ll='\ls -alFv --color=auto'
@@ -79,13 +78,32 @@ alias lsa='\ls -AFlhv --color=auto'
 alias mkdir='\mkdir -p'
 alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias path='echo $PATH | tr -s ":" "\n"'
-alias r='rails'
-alias rs='rails s'
-alias snaplist='sudo btrfs subvolume list /'
-alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
-alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
 alias wget='\wget -c'
 
+# Backup
+if [[ "$(df / | awk '{print $2}' | tail -n 1)" == 'btrfs' ]]; then
+  alias snaplist='sudo btrfs subvolume list /'
+  alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
+fi
+
+# dnf & flatpak
+if [[ -f $(command -v dnf) ]]; then
+  alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
+fi
+
+# Git
+if [[ -f $(command -v git) ]]; then
+  alias g='git'
+fi
+
+# Ruby on Rails
+if [[ -f $(command -v rails) ]]; then
+  alias r='rails'
+  alias rc='rails c'
+  alias rs='rails s'
+fi
+
+# Kitty terminal
 if [[ "$TERM" == "xterm-kitty" ]]; then
   alias icat='kitty +kitten icat'
   alias fc-cache='\fc-cache -f && kitty + list-fonts --psnames'
@@ -100,11 +118,11 @@ if [[ -f $(command -v youtube-dl) ]]; then
   alias ytdl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 fi
 
-# Translate aliases
+# Translate
 if [[ -f $(command -v trans) ]]; then
-  alias trans_en='trans en:fr+ja'
-  alias trans_fr='trans fr:en+ja'
-  alias trans_jp='trans ja:en+fr'
+  alias tr_en='trans en:fr+ja'
+  alias tr_fr='trans fr:en+ja'
+  alias tr_jp='trans ja:en+fr'
 fi
 
 # Folders
