@@ -10,7 +10,7 @@ Plug 'itchyny/vim-gitbranch'                                           " Returns
 Plug 'jamessan/vim-gnupg'                                              " Transparent editing of gpg encrypted files     https://github.com/jamessan/vim-gnupg
 Plug 'jiangmiao/auto-pairs'                                            " Insert/Delete '[', '(', '{'... in pair         https://github.com/jiangmiao/auto-pairs
 Plug 'jmckiern/vim-venter'                                             " Horizontally centers the current window        https://github.com/JMcKiern/vim-venter
-Plug 'keith/rspec.vim'                                                 " Improved syntax highlighting for rspec         https://github.com/keith/rspec.vim
+Plug 'keith/rspec.vim', { 'for': 'rspec' }                             " Improved syntax highlighting for rspec         https://github.com/keith/rspec.vim
 Plug 'lambdalisue/suda.vim'                                            " Add missing !sudo tee % feature                https://github.com/lambdalisue/suda.vim
 Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }      " Ledger filetype for Vim                        https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                   " Make the yanked region apparent!               https://github.com/machakann/vim-highlightedyank
