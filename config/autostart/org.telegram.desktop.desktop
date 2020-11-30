@@ -1,5 +1,14 @@
 [Desktop Entry]
+Version=1.0
+Name=Telegram Desktop
+Comment=Official desktop version of Telegram messaging app
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=telegram-desktop --file-forwarding org.telegram.desktop -- @@u %u @@
+Icon=org.telegram.desktop
+Terminal=false
+StartupWMClass=TelegramDesktop
 Type=Application
-Name=org.telegram.desktop
-Exec=flatpak run --command=telegram-desktop.bin org.telegram.desktop -autostart
+Categories=Chat;Network;InstantMessaging;Qt;
+MimeType=x-scheme-handler/tg;
+Keywords=tg;chat;im;messaging;messenger;sms;tdesktop;
+X-GNOME-UsesNotifications=true
 X-Flatpak=org.telegram.desktop
