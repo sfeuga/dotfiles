@@ -1,0 +1,65 @@
+:root[hasbrowserhandlers="true"] body.dark {
+    color: pink !important;
+    background-color: blue !important;
+}
+:root[hasbrowserhandlers="true"] body.light {
+    color: pink !important;
+    background-color: blue !important;
+}
+:root[hasbrowserhandlers="true"] body.sepia {
+    color: pink !important;
+    background-color: blue !important;
+}
+
+:root[hasbrowserhandlers="true"] body.serif {
+    font-family: serif !important;
+}
+:root[hasbrowserhandlers="true"] body.sans-serif {
+    font-family: sans-serif !important;
+}
+
+@-moz-document url-prefix("about:reader") {
+
+    body {
+        --content-width: 90em !important;
+    }
+
+    .container {
+        text-align: justify !important;
+    }
+
+    .header {
+        text-align: center !important;
+    }
+    
+    code, pre, blockquote, ul, ol, li, figure {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    
+    blockquote {
+        background-color: #1d24315e !important;
+        font-style: italic !important;
+        font-weight: bold !important;
+    }
+
+    code, pre {
+        font-family: "Lucida Console", Courier, monospace !important;
+        padding-top: 7px !important;
+        padding-bottom: 2px !important;
+    }
+        
+    pre {
+        background-color: #00000080 !important;
+        line-height: 1em !important;
+        max-width: 98% !important;
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+    
+    p > code {
+        background-color: #00000080 !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+}
