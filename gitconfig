@@ -36,6 +36,7 @@
   dc = diff --cached
   f = pull
   findbug = "!sh -c 'git log --grep=^$1:' -"
+  gl = config --global -l
   graph-log = log --oneline --decorate --graph --all
   l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   last = log -1 --stat
@@ -43,15 +44,16 @@
   mkg = !mkgitignore -d
   p = push
   pf = push -f
-  pom = push origin master
+  pom = push origin main
   remotes = remote -v
   rpo = remote prune origin
   s = status
   sb = status -sb
+  se = !git rev-list --all | xargs git grep -F
   stashes = stash list
   sw = switch
   sync = sync-repo
-  t = tag --sign
+  t = tag -s
   tag-delete = push --delete origin $1 && git tag -d $1
   tags = tag -l
   unstage = reset HEAD --
