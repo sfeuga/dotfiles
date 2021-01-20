@@ -49,6 +49,12 @@ export NVM_DIR="$HOME/.nvm"
 ### Add GVM to PATH
 [[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
 
+### Add Pyenv to PATH
+[[ -s "$HOME/.pyenv" ]] && export PYENV_ROOT="$HOME/.pyenv" && export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 ### Add PostgreSQL to PATH
 if [[ -d "/usr/pgsql-14/bin" ]]; then
   export PATH="/usr/pgsql-14/bin:$PATH"
