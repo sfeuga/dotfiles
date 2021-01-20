@@ -73,3 +73,5 @@
   process = git-lfs filter-process
   required = true
   smudge = git-lfs smudge -- %f
+[pull]
+  rebase = true
