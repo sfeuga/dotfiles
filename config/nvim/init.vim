@@ -1,19 +1,24 @@
 " Minimalist Vim Plugin Manager                                                                                         https://github.com/junegunn/vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'aliou/bats.vim'                                                  " Add syntax files for Bats test files           https://github.com/aliou/bats.vim
+Plug 'colinkennedy/vim-vex-complete'                                   " Auto-completes functions for VEX               https://github.com/ColinKennedy/vim-vex-complete
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }           " Fuzzy file, buffer, mru, tag... finder         https://github.com/ctrlpvim/ctrlp.vim
 Plug 'drichardson/vex.vim'                                             " VEX support for Vim                            https://github.com/drichardson/vim-vex
 Plug 'editorconfig/editorconfig-vim'                                   " EditorConfig Vim Plugin                        https://github.com/editorconfig/editorconfig-vim
+Plug 'fatih/vim-go'                                                    " Go support for Vim                             https://github.com/fatih/vim-go
 Plug 'freitass/todo.txt-vim'                                           " Add syntax highlighting to todo.txt files      https://github.com/freitass/todo.txt-vim
 Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
+Plug 'honza/vim-snippets'                                              " Snippets files for various languages           https://github.com/honza/vim-snippets
 Plug 'itchyny/vim-gitbranch'                                           " Returns the name of the git branch             https://github.com/itchyny/vim-gitbranch
 Plug 'jamessan/vim-gnupg'                                              " Transparent editing of gpg encrypted files     https://github.com/jamessan/vim-gnupg
 Plug 'jiangmiao/auto-pairs'                                            " Insert/Delete '[', '(', '{'... in pair         https://github.com/jiangmiao/auto-pairs
 Plug 'jmckiern/vim-venter'                                             " Horizontally centers the current window        https://github.com/JMcKiern/vim-venter
+Plug 'jparise/vim-graphql', { 'for': ['graphql', 'graphqls', 'gql'] }  " GraphQL detection, highlighting & indentation  https://github.com/jparise/vim-graphql
 Plug 'keith/rspec.vim', { 'for': 'rspec' }                             " Improved syntax highlighting for rspec         https://github.com/keith/rspec.vim
 Plug 'lambdalisue/suda.vim'                                            " Add missing !sudo tee % feature                https://github.com/lambdalisue/suda.vim
 Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }      " Ledger filetype for Vim                        https://github.com/ledger/vim-ledger
 Plug 'machakann/vim-highlightedyank'                                   " Make the yanked region apparent!               https://github.com/machakann/vim-highlightedyank
+Plug 'machakann/vim-swap'                                              " Swap delimited items                           https://github.com/machakann/vim-swap
 Plug 'matsub/github-actions.vim'                                       " Syntax files of GitHub Actions                 https://github.com/matsub/github-actions.vim
 Plug 'mattesgroeger/vim-bookmarks'                                     " Allows toggling bookmarks per line             https://github.com/mattesgroeger/vim-bookmarks
 Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }                 " Generate table of contents for Markdown files  https://github.com/mzlogin/vim-markdown-toc
@@ -27,16 +32,24 @@ Plug 'reedes/vim-lexical'                                              " Build o
 Plug 'rhysd/git-messenger.vim'                                         " Reveal Git message under the cursor            https://github.com/rhysd/git-messenger.vim
 Plug 'rhysd/vim-github-actions'                                        " Filetype support for GitHub Actions            https://github.com/rhysd/vim-github-actions
 Plug 'ryanoasis/vim-devicons'                                          " Adds filetype glyphs to various vim plugins    https://github.com/ryanoasis/vim-devicons
+Plug 'sirver/ultisnips'                                                " Ultimate solution for snippets                 https://github.com/SirVer/ultisnips
 Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                              " My favorite theme !                            https://github.com/tomasr/molokai
 Plug 'tpope/vim-cucumber', { 'for': 'feature' }                        " Syntax highlight, indent, and more             https://github.com/tpope/vim-cucumber
+Plug 'tpope/vim-dadbod'                                                " Interacting with databases                     https://github.com/tpope/vim-dadbod
+Plug 'tpope/vim-dotenv'                                                " Basic support for .env and Procfile            https://github.com/tpope/vim-dotenv
 Plug 'tpope/vim-endwise'                                               " Adding end after if, do, def                   https://github.com/tpope/vim-endwise
+Plug 'tpope/vim-heroku'                                                " Interacting with Heroku                        https://github.com/tpope/vim-heroku
+Plug 'tpope/vim-jdaddy'                                                " Working with JSON in Vim                       https://github.com/tpope/vim-jdaddy
 Plug 'tpope/vim-rails', { 'for': 'ruby' }                              " Ruby on Rails power tools                      https://github.com/tpope/vim-rails
 Plug 'tpope/vim-rvm'                                                   " Switch Ruby versions from inside Vim           https://github.com/tpope/vim-rvm
+Plug 'tpope/vim-speeddating'                                           " Make vim understand date format                https://github.com/tpope/vim-speeddating
 Plug 'tpope/vim-surround'                                              " Quoting/parenthesizing made simple             https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                            " Pairs of handy bracket mappings                https://github.com/tpope/vim-unimpaired
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                            " Provides motions and text objects for Ruby     https://github.com/vim-ruby/vim-ruby
+Plug 'vim-scripts/bats.vim', { 'for': 'bash' }                         " Extends shell highlighting for Bats            https://github.com/vim-scripts/bats.vim
 Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                " Source code browser                            https://vimawesome.com/plugin/taglist-vim
+Plug 'wellle/context.vim'                                              " Shows context of currently visible contents    https://github.com/wellle/context.vim
 Plug 'xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }         " Add git status flags to NERDTree               https://github.com/Xuyuanp/nerdtree-git-plugin
 call plug#end()
 
@@ -478,6 +491,12 @@ endif
 "" rhysd/vim-github-actions
 
 "" ryanoasis/vim-devicons
+
+"" sirver/ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 
 "" thoughtbot/vim-rspec
 if &runtimepath =~ 'vim-rspec'
