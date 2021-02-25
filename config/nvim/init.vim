@@ -6,7 +6,6 @@ Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }           " Fuzzy f
 Plug 'drichardson/vex.vim'                                             " VEX support for Vim                            https://github.com/drichardson/vim-vex
 Plug 'editorconfig/editorconfig-vim'                                   " EditorConfig Vim Plugin                        https://github.com/editorconfig/editorconfig-vim
 Plug 'fatih/vim-go'                                                    " Go support for Vim                             https://github.com/fatih/vim-go
-Plug 'freitass/todo.txt-vim'                                           " Add syntax highlighting to todo.txt files      https://github.com/freitass/todo.txt-vim
 Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
 Plug 'honza/vim-snippets'                                              " Snippets files for various languages           https://github.com/honza/vim-snippets
 Plug 'itchyny/vim-gitbranch'                                           " Returns the name of the git branch             https://github.com/itchyny/vim-gitbranch
@@ -361,8 +360,6 @@ endif
 "" drichardson/vex.vim
 
 "" editorconfig/editorconfig-vim
-
-"" freitass/todo.txt-vim
 
 "" godlygeek/tabular
 
