@@ -1,6 +1,103 @@
 # shellcheck disable=SC1090
 
-### cheat settings
+# Add NVM to PATH for scripting. Make sure this is the last PATH variable change.
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+[[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"; export rvm_path="$HOME/.rvm"; #source "$rvm_path/contrib/ps1_functions" && ps1_set --prompt ∴
+# Add completion for RVM
+[[ -r "$rvm_path/scripts/completion" ]] && . "$rvm_path/scripts/completion"
+# Make RVM a function
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Add GVM to PATH for scripting. Make sure this is the last PATH variable change.
+[[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
+
+# Add Rust Cargo to PATH
+[[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+
+# Add Perl to PATH
+[[ -s "$HOME/.perl5/bin" ]] && PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+[[ -s "$HOME/.perl5/lib/perl5" ]] && PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+[[ -s "$HOME/.perl5" ]] && PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+[[ -s "$HOME/.perl5" ]] && PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+[[ -s "$HOME/.perl5" ]] && PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+
+# Add GVM to PATH
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
+
+# Add Pyenv to PATH
+[[ -s "$HOME/.pyenv" ]] && export PYENV_ROOT="$HOME/.pyenv" && export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# Add some bin folder to PATH for scripting. Make sure this is the last PATH variable change.
+if [[ -d "$HOME/.local/bin" ]]; then
+  export PATH="$PATH:$HOME/.local/bin"
+fi
+if [[ -d "$HOME/bin" ]]; then
+  export PATH="$PATH:$HOME/bin"
+fi
+
+# If Kitty terminal exist, setup it.
+if [[ -e "/usr/bin/kitty" && -n "$(echo $TERMINFO)" ]]; then
+  source <(kitty + complete setup bash)
+  if [[ "$TERM" == "xterm-kitty" ]]; then
+    alias icat='kitty +kitten icat'
+    alias fc-cache='\fc-cache -f && kitty + list-fonts --psnames'
+  fi
+fi
+
+# First, check if some flatpak are installed, if yes, make some alias
+if [[ -f ".local/share/flatpak/exports/bin/com.sublimetext.three" ]]; then
+  alias subl='$HOME/.local/share/flatpak/exports/bin/com.sublimetext.three "$@"'
+fi
+if [[ -f ".local/share/flatpak/exports/bin/org.gnu.emacs" ]]; then
+  alias emacs='$HOME/.local/share/flatpak/exports/bin/org.gnu.emacs "$@"'
+fi
+
+# Set Defaut editor
+if [[ $(command -v nvim) ]]; then
+  export EDITOR='nvim'
+  alias vim='vim_session nvim "$@"'
+elif [[ $(command -v vim) ]]; then
+  export EDITOR='vim'
+   alias vim='vim_session vim'
+elif [[ $(command -v vi) ]]; then
+  export EDITOR='vi'
+  alias vim='vi'
+elif [[ $(command -v emacs) ]]; then
+  export EDITOR='emacs'
+elif [[ $(command -v subl) ]]; then
+  export EDITOR='subl'
+elif [[ $(command -v nano) ]]; then
+  export EDITOR='nano'
+fi
+
+## If no file(s) are passed to vim, check if a Session.vim exist, if yes, run it
+function vim_session() {
+  local editor
+  if [[ -f "Session.vim" ]]; then
+    if [[ "$#" -gt 1 ]]; then
+      editor=$1
+      shift
+      $editor "$@"
+    else
+      editor=$1
+      shift
+      $editor -S
+    fi
+  else
+    editor=$1
+    shift
+    $editor "$@"
+  fi
+}
+
+# cheat settings
 if [[ -x $(command -v cheat) ]]; then
   export CHEAT_COLORS=true
   export CHEAT_COLORSCHEME=dark
@@ -17,68 +114,49 @@ if [[ -x $(command -v cheat) ]]; then
   complete -F _cheat_autocomplete cheat
 fi
 
-### Add color to man
+# Add color to man
 if [[ -f $(command -v most) ]]; then
   pager=$(command -v most)
   export MANPAGER="$pager -s"
 fi
 
-### Add syntax color in Less
+# Add syntax color in Less
 if [[ -f $(command -v src-hilite-lesspipe.sh) ]]; then
   export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
   export LESS=" -R"
 fi
 
-### Add RVM to PATH
-#   Make sure this is the last PATH variable change.
-[[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
-# Add completion for RVM
-export rvm_path="$HOME/.rvm"
-[[ -r "$rvm_path/scripts/completion" ]] && . "$rvm_path/scripts/completion"
-# Make RVM a function
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-### Add Rust Cargo to PATH
-[[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
-
-### Add NVM to PATH
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-### Add GVM to PATH
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
-
-### Add Pyenv to PATH
-[[ -s "$HOME/.pyenv" ]] && export PYENV_ROOT="$HOME/.pyenv" && export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-source $HOME/.local/bin/activate.sh
-
-### Add Perl to PATH
-PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
-
-### Add PostgreSQL to PATH
+# Add PostgreSQL to PATH
+#   Fedora use "/usr/pgsql-*/bin" folder
+#   Ubuntu use "/usr/lib/postgresql/*/bin/" folder
 if [[ -d "/usr/pgsql-14/bin" ]]; then
   export PATH="/usr/pgsql-14/bin:$PATH"
+elif [[ -d "/usr/lib/postgresql/14/bin/" ]]; then
+  export PATH="$PATH:/usr/lib/postgresql/14/bin/"
 elif [[ -d "/usr/pgsql-13/bin" ]]; then
   export PATH="/usr/pgsql-13/bin:$PATH"
+elif [[ -d "/usr/lib/postgresql/13/bin/" ]]; then
+  export PATH="$PATH:/usr/lib/postgresql/13/bin/"
 elif [[ -d "/usr/pgsql-12/bin" ]]; then
   export PATH="/usr/pgsql-12/bin:$PATH"
+elif [[ -d "/usr/lib/postgresql/12/bin/" ]]; then
+  export PATH="$PATH:/usr/lib/postgresql/12/bin/"
 fi
 
-### Add Github gh completion
+# Git
+if [[ ! -f $(command -v git) && -f $(command -v dnf) ]]; then
+  sudo dnf install -y git
+elif [[ ! -f $(command -v git) && -f $(command -v apt) ]]; then
+  sudo apt install -y git
+fi
+
+
+# Add Github gh completion
 if [[ -f $(command -v gh) ]]; then
   eval "$(gh completion -s bash)"
 fi
 
-### Aliases
-alias :q='exit'
+# Aliases
 alias boot.log='journalctl -b'
 alias cp='\cp -u'
 alias df='\df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
@@ -94,33 +172,31 @@ alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias wget='\wget -c'
 
+# Tricks to autosource venv if existe
+cd_env() {
+  builtin cd "$@"
+  if [[ -f "./venv/bin/activate" ]]; then
+    source "./venv/bin/activate"
+  else
+    deactivate 1>/dev/null 2>&1
+  fi
+  if [[ -e "$(pwd)/.bash_aliases" && "$(pwd)" != "$HOME" ]]; then
+    source "$(pwd)/.bash_aliases"
+  fi
+}
+alias cd='cd_env'
+
 # Backup
-if [[ "$(df / | awk '{print $2}' | tail -n 1)" == 'btrfs' ]]; then
+if [[ "$(df -T / | awk '{print $2}' | tail -n 1)" == 'btrfs' ]]; then
   alias snaplist='sudo btrfs subvolume list /'
   alias snaproot='sudo btrfs subvolume snapshot / /.snapshots/$(date +"%Y%m%d")'
 fi
 
-# dnf & flatpak
+# System update alias
 if [[ -f $(command -v dnf) ]]; then
   alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
-fi
-
-# Git
-if [[ -f $(command -v git) ]]; then
-  alias g='git'
-fi
-
-# Ruby on Rails
-if [[ -f $(command -v rails) ]]; then
-  alias r='rails'
-  alias rc='rails c'
-  alias rs='rails s'
-fi
-
-# Kitty terminal
-if [[ "$TERM" == "xterm-kitty" ]]; then
-  alias icat='kitty +kitten icat'
-  alias fc-cache='\fc-cache -f && kitty + list-fonts --psnames'
+elif [[ -f $(command -v apt) ]]; then
+  alias sysup="sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && sudo snap refresh && flatpak update -y"
 fi
 
 # Easy DL
@@ -143,18 +219,31 @@ fi
 if [[ -d "$HOME/Documents/Development/" ]]; then
   alias dev='cd ~/Documents/Development/'
 fi
+if [[ -d "$HOME/Documents/Development/WealthPark/" ]]; then
+  alias job='cd $HOME/Documents/Development/WealthPark/'
+  for folder in $HOME/Documents/Development/WealthPark/*/; do
+    alias wp-$(echo ${folder%/} | awk -F '/' '{print $NF}')="cd $folder && git_wp_setup"
+  done
+fi
 if [[ -d "$HOME/Documents/Development/sfeuga.com/www.sfeuga.com/" ]]; then
-  alias web='cd ~/Documents/Development/sfeuga.com/www.sfeuga.com/ && git status'
+  alias web='cd ~/Documents/Development/sfeuga.com/www.sfeuga.com/'
 fi
 if [[ -d "$HOME/Documents/Development/Eclisse/musical-eureka" ]]; then
-  alias eclisse='cd ~/Documents/Development/Eclisse/musical-eureka && git status'
+  alias eclisse='cd ~/Documents/Development/Eclisse/musical-eureka'
 fi
 if [[ -d "$HOME/.dotfiles" ]]; then
-  alias dots='cd ~/.dotfiles && git status'
+  alias dots='cd ~/.dotfiles'
 fi
 
+### Setup account to sign git commit for WealthPark
+function git_wp_setup() {
+  if [[ -d ".git" ]]; then
+    git config --local user.email stephane.oshima@wealth-park.com
+    git config --local user.signingKey 2AD5054BE235EBE6
+  fi
+}
 ##############################################
-### Do not put other lines after this code ###
+# Do not put other lines after this code ###
 ##############################################
 
 # Clean path
