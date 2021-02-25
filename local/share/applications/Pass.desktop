@@ -1,0 +1,8 @@
+[Desktop Entry]
+Terminal=false
+Type=Application
+StartupNotify=true
+MimeType=text/plain;
+Icon=/usr/share/icons/hicolor/256x256/apps/gcr-password.png
+Name=Open Pass.md
+Exec=gedit Documents/pass.md

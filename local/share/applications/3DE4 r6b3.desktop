@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=3DEqualizer
+Comment=v4r6b3
+Exec=/opt/3DE4_linux64_r6b3/bin/wrapper_startup_script
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=/home/sfo/.local/share/icons/3de_white.png
+Categories=Application;Graphics;
