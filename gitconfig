@@ -38,8 +38,9 @@
   findbug = "!sh -c 'git log --grep=^$1:' -"
   gl = config --global -l
   graph-log = log --oneline --decorate --graph --all
-  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  l = !git log | head -n 30
   last = log -1 --stat
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
   mkg = !mkgitignore -d
   p = push
@@ -49,7 +50,7 @@
   rpo = remote prune origin
   s = status
   sb = status -sb
-  se = !git rev-list --all | xargs git grep -F
+  search = !git rev-list --all | xargs git grep -F
   stashes = stash list
   sw = switch
   sync = sync-repo
@@ -57,7 +58,7 @@
   tag-delete = push --delete origin $1 && git tag -d $1
   tags = tag -l
   unstage = reset HEAD --
-  unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
+  unwip = !"git log -n 1 | grep -q -c WIP && git reset HEAD~1"
   wip = !git add -u && git commit -m "WIP"
 [gpg]
   program = gpg
