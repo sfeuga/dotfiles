@@ -76,3 +76,5 @@
   smudge = git-lfs smudge -- %f
 [pull]
   rebase = true
+[gist]
+  private = yes
