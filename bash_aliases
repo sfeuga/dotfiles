@@ -1,5 +1,11 @@
 # shellcheck disable=SC1090
 
+# Ignore some command in history
+HISTIGNORE="&:[ \t]*:history:history *:ps:ps *"
+HISTIGNORE+=":cheat *:man *"
+HISTIGNORE+=":pwd:[fb]g:exit:clear:reset:df:du:free:top:htop:sudo updatedb"
+HISTIGNORE+=":flatpak *:apt *:which *:path:sysup"
+
 # Add NVM to PATH for scripting. Make sure this is the last PATH variable change.
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
