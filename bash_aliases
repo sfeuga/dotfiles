@@ -6,6 +6,26 @@ HISTIGNORE+=":cheat *:man *"
 HISTIGNORE+=":pwd:[fb]g:exit:clear:reset:df:du:free:top:htop:sudo updatedb"
 HISTIGNORE+=":flatpak *:apt *:which *:path:sysup"
 
+# Set some other optional shell options
+shopt -s autocd     # If set, command name that is a directory name is executed as if it were the cd command's argument
+shopt -s cdspell    # If set, minor errors in the spelling of a directory component in a cd command are corrected
+shopt -s cmdhist    # If set, bash attempts to save all lines of a multiple-line command in the same history entry
+shopt -s direxpand  # If set, bash replaces directory names with the results of word expansion when performing file name completion
+shopt -s dirspell   # If set, bash attempts spelling correction on directory names during word completion if the directory name initially supplied does not exist
+shopt -s dotglob    # If set, bash includes file names beginning with a '.' in the results of path name globbing
+shopt -s extglob    # If set, the extended pattern matching features offered by bash path name expansion are enabled
+shopt -s globstar   # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
+
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+if [[ -f $(command -v dnf) && ! -f $(command -v notify-send) ]]; then
+  sudo dnf install -y libnotify
+elif [[ -f $(command -v apt) && ! -f $(command -v notify-send) ]]; then
+  sudo apt install -y libnotify-bin
+fi
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
 # Add NVM to PATH for scripting. Make sure this is the last PATH variable change.
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -14,25 +34,22 @@ export NVM_DIR="$HOME/.nvm"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"; export rvm_path="$HOME/.rvm"; #source "$rvm_path/contrib/ps1_functions" && ps1_set --prompt ∴
 # Add completion for RVM
-[[ -r "$rvm_path/scripts/completion" ]] && . "$rvm_path/scripts/completion"
-# Make RVM a function
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[[ -e "$rvm_path/scripts/completion" ]] && source "$rvm_path/scripts/completion"
+# Make RVM a function and load RVM into a shell session *as a function*
+[[ -e "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Add GVM to PATH for scripting. Make sure this is the last PATH variable change.
-[[ -s "/home/sfo/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
+[[ -e "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm" && source "$HOME/.gvm/scripts/completion"
 
 # Add Rust Cargo to PATH
 [[ -s "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 
 # Add Perl to PATH
-[[ -s "$HOME/.perl5/bin" ]] && PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-[[ -s "$HOME/.perl5/lib/perl5" ]] && PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-[[ -s "$HOME/.perl5" ]] && PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-[[ -s "$HOME/.perl5" ]] && PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-[[ -s "$HOME/.perl5" ]] && PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
-
-# Add GVM to PATH
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "/home/sfo/.gvm/scripts/gvm"
+[[ -s "$HOME/.perl5/bin" ]] && export PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
+[[ -s "$HOME/.perl5/lib/perl5" ]] && export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+[[ -s "$HOME/.perl5" ]] && export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+[[ -s "$HOME/.perl5" ]] && export PERL_MB_OPT="--install_base \"$HOME/perl5\""
+[[ -s "$HOME/.perl5" ]] && export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 
 # Add Pyenv to PATH
 [[ -s "$HOME/.pyenv" ]] && export PYENV_ROOT="$HOME/.pyenv" && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -58,10 +75,10 @@ if [[ -e "/usr/bin/kitty" && -n "$(echo $TERMINFO)" ]]; then
 fi
 
 # First, check if some flatpak are installed, if yes, make some alias
-if [[ -f ".local/share/flatpak/exports/bin/com.sublimetext.three" ]]; then
+if [[ -f "$HOME/.local/share/flatpak/exports/bin/com.sublimetext.three" ]]; then
   alias subl='$HOME/.local/share/flatpak/exports/bin/com.sublimetext.three "$@"'
 fi
-if [[ -f ".local/share/flatpak/exports/bin/org.gnu.emacs" ]]; then
+if [[ -f "$HOME/.local/share/flatpak/exports/bin/org.gnu.emacs" ]]; then
   alias emacs='$HOME/.local/share/flatpak/exports/bin/org.gnu.emacs "$@"'
 fi
 
@@ -127,9 +144,13 @@ if [[ -f $(command -v most) ]]; then
 fi
 
 # Add syntax color in Less
-if [[ -f $(command -v src-hilite-lesspipe.sh) ]]; then
+if [[ -e "/usr/bin/src-hilite-lesspipe.sh" ]]; then
   export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
-  export LESS=" -R"
+  export LESS=" -NR"
+fi
+if [[ -e "/usr/share/source-highlight/src-hilite-lesspipe.sh" ]]; then
+  export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+  export LESS=" -NR"
 fi
 
 # Add PostgreSQL to PATH
