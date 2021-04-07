@@ -247,7 +247,7 @@ if [[ -d "$HOME/Documents/Development/" ]]; then
   alias dev='cd ~/Documents/Development/'
 fi
 if [[ -d "$HOME/Documents/Development/WealthPark/" ]]; then
-  alias job='cd $HOME/Documents/Development/WealthPark/'
+  alias wp='cd $HOME/Documents/Development/WealthPark/'
   for folder in $HOME/Documents/Development/WealthPark/*/; do
     alias wp-$(echo ${folder%/} | awk -F '/' '{print $NF}')="cd $folder && git_wp_setup"
   done
