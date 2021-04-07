@@ -45,6 +45,7 @@ Plug 'tpope/vim-rvm'                                                   " Switch 
 Plug 'tpope/vim-speeddating'                                           " Make vim understand date format                https://github.com/tpope/vim-speeddating
 Plug 'tpope/vim-surround'                                              " Quoting/parenthesizing made simple             https://github.com/tpope/vim-surround
 Plug 'tpope/vim-unimpaired'                                            " Pairs of handy bracket mappings                https://github.com/tpope/vim-unimpaired
+Plug 'uarun/vim-protobuf'                                              " Syntax highlighting for Google's ProtoBuf      https://github.com/uarun/vim-protobuf
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                            " Provides motions and text objects for Ruby     https://github.com/vim-ruby/vim-ruby
 Plug 'vim-scripts/bats.vim', { 'for': 'bash' }                         " Extends shell highlighting for Bats            https://github.com/vim-scripts/bats.vim
 Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                " Source code browser                            https://vimawesome.com/plugin/taglist-vim
