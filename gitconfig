@@ -65,3 +65,5 @@
   rebase = true
 [gist]
   private = yes
+[fetch]
+  prune = true
