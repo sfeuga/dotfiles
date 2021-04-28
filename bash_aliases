@@ -223,7 +223,11 @@ fi
 if [[ -f $(command -v dnf) ]]; then
   alias sysup="sudo dnf update -y && sudo dnf autoremove -y && flatpak update -y"
 elif [[ -f $(command -v apt) ]]; then
-  alias sysup="sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && sudo snap refresh && flatpak update -y"
+  if [[ -f $(command -v snap) ]]; then
+    alias sysup="sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && sudo snap refresh && flatpak update -y"
+  else
+    alias sysup="sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update -y"
+  fi
 fi
 
 # Easy DL
@@ -247,9 +251,13 @@ if [[ -d "$HOME/Documents/Development/" ]]; then
   alias dev='cd ~/Documents/Development/'
 fi
 if [[ -d "$HOME/Documents/Development/WealthPark/" ]]; then
-  alias wp='cd $HOME/Documents/Development/WealthPark/'
+  wp_path="$HOME/Documents/Development/WealthPark"
+  alias wp='cd $wp_path'
   for folder in $HOME/Documents/Development/WealthPark/*/; do
-    alias wp-$(echo ${folder%/} | awk -F '/' '{print $NF}')="cd $folder && git_wp_setup"
+    folder=$(echo ${folder%/} | awk -F '/' '{print $NF}')
+    if [[ ! "$folder" =~ ^\..* ]]; then
+      alias wp-$folder="cd $wp_path/$folder && git_wp_setup"
+    fi
   done
 fi
 if [[ -d "$HOME/Documents/Development/sfeuga.com/www.sfeuga.com/" ]]; then
@@ -269,6 +277,7 @@ function git_wp_setup() {
     git config --local user.signingKey 2AD5054BE235EBE6
   fi
 }
+
 ##############################################
 # Do not put other lines after this code ###
 ##############################################
