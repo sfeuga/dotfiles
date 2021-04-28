@@ -5,6 +5,7 @@ Plug 'colinkennedy/vim-vex-complete'                                   " Auto-co
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }           " Fuzzy file, buffer, mru, tag... finder         https://github.com/ctrlpvim/ctrlp.vim
 Plug 'drichardson/vex.vim'                                             " VEX support for Vim                            https://github.com/drichardson/vim-vex
 Plug 'editorconfig/editorconfig-vim'                                   " EditorConfig Vim Plugin                        https://github.com/editorconfig/editorconfig-vim
+Plug 'sfeuga/dockerfile.vim'                                           " Syntax file for Docker's Dockerfile            https://github.com/elemecca/dockerfile.vim
 Plug 'fatih/vim-go'                                                    " Go support for Vim                             https://github.com/fatih/vim-go
 Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
 Plug 'honza/vim-snippets'                                              " Snippets files for various languages           https://github.com/honza/vim-snippets
@@ -24,6 +25,7 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }                 " Generat
 Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }   " Cypher Vim Syntax                              https://github.com/neo4j-contrib/cypher-vim-syntax
 Plug 'neomake/neomake'                                                 " Syntax checking hacks                          https://github.com/neomake/neomake
 Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }             " Runs RuboCop                                   https://github.com/ngmy/vim-rubocop
+Plug 'nlknguyen/vim-docker-compose-syntax'                             " Syntax file for Docker's docker-compose file   https://github.com/nlknguyen/vim-docker-compose-syntax
 Plug 'pbrisbin/vim-mkdir'                                              " Auto create directories at buffer save         https://github.com/pbrisbin/vim-mkdir
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }                  " A tree explorer plugin                         https://github.com/scrooloose/nerdtree
 Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }       " Code smell detector for Ruby                   https://github.com/rainerborene/vim-reek
@@ -251,7 +253,7 @@ imap        cw                  <ESC>cw
 " r to redo
 nnoremap    r                   :redo<CR>
 " List all buffers
-nnoremap    <Leader>b           :buffers!<CR>
+nnoremap    <Leader>b           :ls<CR>
 " Keep search matches in the middle of the window.
 nnoremap    n                   nzzzv
 nnoremap    N                   Nzzzv
