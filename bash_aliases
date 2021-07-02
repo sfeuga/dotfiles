@@ -278,6 +278,29 @@ function git_wp_setup() {
   fi
 }
 
+### Android Studio
+if [[ -d "$HOME/bin/android-studio/bin" ]]; then
+  export PATH="$PATH:$HOME/bin/android-studio/bin"
+fi
+if [[ -d "$HOME/Android/Sdk" ]]; then
+  export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+
+  if [[ -d "$HOME/Android/Sdk/tools" ]]; then
+    export PATH="$PATH:$HOME/Android/Sdk/tools"
+  fi
+  if [[ -d "$HOME/Android/Sdk/platform-tools" ]]; then
+    export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
+  fi
+  if [[ -d "$HOME/Android/Sdk/emulator" ]]; then
+    export PATH="$PATH:$HOME/Android/Sdk/emulator"
+  fi
+fi
+
+### Flutter & Dart
+if [[ -d "$HOME/Documents/Development/Others/flutter/bin" ]]; then
+  export PATH="$PATH:$HOME/Documents/Development/Others/flutter/bin"
+fi
+
 ##############################################
 # Do not put other lines after this code ###
 ##############################################
