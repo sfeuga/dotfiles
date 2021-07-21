@@ -5,4 +5,4 @@ Host *
 
 Host osmc
   HostName 192.168.100.250
-  User osmc
+  User root
