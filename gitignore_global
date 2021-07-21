@@ -50,3 +50,9 @@ Thumbs.db
 # Vim sessions #
 ################
 Session.vim
+
+# JetBrains #
+#############
+.idea
+.idea/*
+.idea/.*
