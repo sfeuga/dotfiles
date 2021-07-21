@@ -47,5 +47,6 @@ Thumbs.db
 .debris/*
 .debris/.*
 
-# Vim sessions
+# Vim sessions #
+################
 Session.vim
