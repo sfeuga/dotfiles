@@ -147,8 +147,7 @@ fi
 if [[ -e "/usr/bin/src-hilite-lesspipe.sh" ]]; then
   export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
   export LESS=" -NR"
-fi
-if [[ -e "/usr/share/source-highlight/src-hilite-lesspipe.sh" ]]; then
+elif [[ -e "/usr/share/source-highlight/src-hilite-lesspipe.sh" ]]; then
   export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
   export LESS=" -NR"
 fi
@@ -170,14 +169,6 @@ elif [[ -d "/usr/lib/postgresql/12/bin/" ]]; then
   export PATH="$PATH:/usr/lib/postgresql/12/bin/"
 fi
 
-# Git
-if [[ ! -f $(command -v git) && -f $(command -v dnf) ]]; then
-  sudo dnf install -y git
-elif [[ ! -f $(command -v git) && -f $(command -v apt) ]]; then
-  sudo apt install -y git
-fi
-
-
 # Add Github gh completion
 if [[ -f $(command -v gh) ]]; then
   eval "$(gh completion -s bash)"
@@ -191,9 +182,9 @@ alias free='\free -h'
 alias l='\ls -CFv --color=auto'
 alias la='\ls -AFv --color=auto'
 alias ll='\ls -AlFvh --color=auto'
-alias ln='ln -v'
 alias ls='\ls -ACF --color=auto'
 alias lsa='\ls -AFlhvQ --color=auto'
+alias ln='ln -v'
 alias mkdir='\mkdir -p'
 alias now='\date +"%Y/%m/%d %V %H:%M:%S"'
 alias path='echo $PATH | tr -s ":" "\n"'
