@@ -67,3 +67,5 @@
   private = yes
 [fetch]
   prune = true
+[advice]
+  detachedHead = false
