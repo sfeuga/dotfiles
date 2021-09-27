@@ -3,9 +3,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'aliou/bats.vim'                                                  " Add syntax files for Bats test files           https://github.com/aliou/bats.vim
 Plug 'colinkennedy/vim-vex-complete'                                   " Auto-completes functions for VEX               https://github.com/ColinKennedy/vim-vex-complete
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }           " Fuzzy file, buffer, mru, tag... finder         https://github.com/ctrlpvim/ctrlp.vim
+Plug 'dag/vim-fish'                                                    " Add syntax files for fish sell files           https://github.com/dag/vim-fish
 Plug 'drichardson/vex.vim'                                             " VEX support for Vim                            https://github.com/drichardson/vim-vex
 Plug 'editorconfig/editorconfig-vim'                                   " EditorConfig Vim Plugin                        https://github.com/editorconfig/editorconfig-vim
-Plug 'sfeuga/dockerfile.vim'                                           " Syntax file for Docker's Dockerfile            https://github.com/elemecca/dockerfile.vim
 Plug 'fatih/vim-go'                                                    " Go support for Vim                             https://github.com/fatih/vim-go
 Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
 Plug 'honza/vim-snippets'                                              " Snippets files for various languages           https://github.com/honza/vim-snippets
@@ -33,6 +33,7 @@ Plug 'reedes/vim-lexical'                                              " Build o
 Plug 'rhysd/git-messenger.vim'                                         " Reveal Git message under the cursor            https://github.com/rhysd/git-messenger.vim
 Plug 'rhysd/vim-github-actions'                                        " Filetype support for GitHub Actions            https://github.com/rhysd/vim-github-actions
 Plug 'ryanoasis/vim-devicons'                                          " Adds filetype glyphs to various vim plugins    https://github.com/ryanoasis/vim-devicons
+Plug 'sfeuga/dockerfile.vim'                                           " Syntax file for Docker's Dockerfile            https://github.com/elemecca/dockerfile.vim
 Plug 'sirver/ultisnips'                                                " Ultimate solution for snippets                 https://github.com/SirVer/ultisnips
 Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                              " My favorite theme !                            https://github.com/tomasr/molokai
@@ -328,6 +329,7 @@ vnoremap    D                   y'>o<ESC>p
 
 """ File type mapping
 autocmd FileType ruby compiler ruby                                      " Set MRI as default ruby compiler
+autocmd FileType fish compiler fish                                      " Set fish as default fish compiler
 autocmd VimEnter,BufRead,BufNewFile *.gemspec                            set filetype=ruby
 autocmd VimEnter,BufRead,BufNewFile *.rake                               set filetype=ruby
 autocmd VimEnter,BufRead,BufNewFile *.thor                               set filetype=ruby
@@ -359,6 +361,8 @@ if exists(":CtrlP")
   nnoremap  <C-p>               :CtrlPMixed<CR>
   nnoremap  <F5>                :CtrlPMixed<CR>
 endif
+
+"" dag/vim-fish
 
 "" drichardson/vex.vim
 
