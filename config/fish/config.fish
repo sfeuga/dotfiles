@@ -13,3 +13,9 @@ if test -f ~/.asdf/asdf.fish
         ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions/asdf.fish
     end
 end
+
+# Go
+if test -e "$HOME/.asdf/installs/golang/"
+  set -gx GOPATH (go env | grep GOPATH | sed 's/GOPATH=//' | sed 's/"//g')
+  set -gxa PATH "$GOPATH/bin"
+end
