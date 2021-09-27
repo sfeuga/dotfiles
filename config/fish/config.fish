@@ -1,5 +1,7 @@
 # RVM
-set -U fish_greetingrvm default
+if test -f ~/.rvm
+    set -U fish_greetingrvm default
+end
 
 # ASDF
 #   https://asdf-vm.com/guide/getting-started.html#_2-download-asdf
