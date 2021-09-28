@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=OpenRGB
-Exec=/home/sfo/bin/OpenRGB_0.5_x86_64_88464d1.AppImage
-Terminal=false
-Type=Application
-StartupNotify=false
-Icon=/home/sfo/.local/share/icons/OpenRGB.png
-Categories=Utility;GTK;

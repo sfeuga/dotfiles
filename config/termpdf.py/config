@@ -1,6 +1,0 @@
-{
-  "TINT_COLOR": "grey23",
-  "KITTYCMD": "kitty --single-instance --instance-group=1",
-  "URL_BROWSER": "firefox",
-  "NOTE_PATH": "$HOME/Documents/pdf_notes.txt"
-}

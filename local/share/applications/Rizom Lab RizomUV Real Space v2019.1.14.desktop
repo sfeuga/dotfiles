@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=RizomUV Real Space
-Comment=v2019.1.14
-Exec=/home/sfo/bin/Rizom_Lab_RizomUV_Real_Space_v2019.1.14.AppImage
-Terminal=false
-Type=Application
-StartupNotify=true
-Icon=/home/sfo/.local/share/icons/Rizom-Lab/1000x1000/RizomUV_Real_Space.png
-Categories=Application;Graphics;

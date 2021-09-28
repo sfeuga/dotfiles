@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Bitwarden
-Exec=/home/sfo/bin/Bitwarden-1.24.6-x86_64.AppImage
-Terminal=false
-Type=Application
-StartupNotify=false
-Icon=/home/sfo/.local/share/icons/Bitwarden.png
-Categories=Utility;GTK;

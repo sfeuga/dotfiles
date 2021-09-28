@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=RizomUV Virtual Spaces
-Comment=v2019.1.14
-Exec=/home/sfo/bin/Rizom_Lab_RizomUV_Virtual_Spaces_v2019.1.14.AppImage
-Terminal=false
-Type=Application
-StartupNotify=true
-Icon=/home/sfo/.local/share/icons/Rizom-Lab/1000x1000/RizomUV_Virtual_Spaces.png
-Categories=Application;Graphics;

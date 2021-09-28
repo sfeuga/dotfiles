@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=GDevelop
-Exec="/home/sfo/bin/GDevelop*.AppImage" %U
-Terminal=false
-Type=Application
-Icon=/home/sfo/.local/share/icons/hicolor/256x256/apps/GDevelop-5.png
-StartupWMClass=GDevelop
-Categories=Utility;
-TryExec=/home/sfo/bin/GDevelop*.AppImage
