@@ -6,7 +6,7 @@ if test -d $HOME/Documents/Development/
         set -l folder_name (echo $folder | \
                                 string split --max 1 --no-empty "$HOME/Documents/Development/" | \
                                 string trim -c /)
-        abbr -a -g "dev-$folder_name" cd $folder; and git_wp_setup
+        abbr -a -g "dev-$folder_name" cd $folder
     end
 
     if test -d $HOME/Documents/Development/WealthPark/
@@ -20,7 +20,7 @@ if test -d $HOME/Documents/Development/
     end
 
     if test -d $HOME/Documents/Development/sfeuga.com/www.sfeuga.com/
-        abbr -a -g web cd "$HOME/Documents/Development/sfeuga.com/www.sfeuga.com/"
+        abbr -a -g web cd "$HOME/Documents/Development/sfeuga.com/www.sfeuga.com"
     end
 
     if test -d $HOME/Documents/Development/Eclisse/musical-eureka
