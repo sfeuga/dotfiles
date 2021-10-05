@@ -19,3 +19,8 @@ if test -e "$HOME/.asdf/installs/golang/"
   set -gx GOPATH (go env | grep GOPATH | sed 's/GOPATH=//' | sed 's/"//g')
   set -gxa PATH "$GOPATH/bin"
 end
+
+# Rust
+if test -e "$HOME/.asdf/installs/rust/1.55.0"
+  set -gxa PATH "$HOME/.asdf/installs/rust/1.55.0/bin"
+end
