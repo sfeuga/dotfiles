@@ -56,3 +56,12 @@ Session.vim
 .idea
 .idea/*
 .idea/.*
+
+# asdf #
+########
+.tool-versions
+
+# VSCode #
+##########
+*.code-workspace
+launch.json
