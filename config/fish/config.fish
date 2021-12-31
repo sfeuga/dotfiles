@@ -1,8 +1,3 @@
-# RVM
-if test -f ~/.rvm
-  set -U fish_greetingrvm default
-end
-
 # ASDF
 #   https://asdf-vm.com/guide/getting-started.html#_2-download-asdf
 if test -f ~/.asdf/asdf.fish
@@ -14,6 +9,12 @@ if test -f ~/.asdf/asdf.fish
     end
 end
 
+# DirEnv
+#  https://github.com/direnv/direnv/blob/master/docs/hook.md
+if test -e "$HOME/.asdf/installs/direnv"
+  direnv hook fish | source
+end
+
 # Go
 if test -e "$HOME/.asdf/installs/golang/"
   set -gx GOPATH (go env | grep GOPATH | sed 's/GOPATH=//' | sed 's/"//g')
@@ -21,6 +22,6 @@ if test -e "$HOME/.asdf/installs/golang/"
 end
 
 # Rust
-if test -e "$HOME/.asdf/installs/rust/1.55.0"
-  set -gxa PATH "$HOME/.asdf/installs/rust/1.55.0/bin"
+if test -e "$HOME/.asdf/installs/rust/1.57.0"
+  set -gxa PATH "$HOME/.asdf/installs/rust/1.57.0/bin"
 end
