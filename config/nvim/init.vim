@@ -34,7 +34,7 @@ Plug 'rhysd/git-messenger.vim'                                         " Reveal 
 Plug 'rhysd/vim-github-actions'                                        " Filetype support for GitHub Actions            https://github.com/rhysd/vim-github-actions
 Plug 'ryanoasis/vim-devicons'                                          " Adds filetype glyphs to various vim plugins    https://github.com/ryanoasis/vim-devicons
 Plug 'sfeuga/dockerfile.vim'                                           " Syntax file for Docker's Dockerfile            https://github.com/elemecca/dockerfile.vim
-Plug 'sirver/ultisnips'                                                " Ultimate solution for snippets                 https://github.com/SirVer/ultisnips
+"Plug 'sirver/ultisnips'                                                " Ultimate solution for snippets                 https://github.com/SirVer/ultisnips
 Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
 Plug 'tomasr/molokai', {'as': 'molokai' }                              " My favorite theme !                            https://github.com/tomasr/molokai
 Plug 'tpope/vim-cucumber', { 'for': 'feature' }                        " Syntax highlight, indent, and more             https://github.com/tpope/vim-cucumber
@@ -130,7 +130,7 @@ set number                                                             " Display
 set numberwidth=5                                                      " Line number width
 set cursorline                                                         " Highlight current line
 set ruler                                                              " Always show current position
-set textwidth=80                                                       " Line wrap at 80 chars
+set textwidth=120                                                      " Line wrap at 80 chars
 set lazyredraw                                                         " Redraw only when we need to
 set undofile                                                           " Persistent undo after close Vim
 autocmd TermOpen * setlocal wrap                                       " Wrap text in terminal
@@ -349,6 +349,15 @@ autocmd VimEnter,BufRead,BufNewFile .z{shrc,login}                       set fil
 autocmd VimEnter,BufRead,BufNewFile *.m{d,kd,kdn,dwn,mdown,arkdown}      set filetype=markdown
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""" Macro
+" Change docker-compose variable to .env variable
+let @e = 'wwd$a$€khwvw€kly€@7a{pww'
+
+" Setup Security CI
+let @s = 'c$include:o- project: ''hogwarts/gitlab-ci-templates''ofile:o- ''Docker-Executor.gitlab-ci.yml''o- ''Security.gitlab-ci.yml''oo0istages:0dwo- scan'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ Plugins Parameters
 
