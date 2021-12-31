@@ -50,7 +50,6 @@
 [gpg]
   program = gpg
 [init]
-  templatedir = ~/.git-templates
   defaultbranch = main
 [user]
   email = sfeuga@member.fsf.org
