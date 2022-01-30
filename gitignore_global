@@ -32,10 +32,15 @@ Thumbs.db
 *.*~
 *~
 
+# Git #
+#######
+*.patch
+
 # dotenv files #
 ###############
 .env
 .env.*
+.envrc
 
 # my script specials #
 ######################
