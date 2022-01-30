@@ -1,5 +1,6 @@
 awscli 2.4.6
 direnv 2.29.0
+exa 0.10.1
 golang 1.17.5
 java openjdk-17.0.1
 jq 1.6
