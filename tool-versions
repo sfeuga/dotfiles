@@ -12,3 +12,4 @@ ruby 3.0.3
 rust 1.57.0
 sqlite 3.37.0
 task 3.9.2
+tokei 12.1.2
