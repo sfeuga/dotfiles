@@ -349,6 +349,11 @@ autocmd VimEnter,BufRead,BufNewFile .z{shrc,login}                       set fil
 autocmd VimEnter,BufRead,BufNewFile *.m{d,kd,kdn,dwn,mdown,arkdown}      set filetype=markdown
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Neovim Wrapper
+let g:ruby_host_prog = '~/.asdf/shims/neovim-ruby-host'
+let g:python3_host_prog = '/home/sfo/.asdf/shims/python3'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ Macro
 " Change docker-compose variable to .env variable
