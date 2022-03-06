@@ -16,7 +16,7 @@ else
   set flatpak ''
 end
 
-function asdf_update --description "An easy way to update your default app"
+function asdf_update --description "An easy way to update your asdf default app"
   if test -f "$HOME/.tool-versions"
     for app in (cat "$HOME/.tool-versions")
       set app_name (echo "$app" | awk '{print $1}')
