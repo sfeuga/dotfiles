@@ -4,6 +4,3 @@ Host *
   ControlPersist 4h
   UseKeychain yes
 
-Host osmc
-  HostName 192.168.100.250
-  User root
