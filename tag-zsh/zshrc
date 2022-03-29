@@ -95,6 +95,7 @@ plugins=(
     history
     history-substring-search
     macos
+    sudo
     vscode
 )
 
