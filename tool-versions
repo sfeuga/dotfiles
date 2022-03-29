@@ -6,6 +6,7 @@ exa 0.10.1
 golang 1.17.7
 java openjdk-17.0.2
 jq 1.6
+lua 5.4.4
 neovim 0.6.1
 nodejs 17.5.0
 python 3.10.2
