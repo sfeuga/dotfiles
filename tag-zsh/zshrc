@@ -84,6 +84,7 @@ POWERLEVEL9K_MODE="awesome-patched"
 plugins=(
     asdf
     brew
+    direnv
     emoji
     emoji-clock
     git
