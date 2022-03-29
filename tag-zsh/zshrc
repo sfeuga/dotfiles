@@ -83,6 +83,7 @@ POWERLEVEL9K_MODE="awesome-patched"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     asdf
+    aws
     brew
     direnv
     emoji
