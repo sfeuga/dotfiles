@@ -96,7 +96,6 @@ plugins=(
     history-substring-search
     macos
     sudo
-    vscode
 )
 
 source $ZSH/oh-my-zsh.sh
