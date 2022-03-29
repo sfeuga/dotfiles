@@ -85,6 +85,7 @@ plugins=(
     asdf
     aws
     brew
+    bundler
     direnv
     emoji
     emoji-clock
