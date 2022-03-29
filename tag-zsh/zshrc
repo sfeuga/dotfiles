@@ -86,6 +86,7 @@ plugins=(
     aws
     bundler
     direnv
+    docker
     emoji
     emoji-clock
     git
