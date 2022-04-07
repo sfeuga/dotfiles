@@ -166,5 +166,9 @@ if [ -e "$HOME/bin" ]; then
   export PATH="$HOME/bin:$PATH"
 fi
 
+if which nvim > /dev/null; then
+  alias vim=nvim
+fi
+
 GPG_TTY=$TTY
 export GPG_TTY
