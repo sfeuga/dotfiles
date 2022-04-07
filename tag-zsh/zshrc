@@ -161,5 +161,10 @@ if [[ -d /Applications/Docker.app ]]; then
   done
 fi
 
+### Local bin
+if [ -e "$HOME/bin" ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
 GPG_TTY=$TTY
 export GPG_TTY
