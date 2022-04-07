@@ -518,6 +518,30 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ My functions
+" Get running OS
+let os = ""
+if has("win32")
+  let os="win"
+  " Display OS in statusline
+  "set statusline+=\ \|\ win
+elseif has("unix")
+  let s:uname = system("uname")
+  if s:uname =~ "Darwin"
+    " Display OS in statusline
+    "set statusline+=\ \|\ mac
+    let os="mac"
+  else
+    " Display OS in statusline
+    "set statusline+=\ \|\ unix
+    let os="unix"
+  endif
+endif
+
+" Set python 3 path on macOS (need pip install pynvim)
+if os=="mac"
+  let g:python3_host_prog = expand('~/.asdf/shims/python3')
+endif
+
 " Press [gh] to open the GitHub URL for a plugin or a commit with the default browser
 function! s:plug_gx()
   let line = getline('.')
