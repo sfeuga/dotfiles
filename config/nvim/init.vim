@@ -193,6 +193,11 @@ set tabstop=2                                                          " 1 tab =
 set expandtab                                                          " Convert tab to space
 set shiftwidth=2                                                       " 1 tab == 2 spaces
 set smarttab                                                           " Inserts blanks according to 'shiftwidth'
+set softtabstop=0                                                      " Setting this to a non-zero value other than
+                                                                       "   tabstop will make the tab key (in insert
+                                                                       "   mode) insert a combination of spaces (and
+                                                                       "   possibly tabs) to simulate tab stops at this
+                                                                       "   width.
 set backspace=indent,eol,start                                         " Backspace through everything in insert mode
 
 """ Search
@@ -330,23 +335,25 @@ vnoremap    D                   y'>o<ESC>p
 """ File type mapping
 autocmd FileType ruby compiler ruby                                      " Set MRI as default ruby compiler
 autocmd FileType fish compiler fish                                      " Set fish as default fish compiler
-autocmd VimEnter,BufRead,BufNewFile *.gemspec                            set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile *.rake                               set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile *.thor                               set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile Gemfile                              set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile Guardfile                            set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile Procfile                             set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile Rakefile                             set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile Thorfile                             set filetype=ruby
-autocmd VimEnter,BufRead,BufNewFile config.ru                            set filetype=ruby
+autocmd VimEnter,BufRead,BufNewFile *.rb                                 set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile *.gemspec                            set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile *.rake                               set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile *.thor                               set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile Gemfile                              set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile Guardfile                            set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile Procfile                             set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile Rakefile                             set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile Thorfile                             set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile config.ru                            set filetype=ruby tabstop=4 shiftwidth=4
 autocmd VimEnter,BufRead,BufNewFile *.feature                            set filetype=cucumber
 autocmd VimEnter,BufRead,BufNewFile *.idr                                set filetype=idris
 autocmd VimEnter,BufRead,BufNewFile *.jl                                 set filetype=julia
 autocmd VimEnter,BufRead,BufNewFile *.lfe                                set filetype=lfe
 autocmd VimEnter,BufRead,BufNewFile *.lidr                               set filetype=lidris
-autocmd VimEnter,BufRead,BufNewFile .bash{rc,_profile,_logout,_aliases}  set filetype=sh
-autocmd VimEnter,BufRead,BufNewFile .z{shrc,login}                       set filetype=sh
+autocmd VimEnter,BufRead,BufNewFile .bash{rc,_profile,_logout,_aliases}  set filetype=sh tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile .z{shrc,login}                       set filetype=sh tabstop=2 shiftwidth=2
 autocmd VimEnter,BufRead,BufNewFile *.m{d,arkdown}                       set filetype=markdown
+autocmd VimEnter,BufRead,BufNewFile *.go                                 set filetype=go tabstop=2 shiftwidth=2 noexpandtab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neovim Wrapper
@@ -358,9 +365,6 @@ let g:python3_host_prog = '/home/sfo/.asdf/shims/python3'
 """ Macro
 " Change docker-compose variable to .env variable
 let @e = 'wwd$a$€khwvw€kly€@7a{pww'
-
-" Setup Security CI
-let @s = 'c$include:o- project: ''hogwarts/gitlab-ci-templates''ofile:o- ''Docker-Executor.gitlab-ci.yml''o- ''Security.gitlab-ci.yml''oo0istages:0dwo- scan'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -585,13 +589,13 @@ autocmd BufWrite .*             :call DeleteTrailingWS()
 
 " Add SheBang automatically on new files
 augroup Shebang
-  autocmd BufNewFile *.pl                   0put =\"#!/usr/bin/env perl\<nl>\"|$
+  autocmd BufNewFile *.pl                   0put =\"#!/usr/bin/env perl\<nl>\<nl># Copyright (c) Stephane FEUGA OSHIMA\<nl>#  stephane [@] feuga-oshima.com\<nl>#\<nl># This source code is licensed under the GNU/GPLv3 license found in the\<nl>#   LICENSE file in the root directory of this source tree.\<nl>\<nl>\"|$
+  autocmd BufNewFile *.{sh,bash}            0put =\"#!/usr/bin/env bash\<nl>\<nl># Copyright (c) Stephane FEUGA OSHIMA\<nl>#  stephane [@] feuga-oshima.com\<nl>#\<nl># This source code is licensed under the GNU/GPLv3 license found in the\<nl>#   LICENSE file in the root directory of this source tree.\<nl>\<nl>\"|$
+  autocmd BufNewFile *.tcsh                 0put =\"#!/usr/bin/env tcsh\<nl>\<nl># Copyright (c) Stephane FEUGA OSHIMA\<nl>#  stephane [@] feuga-oshima.com\<nl>#\<nl># This source code is licensed under the GNU/GPLv3 license found in the\<nl>#   LICENSE file in the root directory of this source tree.\<nl>\<nl>\"|$
+  autocmd BufNewFile *.tcsh                 0put =\"#!/usr/bin/env tcsh\<nl>\<nl># Copyright (c) Stephane FEUGA OSHIMA\<nl>#  stephane [@] feuga-oshima.com\<nl>#\<nl># This source code is licensed under the GNU/GPLv3 license found in the\<nl>#   LICENSE file in the root directory of this source tree.\<nl>\<nl>\"|$
+  autocmd BufNewFile *.zsh                  0put =\"#!/usr/bin/env zsh\<nl>\<nl># Copyright (c) Stephane FEUGA OSHIMA\<nl>#  stephane [@] feuga-oshima.com\<nl>#\<nl># This source code is licensed under the GNU/GPLv3 license found in the\<nl>#   LICENSE file in the root directory of this source tree.\<nl>\<nl>\"|$
   autocmd BufNewFile *.py                   0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl>\<nl>\"|$
   autocmd BufNewFile *.rb                   0put =\"# frozen_string_literal: true\<nl>\<nl>\"|$
-  autocmd BufNewFile *.sh                   0put =\"#!/usr/bin/env bash\<nl>\"|$
-  autocmd BufNewFile *.tcsh                 0put =\"#!/usr/bin/env tcsh\<nl>\"|$
-  autocmd BufNewFile *.tcsh                 0put =\"#!/usr/bin/env tcsh\<nl>\"|$
-  autocmd BufNewFile *.zsh                  0put =\"#!/usr/bin/env zsh\<nl>\"|$
   autocmd BufNewFile *.{cc,hh}              0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\<nl>\"|$
   autocmd BufNewFile *.{ldg,ledger,journal} 0put =\"# -*- ledger -*-\<nl># -*- coding: utf-8 -*-\<nl>\<nl>\"|$
 augroup END
