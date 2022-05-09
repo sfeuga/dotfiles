@@ -3,12 +3,13 @@ awscli 2.5.1
 bat 0.19.0
 direnv 2.31.0
 exa 0.10.1
-golang 1.18
+golang 1.18.1
 java openjdk-18
 jq 1.6
 lua 5.4.4
 neovim 0.6.1
 nodejs 17.8.0
+opam 2.1.2
 python 3.10.4
 ruby 3.1.1
 rust 1.59.0
