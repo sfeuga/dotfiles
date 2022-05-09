@@ -68,3 +68,6 @@
   prune = true
 [advice]
   detachedHead = false
+[pager]
+  diff = bat -l diff --style='changes,grid,header,header-filesize'
+  show = bat -l diff --style='changes,grid,header,header-filesize'
