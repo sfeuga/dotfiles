@@ -70,3 +70,7 @@ Session.vim
 ##########
 *.code-workspace
 launch.json
+
+# {ba,z}sh aliases #
+####################
+.aliases
