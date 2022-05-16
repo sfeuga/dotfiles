@@ -248,10 +248,15 @@ tnoremap    :q                  <C-\><C-N>:q<CR>
 imap        :w                  <ESC>:w<CR>
 vmap        :w                  <ESC>:w<CR>
 nmap        :w                  :w<CR>
-" Quick Save + Make Vim Session
-imap        :W                  <ESC>:w<CR>:mksession<CR>
-vmap        :W                  <ESC>:w<CR>:mksession<CR>
-nmap        :W                  :w<CR>:mksession<CR>
+" Quick Save All + Make Vim Session
+imap        :W                  <ESC>:wa<CR>:mksession<CR>
+vmap        :W                  <ESC>:wa<CR>:mksession<CR>
+nmap        :W                  :wa<CR>:mksession<CR>
+" Quick Save & Quit All + Make Vim Session
+imap        :Q                  <ESC>:wa<CR>:mksession<CR>:qa<CR>
+vmap        :Q                  <ESC>:wa<CR>:mksession<CR>:qa<CR>
+nmap        :Q                  :wa<CR>:mksession<CR>:qa<CR>
+tnoremap    :Q                  <C-\><C-N>:wa<CR>:mksession<CR>:qa<CR>
 " Quick Delete
 imap        dw                  <ESC>dw
 " Quick Change
@@ -266,7 +271,7 @@ nnoremap    N                   Nzzzv
 " + toggle open/closes folds
 nnoremap    +                   za
 " Insert digraph
-inoremap    <Leader>k           <C-K>
+"inoremap    <Leader>k           <C-K>
 " Easy resize windows
 inoremap    <A-right>           <Esc>:vertical resize +5<CR>i
 vnoremap    <A-right>           <Esc>:vertical resize +5<CR>v
