@@ -54,7 +54,7 @@
 [user]
   email = sfeuga@member.fsf.org
   name = Stéphane FEUGA OSHIMA
-  signingKey = FE68EE6758FACFAC
+  signingKey = 7809E85A0352E9AF
 [filter "lfs"]
   clean = git-lfs clean -- %f
   process = git-lfs filter-process
