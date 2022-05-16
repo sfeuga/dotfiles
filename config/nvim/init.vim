@@ -4,7 +4,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 "Plug 'colinkennedy/vim-vex-complete'                                   " Auto-completes functions for VEX               https://github.com/ColinKennedy/vim-vex-complete
 "Plug 'drichardson/vex.vim'                                             " VEX support for Vim                            https://github.com/drichardson/vim-vex
 "Plug 'fatih/vim-go'                                                    " Go support for Vim                             https://github.com/fatih/vim-go
-"Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
 "Plug 'honza/vim-snippets'                                              " Snippets files for various languages           https://github.com/honza/vim-snippets
 "Plug 'jamessan/vim-gnupg'                                              " Transparent editing of gpg encrypted files     https://github.com/jamessan/vim-gnupg
 "Plug 'jiangmiao/auto-pairs'                                            " Insert/Delete '[', '(', '{'... in pair         https://github.com/jiangmiao/auto-pairs
@@ -31,7 +30,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 "Plug 'tpope/vim-rvm'                                                   " Switch Ruby versions from inside Vim           https://github.com/tpope/vim-rvm
 "Plug 'tpope/vim-surround'                                              " Quoting/parenthesizing made simple             https://github.com/tpope/vim-surround
 "Plug 'tpope/vim-unimpaired'                                            " Pairs of handy bracket mappings                https://github.com/tpope/vim-unimpaired
-"Plug 'uarun/vim-protobuf'                                              " Syntax highlighting for Google's ProtoBuf      https://github.com/uarun/vim-protobuf
 "Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                            " Provides motions and text objects for Ruby     https://github.com/vim-ruby/vim-ruby
 "Plug 'vim-scripts/bats.vim', { 'for': 'bash' }                         " Extends shell highlighting for Bats            https://github.com/vim-scripts/bats.vim
 "Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                " Source code browser                            https://vimawesome.com/plugin/taglist-vim
@@ -39,6 +37,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ctrlpvim/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPMixed'] }           " Fuzzy file, buffer, mru, tag... finder         https://github.com/ctrlpvim/ctrlp.vim
 Plug 'dag/vim-fish'                                                    " Add syntax files for fish sell files           https://github.com/dag/vim-fish
 Plug 'editorconfig/editorconfig-vim'                                   " EditorConfig Vim Plugin                        https://github.com/editorconfig/editorconfig-vim
+Plug 'godlygeek/tabular'                                               " Aligning text                                  https://github.com/godlygeek/tabular
 Plug 'itchyny/vim-gitbranch'                                           " Returns the name of the git branch             https://github.com/itchyny/vim-gitbranch
 Plug 'lambdalisue/suda.vim'                                            " Add missing !sudo tee % feature                https://github.com/lambdalisue/suda.vim
 Plug 'machakann/vim-highlightedyank'                                   " Make the yanked region apparent!               https://github.com/machakann/vim-highlightedyank
@@ -53,6 +52,7 @@ Plug 'tomasr/molokai', {'as': 'molokai' }                              " My favo
 Plug 'tpope/vim-dotenv'                                                " Basic support for .env and Procfile            https://github.com/tpope/vim-dotenv
 Plug 'tpope/vim-endwise'                                               " Adding end after if, do, def                   https://github.com/tpope/vim-endwise
 Plug 'tpope/vim-speeddating'                                           " Make vim understand date format                https://github.com/tpope/vim-speeddating
+Plug 'uarun/vim-protobuf'                                              " Syntax highlighting for Google's ProtoBuf      https://github.com/uarun/vim-protobuf
 Plug 'xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }         " Add git status flags to NERDTree               https://github.com/Xuyuanp/nerdtree-git-plugin
 call plug#end()
 
