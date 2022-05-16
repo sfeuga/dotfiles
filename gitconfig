@@ -45,7 +45,7 @@
   tag-delete = push --delete origin $1 && git tag -d $1
   tags = tag -l
   unstage = reset HEAD --
-  unwip = !"git log -n 1 | grep -q -c WIP && git reset HEAD~1"
+  unwip = !"git log -n 1 | grep -q -c -i WIP && git reset HEAD~1"
   wip = !git add -u && git commit -m "WIP"
 [gpg]
   program = gpg
