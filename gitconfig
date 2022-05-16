@@ -20,6 +20,7 @@
   trustexitcode = false
 [alias]
   a = add
+  alias = !git config --global -l | grep alias | sed 's/alias.//' | sed 's/=/\t=> /'
   b = branch
   branches = branch -a
   bugrelease = "!sh -c 'git name-rev --tags --name-only  $(git log --grep ^$1: --pretty=\"format:%H\n\")' -"
