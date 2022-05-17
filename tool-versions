@@ -3,6 +3,7 @@ awscli 2.7.0
 bat 0.19.0
 direnv 2.31.0
 exa 0.10.1
+github-cli 2.10.1
 golang 1.18.2
 java openjdk-18
 jq 1.6
