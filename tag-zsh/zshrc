@@ -174,5 +174,20 @@ if which nvim > /dev/null; then
   alias vim=nvim
 fi
 
+# Github-cli (https://cli.github.com)
+if which gh > /dev/null; then
+  GH_NO_UPDATE_NOTIFIER=false
+  export GH_NO_UPDATE_NOTIFIER
+
+  GH_PAGER="bat -l diff --style='changes,grid,header,header-filesize'"
+  export GH_PAGER
+
+  GLAMOUR_STYLE=dark
+  export GLAMOUR_STYLE
+
+  GH_BROWSER="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  export GH_BROWSER
+fi
+
 GPG_TTY=$TTY
 export GPG_TTY
