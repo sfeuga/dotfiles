@@ -47,7 +47,7 @@
   tags = tag -l
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c -i WIP && git reset HEAD~1"
-  wip = !git add -u && git commit -m "WIP"
+  wip = !git add -u && git commit -m "WIP" && git push -f
 [gpg]
   program = gpg
 [init]
