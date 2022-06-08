@@ -130,8 +130,12 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias mkdir="take"
+alias dev="/Users/sfo/Documents/Developments"
 alias work="/Users/sfo/Documents/Developments/Abbeal/Shippio"
-alias mykey="gpg --list-secret-keys --keyid-format LONG"
+alias gpg_secret_keys="gpg --list-secret-keys --keyid-format LONG"
+alias gpg_kill_agent="gpgconf --kill gpg-agent"
+alias find_app_id="mdls -name kMDItemCFBundleIdentifier -r"
+alias ls="ls -AF --color=always"
 
 if test -n "$KITTY_INSTALLATION_DIR"; then
     export KITTY_SHELL_INTEGRATION="no-cursor"
@@ -150,18 +154,38 @@ then
 
   autoload -Uz compinit
   compinit
+
+  alias bupdate="brew update && brew upgrade && brew upgrade --casks --greedy"
 fi
+
 export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
+  . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+  function asdf_update () {
+    cat ~/.tool-versions | while read line; do
+      if [[ ! "$line" =~ "java" ]]; then
+        app=$(echo "$line" | awk '{print $1}')
+        asdf install "$app" latest && asdf global "$app" latest
+      fi
+    done
+    clear
+    asdf list
+  }
+
+  alias aupdate=asdf_update
+fi
 
 # Docker
 if [[ -d /Applications/Docker.app ]]; then
   for f in docker docker-compose; do
-    source /Applications/Docker.app/Contents/Resources/etc/${f}.zsh-completion
-    compdef _${f} ${f}
-    autoload -U _${f}
+    if [ -f /Applications/Docker.app/Contents/Resources/etc/${f}.zsh-completion ]; then
+      source /Applications/Docker.app/Contents/Resources/etc/${f}.zsh-completion
+      compdef _${f} ${f}
+      autoload -U _${f}
+    fi
   done
 fi
 
@@ -176,17 +200,14 @@ fi
 
 # Github-cli (https://cli.github.com)
 if which gh > /dev/null; then
-  GH_NO_UPDATE_NOTIFIER=false
+  GH_NO_UPDATE_NOTIFIER='false'
   export GH_NO_UPDATE_NOTIFIER
 
-  GH_PAGER="bat -l diff --style='changes,grid,header,header-filesize'"
+  GH_PAGER="bat -l diff --style='changes,grid'"
   export GH_PAGER
 
-  GLAMOUR_STYLE=dark
+  GLAMOUR_STYLE='dark'
   export GLAMOUR_STYLE
-
-  GH_BROWSER="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-  export GH_BROWSER
 fi
 
 GPG_TTY=$TTY
