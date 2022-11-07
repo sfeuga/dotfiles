@@ -1,5 +1,41 @@
-[push]
-  default = current
+[advice]
+  detachedHead = false
+[alias]
+  alias = !"git config -l | grep alias | sed 's/alias.//' | sed 's/=/\t=> /'"
+  branches = branch -a
+  can = commit --gpg-sign --amend --no-edit
+  clean-local-branches = !"for branch in $(git branch | grep -v main | grep -v "^*"); do git branch -D $branch; done"
+  conf = config -l
+  conf-global = config --global -l
+  conf-local = config --local -l
+  finDbug = !"git log --grep=^$1: -"
+  force-can = !"git gpg && git commit --gpg-sign --amend --no-edit"
+  force-commit = !"git gpg && git commit --gpg-sign"
+  force-save = !"git fwip && git unwip"
+  force-wip = !"git add -u && git gpg && git commit --gpg-sign -m "wip" && git push -f"
+  gpg = !"gpgconf --kill gpg-agent"
+  l = log -5 --stat
+  last = log -1 --stat
+  lg = log -20 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+  p = pull --all -p
+  release = !"git name-rev --tags --name-only $(git log --grep ^$1: --pretty=\"format:%H\n\") -"
+  remotes = remote -v
+  rpo = remote prune origin
+  s = status -sb
+  save = !"git wip && git unwip"
+  search = !"git rev-list --all | xargs git grep -F"
+  sl = !"git show $(git log -1 --pretty=format:%H)"
+  sls = !"git show stash@{0}"
+  stashes = stash list
+  sync = sync-repo
+  tag-delete = push --delete origin $1 && git tag -d $1
+  tags = tag -l
+  unstage = reset HEAD --
+  unwip = !"git log -n 1 | grep -q -c -i wip && git reset HEAD~1"
+  wip = !"git add -u && git commit --gpg-sign -m wip && git push -f"
+[color]
+  ui = true
 [commit]
   gpgsign = true
 [core]
@@ -7,68 +43,38 @@
   editor = nvim
   excludesfile = ~/.gitignore_global
   filemode = false
-  pager =
+  pager = bat
   trustctime = false
-[color]
-  ui = true
 [credential]
   helper = cache --timeout=604800
-[mergetool]
-  keepbackups = false
-  keeptemporaries = false
-  prompt = false
-  trustexitcode = false
-[alias]
-  a = add
-  alias = !git config --global -l | grep alias | sed 's/alias.//' | sed 's/=/\t=> /'
-  b = branch
-  branches = branch -a
-  bugrelease = "!sh -c 'git name-rev --tags --name-only  $(git log --grep ^$1: --pretty=\"format:%H\n\")' -"
-  can = commit --gpg-sign --amend --no-edit
-  co = checkout
-  cob = checkout-new-branch
-  ctags = !.git/hooks/ctags
-  diffc = diff --cached
-  findbug = "!sh -c 'git log --grep=^$1:' -"
-  gl = config --global -l
-  graph-log = log --oneline --decorate --graph --all
-  l = !git log | head -n 30
-  last = log -1 --stat
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
-  mkg = !mkgitignore -d
-  remotes = remote -v
-  rpo = remote prune origin
-  sb = status -sb
-  search = !git rev-list --all | xargs git grep -F
-  stashes = stash list
-  sync = sync-repo
-  tag-delete = push --delete origin $1 && git tag -d $1
-  tags = tag -l
-  unstage = reset HEAD --
-  unwip = !"git log -n 1 | grep -q -c -i WIP && git reset HEAD~1"
-  wip = !git add -u && git commit -m "WIP" && git push -f
-[gpg]
-  program = gpg
-[init]
-  defaultbranch = main
-[user]
-  email = sfeuga@member.fsf.org
-  name = Stéphane FEUGA OSHIMA
-  signingKey = 7809E85A0352E9AF
+[fetch]
+  prune = true
 [filter "lfs"]
   clean = git-lfs clean -- %f
   process = git-lfs filter-process
   required = true
   smudge = git-lfs smudge -- %f
-[pull]
-  rebase = true
 [gist]
   private = yes
-[fetch]
-  prune = true
-[advice]
-  detachedHead = false
+[gpg]
+  program = gpg
+[help]
+  autocorrect = 1
+[init]
+  defaultbranch = main
+[mergetool]
+  keepbackups = false
+  keeptemporaries = false
+  prompt = false
+  trustexitcode = false
 [pager]
-  diff = bat -l diff --style='changes,grid,header,header-filesize'
-  show = bat -l diff --style='changes,grid,header,header-filesize'
+  diff = bat -l diff --style='changes,grid'
+  show = bat -l diff --style='changes,grid'
+[pull]
+  rebase = true
+[push]
+  default = current
+[user]
+  email = sfeuga@member.fsf.org
+  name = Stéphane FEUGA OSHIMA
+  signingKey = 7809E85A0352E9AF
