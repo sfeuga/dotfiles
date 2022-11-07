@@ -248,11 +248,7 @@ tnoremap    :q                  <C-\><C-N>:q<CR>
 imap        :w                  <ESC>:w<CR>
 vmap        :w                  <ESC>:w<CR>
 nmap        :w                  :w<CR>
-" Quick Save All + Make Vim Session
-imap        :W                  <ESC>:wa<CR>:mksession<CR>
-vmap        :W                  <ESC>:wa<CR>:mksession<CR>
-nmap        :W                  :wa<CR>:mksession<CR>
-" Quick Save & Quit All + Make Vim Session
+" Quick Save + Make Vim Session & Quit All
 imap        :Q                  <ESC>:wa<CR>:mksession<CR>:qa<CR>
 vmap        :Q                  <ESC>:wa<CR>:mksession<CR>:qa<CR>
 nmap        :Q                  :wa<CR>:mksession<CR>:qa<CR>
