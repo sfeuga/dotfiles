@@ -1,4 +1,5 @@
-ssh-add ~/.ssh/macmini
+hostname=${$(uname -n)%.local}
+ssh-add ~/.ssh/$hostname
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -9,12 +10,6 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-  curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-fi
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -23,7 +18,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-POWERLEVEL9K_MODE="awesome-patched"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -211,25 +205,6 @@ elif alias aupdate &>/dev/null; then
   alias sysupdate=aupdate
 fi
 
-# Docker / Podman
-if which podman > /dev/null; then
-  alias docker=podman
-
-  export DOCKER_HOST='unix:///Users/sfo/.local/share/containers/podman/machine/podman-machine-default/podman.sock'
-
-  if which podman-compose > /dev/null; then
-    alias docker-compose=podman-compose
-  fi
-elif [[ -d /Applications/Docker.app ]]; then
-  for f in docker docker-compose; do
-    if [ -f /Applications/Docker.app/Contents/Resources/etc/${f}.zsh-completion ]; then
-      source /Applications/Docker.app/Contents/Resources/etc/${f}.zsh-completion
-      compdef _${f} ${f}
-      autoload -U _${f}
-    fi
-  done
-fi
-
 ### Local bin
 if [ -e "$HOME/bin" ]; then
   export PATH="$HOME/bin:$PATH"
@@ -244,7 +219,7 @@ if which nvim > /dev/null; then
 fi
 
 # Github-cli (https://cli.github.com)
-if which gh > /dev/null; then
+if [[ -e "/opt/homebrew/bin/gh" ]]; then
   GH_NO_UPDATE_NOTIFIER='false'
   export GH_NO_UPDATE_NOTIFIER
 
@@ -265,4 +240,6 @@ fi
 export GPG_TTY=$TTY
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+if [ -e "$HOME/.rvm/bin" ]; then
+  export PATH="$PATH:$HOME/.rvm/bin"
+fi
