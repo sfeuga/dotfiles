@@ -1,0 +1,5 @@
+nvim/.local/state/nvim/undo
+nvim/.local/share/nvim/plugged
+nvim/.local/state
+fish/.local/share/fish/fish_history
+fish/.local/share/fish/generated_completions
