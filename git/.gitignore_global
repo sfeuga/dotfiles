@@ -84,6 +84,10 @@ dc.yml
 wiki/.*
 wiki
 
+# nVim Plugins params #
+#######################
+nvim/.local/share/direnv/
+
 # Shippio SO project #
 ######################
 data/*.csv
