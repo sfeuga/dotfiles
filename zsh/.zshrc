@@ -124,6 +124,7 @@ source $ZSH/oh-my-zsh.sh
 alias find_app_id="mdls -name kMDItemCFBundleIdentifier -r"
 alias gpg_kill_agent="gpgconf --kill gpg-agent"
 alias gpg_secret_keys="gpg --list-secret-keys --keyid-format LONG"
+alias gpg_public_keys="gpg --list-keys --keyid-format LONG"
 alias ls="ls -AF --color=always"
 alias mkd="take"
 
