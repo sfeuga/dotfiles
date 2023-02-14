@@ -129,7 +129,7 @@ alias ls="ls -AF --color=always"
 alias mkd="take"
 
 alias dev="/Users/sfo/Documents/Developments"
-alias work="/Users/sfo/Documents/Developments/Abbeal/Shippio/simple-operation/"
+alias work="/Users/sfo/Documents/Developments/Abbeal/Cartier/Mapper"
 
 if test -n "$KITTY_INSTALLATION_DIR"; then
     export KITTY_SHELL_INTEGRATION="no-cursor"
