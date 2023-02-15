@@ -131,6 +131,8 @@ alias mkd="take"
 alias dev="/Users/sfo/Documents/Developments"
 alias work="/Users/sfo/Documents/Developments/Abbeal/Cartier/Mapper"
 
+export GPG_TTY=$TTY
+
 if test -n "$KITTY_INSTALLATION_DIR"; then
     export KITTY_SHELL_INTEGRATION="no-cursor"
     autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
@@ -224,7 +226,11 @@ if [[ -e "/opt/homebrew/bin/gh" ]]; then
   GH_NO_UPDATE_NOTIFIER='false'
   export GH_NO_UPDATE_NOTIFIER
 
-  GH_PAGER="bat -l diff --style='changes,grid'"
+  if which bat > /dev/null; then
+    GH_PAGER="bat -l diff --style='changes,grid'"
+  else
+    GH_PAGER="less"
+  fi
   export GH_PAGER
 
   GLAMOUR_STYLE='dark'
@@ -233,14 +239,26 @@ fi
 
 # Go
 if [[ -e "$HOME/go" ]]; then
-  latestGoVersion=$(find ~/go/ -iname "go1.*" -type d | sort -hr | head -n 1 | awk -F '/' '{ print $NF }')
-  export GOPATH=$HOME/go
-  export PATH="$GOPATH/bin:$GOPATH/$latestGoVersion/bin:$PATH"
+  go_root="$HOME/go"
+elif [[ -e "$HOME/.asdf/installs/golang" ]]; then
+  go_root="$HOME/.asdf/installs/golang"
 fi
 
-export GPG_TTY=$TTY
+if [[ -n "$go_root" ]]; then
+  latest_go_version=$(ls --color=never $go_root | sort -hr | head -n 1 | sed 's|/||')
 
+  export GOPATH="$go_root/$latest_go_version/go"
+  export PATH="$GOPATH/bin:$PATH"
+fi
+
+# Ruby
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [ -e "$HOME/.rvm/bin" ]; then
   export PATH="$PATH:$HOME/.rvm/bin"
 fi
+
+# JS
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
