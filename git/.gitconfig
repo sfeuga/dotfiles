@@ -75,6 +75,4 @@
 [push]
   default = current
 [user]
-  email = sfeuga@member.fsf.org
   name = Stéphane FEUGA OSHIMA
-  signingKey = 7809E85A0352E9AF

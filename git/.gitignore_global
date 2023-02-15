@@ -75,10 +75,6 @@ launch.json
 ####################
 .aliases
 
-# Docker Compose #
-##################
-dc.yml
-
 # Github Wiki #
 ###############
 wiki/.*
@@ -88,15 +84,3 @@ wiki
 #######################
 nvim/.local/share/direnv/
 
-# Shippio SO project #
-######################
-data/*.csv
-data/*.jpeg
-data/*.jpg
-data/*.json
-data/*.pgerd
-data/*.png
-data/Master*
-data/Prod*
-data/Stg*
-data/fake_shift.sh
