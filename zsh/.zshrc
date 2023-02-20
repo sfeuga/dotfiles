@@ -132,8 +132,8 @@ alias gpg_public_keys="gpg --list-keys --keyid-format LONG"
 alias ls="ls -AF --color=always"
 alias mkd="take"
 
-alias dev="/Users/sfo/Documents/Developments"
-alias work="/Users/sfo/Documents/Developments/Abbeal/Cartier/Mapper"
+alias dev="$HOME/Developments"
+alias work="$HOME/Developments/Abbeal/Cartier/*ackend"
 
 export GPG_TTY=$TTY
 
