@@ -1,5 +1,9 @@
-hostname=${$(uname -n)%.local}
-ssh-add ~/.ssh/$hostname
+# Add ssh private keys
+for f in ~/.ssh/*; do
+  if [[ ! "$f" =~ "config" && ! "$f" =~ "known_hosts"  && ! "$f" =~ ".pub" ]]; then
+    ssh-add "$f";
+  fi;
+done
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
