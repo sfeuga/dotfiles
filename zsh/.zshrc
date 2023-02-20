@@ -220,6 +220,7 @@ if [ -e "$HOME/.local/bin" ]; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
+# NeoVim
 if which nvim > /dev/null; then
   export EDITOR="nvim"
   alias vim=nvim
@@ -269,6 +270,7 @@ if [ -e "$HOME/.nvm" ]; then
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 fi
 
+# Python
 if type pyenv &>/dev/null; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
