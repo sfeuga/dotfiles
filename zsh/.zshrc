@@ -151,7 +151,7 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit
 
-  alias bupdate="brew update && brew upgrade && brew upgrade --casks --greedy"
+  alias bupdate="brew update && brew upgrade; brew upgrade --casks --greedy"
 fi
 
 unset LDFLAGS
