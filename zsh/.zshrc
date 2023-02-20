@@ -227,8 +227,8 @@ if which nvim > /dev/null; then
 fi
 
 # Github-cli (https://cli.github.com)
-if [[ -e "/opt/homebrew/bin/gh" ]]; then
-  GH_NO_UPDATE_NOTIFIER='false'
+if [[ -e "/opt/homebrew/bin/gh" || -e "$HOME/.asdf/shims/gh" ]]; then
+  GH_NO_UPDATE_NOTIFIER=false
   export GH_NO_UPDATE_NOTIFIER
 
   if which bat > /dev/null; then
@@ -238,7 +238,7 @@ if [[ -e "/opt/homebrew/bin/gh" ]]; then
   fi
   export GH_PAGER
 
-  GLAMOUR_STYLE='dark'
+  GLAMOUR_STYLE=dark
   export GLAMOUR_STYLE
 fi
 
