@@ -245,14 +245,18 @@ fi
 # Go
 if [[ -e "$HOME/go" ]]; then
   go_root="$HOME/go"
-elif [[ -e "$HOME/.asdf/installs/golang" ]]; then
-  go_root="$HOME/.asdf/installs/golang"
+  if [[ -e "$HOME/go/bin" ]]; then
+    go_bin="$HOME/go/bin"
+    export PATH="$go_bin:$PATH"
+  fi
+#elif [[ -e "$HOME/.asdf/installs/golang" ]]; then
+#  go_root="$HOME/.asdf/installs/golang"
 fi
 
 if [[ -n "$go_root" ]]; then
-  latest_go_version=$(ls --color=never $go_root | sort -hr | head -n 1 | sed 's|/||')
+  latest_go_version=$(\ls --color=never $go_root | sort -hr | grep "^go.*" | head -n 1 | sed 's|/||')
 
-  export GOPATH="$go_root/$latest_go_version/go"
+  export GOPATH="$go_root/$latest_go_version"
   export PATH="$GOPATH/bin:$PATH"
 fi
 
