@@ -1,7 +1,7 @@
 [advice]
   detachedHead = false
 [alias]
-  alias = !"git config -l | grep alias | sed 's/alias.//' | sed 's/=/\t=> /'"
+  alias = !"git config -l | grep alias | sed 's/alias.//' | grep -v alias | sed 's/=/❌/' | column -s ❌ -x -t"
   branches = branch -a
   can = commit --gpg-sign --amend --no-edit
   clean-local-branches = !"for branch in $(git branch | grep -v main | grep -v "^*"); do git branch -D $branch; done"
@@ -16,7 +16,7 @@
   gpg = !"gpgconf --kill gpg-agent"
   l = log -5 --stat
   last = log -1 --stat
-  lg = log -20 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lg = log -50 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
   p = pull --all -p
   release = !"git name-rev --tags --name-only $(git log --grep ^$1: --pretty=\"format:%H\n\") -"
