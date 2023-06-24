@@ -226,6 +226,16 @@ if which nvim > /dev/null; then
   alias vim=nvim
 fi
 
+# VSCode / Codium
+if which codium > /dev/null; then
+  alias code=codium
+fi
+
+# JQ / GoJQ
+if which gojq > /dev/null; then
+  alias jq=gojq
+fi
+
 # Github-cli (https://cli.github.com)
 if [[ -e "/opt/homebrew/bin/gh" || -e "$HOME/.asdf/shims/gh" ]]; then
   GH_NO_UPDATE_NOTIFIER=false
@@ -242,45 +252,72 @@ if [[ -e "/opt/homebrew/bin/gh" || -e "$HOME/.asdf/shims/gh" ]]; then
   export GLAMOUR_STYLE
 fi
 
-# Go
-if [[ -e "$HOME/go" ]]; then
-  go_root="$HOME/go"
-  if [[ -e "$HOME/go/bin" ]]; then
-    go_bin="$HOME/go/bin"
-    export PATH="$go_bin:$PATH"
-  fi
-#elif [[ -e "$HOME/.asdf/installs/golang" ]]; then
-#  go_root="$HOME/.asdf/installs/golang"
-fi
+## Go
+#if [[ -e "$HOME/go" ]]; then
+#  go_root="$HOME/go"
+#  if [[ -e "$HOME/go/bin" ]]; then
+#    go_bin="$HOME/go/bin"
+#    export PATH="$go_bin:$PATH"
+#  fi
+##elif [[ -e "$HOME/.asdf/installs/golang" ]]; then
+##  go_root="$HOME/.asdf/installs/golang"
+#fi
+#
+#if [[ -n "$go_root" ]]; then
+#  latest_go_version=$(\ls --color=never $go_root | sort -hr | grep "^go.*" | head -n 1 | sed 's|/||')
+#
+#  export GOPATH="$go_root/$latest_go_version"
+#  export PATH="$GOPATH/bin:$PATH"
+#fi
 
-if [[ -n "$go_root" ]]; then
-  latest_go_version=$(\ls --color=never $go_root | sort -hr | grep "^go.*" | head -n 1 | sed 's|/||')
+## Ruby
+## Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+#if [ -e "$HOME/.rvm/bin" ]; then
+#  export PATH="$PATH:$HOME/.rvm/bin"
+#fi
 
-  export GOPATH="$go_root/$latest_go_version"
-  export PATH="$GOPATH/bin:$PATH"
-fi
+## JS
+#if [ -e "$HOME/.nvm" ]; then
+#  # NVM
+#  export NVM_DIR="$HOME/.nvm"
+#  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+#  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+#fi
 
-# Ruby
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-if [ -e "$HOME/.rvm/bin" ]; then
-  export PATH="$PATH:$HOME/.rvm/bin"
-fi
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+compctl -K _pip_completion pip
+# pip zsh completion end
 
-# JS
-if [ -e "$HOME/.nvm" ]; then
-  # NVM
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-fi
+# Colima
+autoload -U compinit; compinit
+# alias for p in ; do kill -9 47834; done
+# docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:21.0.2 start-dev
 
-# Python
-if type pyenv &>/dev/null; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+function get_token() {
+  clear
+  token=$(curl -s --location 'http://localhost:8080/realms/Cartier/protocol/openid-connect/token' \
+          --header 'Content-Type: application/x-www-form-urlencoded' \
+          --data-urlencode 'client_id=mapper-backend' \
+          --data-urlencode 'grant_type=password' \
+          --data-urlencode 'client_secret=**********' \
+          --data-urlencode 'scope=openid' \
+          --data-urlencode 'username=jewelry' \
+          --data-urlencode 'password=jewelry' | jq .access_token | sed 's/"//g')
+  echo "$token"
+}
 
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
+function rebase {
+  for f in $(git s | grep -E "UU|AA" | awk '{print $2}'); do
+    vim "$f" && git add "$f"
+  done
+  clear
+  git status
+}
