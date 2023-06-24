@@ -58,8 +58,6 @@
   private = yes
 [gpg]
   program = gpg
-[help]
-  autocorrect = 1
 [init]
   defaultbranch = main
 [mergetool]
@@ -76,3 +74,5 @@
   default = current
 [user]
   name = Stéphane FEUGA OSHIMA
+[tag]
+	gpgSign = true
