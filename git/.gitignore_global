@@ -84,3 +84,14 @@ wiki
 #######################
 nvim/.local/share/direnv/
 
+# Abbeal #
+##########
+run_dev.sh
+*.old.json
+credentials?.sh
+toggle_credentials.sh
+api_tests.sh
+api/app/images/
+toggle_keycloak.sh
+app/static/flags/*.svg
+endpoint_tests.sh
