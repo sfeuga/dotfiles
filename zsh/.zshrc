@@ -125,15 +125,16 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias find_app_id="mdls -name kMDItemCFBundleIdentifier -r"
+alias find_apple_app_id="mdls -name kMDItemCFBundleIdentifier -r"
 alias gpg_kill_agent="gpgconf --kill gpg-agent"
 alias gpg_secret_keys="gpg --list-secret-keys --keyid-format LONG"
 alias gpg_public_keys="gpg --list-keys --keyid-format LONG"
 alias ls="ls -AF --color=always"
-alias mkd="take"
 
-alias dev="$HOME/Developments"
-alias work="$HOME/Developments/Abbeal/Cartier/*ackend"
+alias dev="cd $HOME/Developments && reset"
+alias work="cd $HOME/Developments/Abbeal/Cartier && reset"
+alias be="cd $HOME/Developments/Abbeal/Cartier/*ackend && reset"
+alias fe="cd $HOME/Developments/Abbeal/Cartier/*ontend && reset"
 
 export GPG_TTY=$TTY
 
@@ -226,9 +227,14 @@ if which nvim > /dev/null; then
   alias vim=nvim
 fi
 
-# VSCode / Codium
+# VSCode-oss / Codium
 if which codium > /dev/null; then
   alias code=codium
+fi
+# VSCode
+if [ -e "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]; then
+  export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 fi
 
 # JQ / GoJQ
@@ -269,6 +275,10 @@ fi
 #  export GOPATH="$go_root/$latest_go_version"
 #  export PATH="$GOPATH/bin:$PATH"
 #fi
+if [[ -e "$HOME/.asdf/installs/golang" ]]; then
+  source ~/.asdf/plugins/golang/set-env.zsh
+  export ASDF_GOLANG_MOD_VERSION_ENABLED=true
+fi
 
 ## Ruby
 ## Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -283,6 +293,23 @@ fi
 #  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 #  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 #fi
+
+## GCP sdk
+if [ -e "/opt/homebrew/bin/gcloud" ]; then
+  source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+  source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+elif [ -e "/Users/sfo/bin/google-cloud-sdk" ]; then
+  source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
+  source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"
+fi
+
+# Docker Desktop
+if [ -e "$HOME/.docker/bin" ]; then
+  export PATH="$HOME/.docker/bin:$PATH"
+fi
+if [ -e "$HOME/.docker/cli-plugins" ]; then
+  export PATH="$HOME/.docker/cli-plugins:$PATH"
+fi
 
 # pip zsh completion start
 function _pip_completion {
@@ -299,25 +326,103 @@ compctl -K _pip_completion pip
 # Colima
 autoload -U compinit; compinit
 # alias for p in ; do kill -9 47834; done
-# docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:21.0.2 start-dev
 
 function get_token() {
+  case "$#" in
+    0)
+      echo "please provide a valid username or a username and a password"
+      ;;
+    *)
+      if [[ "$#" == 2 ]]; then
+        username="$1"
+        password="$2"
+      else
+        username="$1"
+        password="$username"
+      fi
+      clear
+      token=$(curl -s --location 'http://localhost:8080/realms/Cartier/protocol/openid-connect/token' \
+              --header 'Content-Type: application/x-www-form-urlencoded' \
+              --data-urlencode 'client_id=mapper-backend' \
+              --data-urlencode 'grant_type=password' \
+              --data-urlencode 'client_secret=1234-CARTIER-5678' \
+              --data-urlencode 'scope=openid' \
+              --data-urlencode "username=$username" \
+              --data-urlencode "password=$password" | jq .access_token | sed 's/"//g')
+      echo "$token"
+      ;;
+  esac
+}
+
+function jewelry_token() {
   clear
   token=$(curl -s --location 'http://localhost:8080/realms/Cartier/protocol/openid-connect/token' \
           --header 'Content-Type: application/x-www-form-urlencoded' \
           --data-urlencode 'client_id=mapper-backend' \
           --data-urlencode 'grant_type=password' \
-          --data-urlencode 'client_secret=**********' \
+          --data-urlencode 'client_secret=1234-CARTIER-5678' \
           --data-urlencode 'scope=openid' \
           --data-urlencode 'username=jewelry' \
           --data-urlencode 'password=jewelry' | jq .access_token | sed 's/"//g')
   echo "$token"
 }
 
+function nobody_token() {
+  clear
+  token=$(curl -s --location 'http://localhost:8080/realms/Cartier/protocol/openid-connect/token' \
+          --header 'Content-Type: application/x-www-form-urlencoded' \
+          --data-urlencode 'client_id=mapper-backend' \
+          --data-urlencode 'grant_type=password' \
+          --data-urlencode 'client_secret=1234-CARTIER-5678' \
+          --data-urlencode 'scope=openid' \
+          --data-urlencode 'username=nobody' \
+          --data-urlencode 'password=nobody' | jq .access_token | sed 's/"//g')
+  echo "$token"
+}
+
+function hq_token() {
+  clear
+  token=$(curl -s --location 'http://localhost:8080/realms/Cartier/protocol/openid-connect/token' \
+          --header 'Content-Type: application/x-www-form-urlencoded' \
+          --data-urlencode 'client_id=mapper-backend' \
+          --data-urlencode 'grant_type=password' \
+          --data-urlencode 'client_secret=1234-CARTIER-5678' \
+          --data-urlencode 'scope=openid' \
+          --data-urlencode 'username=hq' \
+          --data-urlencode 'password=hq' | jq .access_token | sed 's/"//g')
+  echo "$token"
+}
+
+function watchmaking_token() {
+  clear
+  token=$(curl -s --location 'http://localhost:8080/realms/Cartier/protocol/openid-connect/token' \
+          --header 'Content-Type: application/x-www-form-urlencoded' \
+          --data-urlencode 'client_id=mapper-backend' \
+          --data-urlencode 'grant_type=password' \
+          --data-urlencode 'client_secret=1234-CARTIER-5678' \
+          --data-urlencode 'scope=openid' \
+          --data-urlencode 'username=watchmaking' \
+          --data-urlencode 'password=watchmaking' | jq .access_token | sed 's/"//g')
+  echo "$token"
+}
+
 function rebase {
+  reset
+
   for f in $(git s | grep -E "UU|AA" | awk '{print $2}'); do
     vim "$f" && git add "$f"
   done
+
   clear
+
+  export KEYCLOAK=False && python -m coverage run -m unittest -vv
+
   git status
 }
+#git last | grep Author | awk -F ': ' '{print }' | sed 's/>//' | awk -F ' <' '{print }'
+
+rm() {
+   mv "$@" "$HOME"/.Trash/
+}
+
+alias grepython="ps aux | grep python | grep -v grep | grep -v vscode"

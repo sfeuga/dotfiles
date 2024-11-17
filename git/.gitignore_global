@@ -95,3 +95,6 @@ api/app/images/
 toggle_keycloak.sh
 app/static/flags/*.svg
 endpoint_tests.sh
+car-eu-dataoffice*.json
+*.session
+*.log

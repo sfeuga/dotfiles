@@ -33,7 +33,7 @@
   tags = tag -l
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c -i wip && git reset HEAD~1"
-  wip = !"git add -u && git commit --gpg-sign -m wip && git push -f"
+  wip = !"git add -A && git commit --gpg-sign -m wip && git push -f"
 [color]
   ui = true
 [commit]
@@ -75,4 +75,4 @@
 [user]
   name = Stéphane FEUGA OSHIMA
 [tag]
-	gpgSign = true
+  gpgSign = true

@@ -6,31 +6,31 @@ call plug#begin('~/.local/share/nvim/plugged')
 "Plug 'fatih/vim-go'                                                    " Go support for Vim                             https://github.com/fatih/vim-go
 "Plug 'honza/vim-snippets'                                              " Snippets files for various languages           https://github.com/honza/vim-snippets
 "Plug 'jamessan/vim-gnupg'                                              " Transparent editing of gpg encrypted files     https://github.com/jamessan/vim-gnupg
-"Plug 'jiangmiao/auto-pairs'                                            " Insert/Delete '[', '(', '{'... in pair         https://github.com/jiangmiao/auto-pairs
+Plug 'jiangmiao/auto-pairs'                                            " Insert/Delete '[', '(', '{'... in pair         https://github.com/jiangmiao/auto-pairs
 "Plug 'jmckiern/vim-venter'                                             " Horizontally centers the current window        https://github.com/JMcKiern/vim-venter
 "Plug 'jparise/vim-graphql', { 'for': ['graphql', 'graphqls', 'gql'] }  " GraphQL detection, highlighting & indentation  https://github.com/jparise/vim-graphql
-"Plug 'keith/rspec.vim', { 'for': 'rspec' }                             " Improved syntax highlighting for rspec         https://github.com/keith/rspec.vim
+Plug 'keith/rspec.vim', { 'for': 'rspec' }                             " Improved syntax highlighting for rspec         https://github.com/keith/rspec.vim
 "Plug 'ledger/vim-ledger', { 'for': ['ldg', 'ledger', 'journal'] }      " Ledger filetype for Vim                        https://github.com/ledger/vim-ledger
 "Plug 'machakann/vim-swap'                                              " Swap delimited items                           https://github.com/machakann/vim-swap
 "Plug 'matsub/github-actions.vim'                                       " Syntax files of GitHub Actions                 https://github.com/matsub/github-actions.vim
 "Plug 'mattesgroeger/vim-bookmarks'                                     " Allows toggling bookmarks per line             https://github.com/mattesgroeger/vim-bookmarks
 "Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }                 " Generate table of contents for Markdown files  https://github.com/mzlogin/vim-markdown-toc
 "Plug 'neo4j-contrib/cypher-vim-syntax', { 'for': ['cypher', 'cql'] }   " Cypher Vim Syntax                              https://github.com/neo4j-contrib/cypher-vim-syntax
-"Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }             " Runs RuboCop                                   https://github.com/ngmy/vim-rubocop
-"Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }       " Code smell detector for Ruby                   https://github.com/rainerborene/vim-reek
+Plug 'ngmy/vim-rubocop', { 'on': 'RuboCop','for': 'ruby' }             " Runs RuboCop                                   https://github.com/ngmy/vim-rubocop
+Plug 'rainerborene/vim-reek', { 'on': 'RunReek', 'for': 'ruby' }       " Code smell detector for Ruby                   https://github.com/rainerborene/vim-reek
 "Plug 'rhysd/git-messenger.vim'                                         " Reveal Git message under the cursor            https://github.com/rhysd/git-messenger.vim
 "Plug 'rhysd/vim-github-actions'                                        " Filetype support for GitHub Actions            https://github.com/rhysd/vim-github-actions
 "Plug 'sirver/ultisnips'                                                " Ultimate solution for snippets                 https://github.com/SirVer/ultisnips
-"Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
-"Plug 'tpope/vim-cucumber', { 'for': 'feature' }                        " Syntax highlight, indent, and more             https://github.com/tpope/vim-cucumber
+Plug 'thoughtbot/vim-rspec', { 'for': 'rspec' }                        " Lightweight RSpec runner                       https://github.com/thoughtbot/vim-rspec
+Plug 'tpope/vim-cucumber', { 'for': 'feature' }                        " Syntax highlight, indent, and more             https://github.com/tpope/vim-cucumber
 "Plug 'tpope/vim-dadbod'                                                " Interacting with databases                     https://github.com/tpope/vim-dadbod
 "Plug 'tpope/vim-heroku'                                                " Interacting with Heroku                        https://github.com/tpope/vim-heroku
 "Plug 'tpope/vim-jdaddy'                                                " Working with JSON in Vim                       https://github.com/tpope/vim-jdaddy
-"Plug 'tpope/vim-rails', { 'for': 'ruby' }                              " Ruby on Rails power tools                      https://github.com/tpope/vim-rails
+Plug 'tpope/vim-rails', { 'for': 'ruby' }                              " Ruby on Rails power tools                      https://github.com/tpope/vim-rails
 "Plug 'tpope/vim-rvm'                                                   " Switch Ruby versions from inside Vim           https://github.com/tpope/vim-rvm
-"Plug 'tpope/vim-surround'                                              " Quoting/parenthesizing made simple             https://github.com/tpope/vim-surround
-"Plug 'tpope/vim-unimpaired'                                            " Pairs of handy bracket mappings                https://github.com/tpope/vim-unimpaired
-"Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                            " Provides motions and text objects for Ruby     https://github.com/vim-ruby/vim-ruby
+Plug 'tpope/vim-surround'                                              " Quoting/parenthesizing made simple             https://github.com/tpope/vim-surround
+Plug 'tpope/vim-unimpaired'                                            " Pairs of handy bracket mappings                https://github.com/tpope/vim-unimpaired
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }                            " Provides motions and text objects for Ruby     https://github.com/vim-ruby/vim-ruby
 "Plug 'vim-scripts/bats.vim', { 'for': 'bash' }                         " Extends shell highlighting for Bats            https://github.com/vim-scripts/bats.vim
 "Plug 'vim-scripts/taglist.vim', { 'on': 'TlistToggle' }                " Source code browser                            https://vimawesome.com/plugin/taglist-vim
 "Plug 'wellle/context.vim'                                              " Shows context of currently visible contents    https://github.com/wellle/context.vim
@@ -83,7 +83,7 @@ set wildignore+=*\\tmp\\*,*/tmp/*
 set mouse-=a                                                           " Disable mouse integration in vim
 set scrolloff=3                                                        " Minimum lines to keep above and below cursor
 set list                                                               " Display invisible characters
-set listchars=tab:>·                                                   " Highlight problematic white space
+"set listchars=tab:~                                                    " Highlight problematic white space
 "set listchars=eol:¬,tab:>·                                             " Highlight problematic white space
 filetype on                                                            " Enable file type detection
 filetype indent on                                                     " Enable file type-specific indenting
@@ -327,8 +327,8 @@ tnoremap    <Leader>k           <C-k>
 vnoremap    8                   <Esc>:noh<CR>
 nnoremap    8                   <Esc>:noh<CR>
 " Vsplit a new Terminal
-nnoremap    <F4>                :vsplit\|te<CR>
-nnoremap    <Leader>t           :15split\|te<CR>
+nnoremap    <Leader>t           :vsplit\|te<CR>
+nnoremap    <Leader>tt          :15split\|te<CR>
 
 " D will duplicate selection at the beginnig of the next line
 vnoremap    D                   y'>o<ESC>p
@@ -336,16 +336,16 @@ vnoremap    D                   y'>o<ESC>p
 """ File type mapping
 autocmd FileType ruby compiler ruby                                      " Set MRI as default ruby compiler
 autocmd FileType fish compiler fish                                      " Set fish as default fish compiler
-autocmd VimEnter,BufRead,BufNewFile *.rb                                 set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile *.gemspec                            set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile *.rake                               set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile *.thor                               set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile Gemfile                              set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile Guardfile                            set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile Procfile                             set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile Rakefile                             set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile Thorfile                             set filetype=ruby tabstop=4 shiftwidth=4
-autocmd VimEnter,BufRead,BufNewFile config.ru                            set filetype=ruby tabstop=4 shiftwidth=4
+autocmd VimEnter,BufRead,BufNewFile *.rb                                 set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile *.gemspec                            set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile *.rake                               set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile *.thor                               set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile Gemfile                              set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile Guardfile                            set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile Procfile                             set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile Rakefile                             set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile Thorfile                             set filetype=ruby tabstop=2 shiftwidth=2
+autocmd VimEnter,BufRead,BufNewFile config.ru                            set filetype=ruby tabstop=2 shiftwidth=2
 autocmd VimEnter,BufRead,BufNewFile *.feature                            set filetype=cucumber
 autocmd VimEnter,BufRead,BufNewFile *.idr                                set filetype=idris
 autocmd VimEnter,BufRead,BufNewFile *.jl                                 set filetype=julia
@@ -357,9 +357,9 @@ autocmd VimEnter,BufRead,BufNewFile *.m{d,arkdown}                       set fil
 autocmd VimEnter,BufRead,BufNewFile *.go                                 set filetype=go tabstop=2 shiftwidth=2 noexpandtab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Neovim Wrapper
-let g:ruby_host_prog = '~/.asdf/shims/neovim-ruby-host'
-let g:python3_host_prog = '/home/sfo/.asdf/shims/python3'
+"" Neovim Wrapper
+let g:loaded_perl_provider = 0
+let g:loaded_node_provider = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -376,7 +376,7 @@ if exists(":CtrlP")
   let g:ctrlp_cmd = 'CtrlPMixed'
   let g:ctrlp_working_path_mode = 'ra'
   nnoremap  <C-p>               :CtrlPMixed<CR>
-  nnoremap  <F5>                :CtrlPMixed<CR>
+  nnoremap  <F4>                :CtrlPMixed<CR>
 endif
 
 "" jiangmiao/auto-pairs
@@ -418,7 +418,8 @@ endif
 
 "" preservim/nerdtree
 if &runtimepath =~ 'nerdtree'
-  map       <F1>                :NERDTreeToggle<CR>
+  nnoremap  <F1>                :NERDTreeToggle<CR>
+  nnoremap  <Leader>f           :NERDTreeToggle<CR>
 
   " Quit vim if NerdTree is the last opened window
   autocmd bufenter *
@@ -439,8 +440,7 @@ endif
 if exists(":RunReek")
   " Disable reek for > 1000 lines files
   let g:reek_line_limit = 1000
-  nnoremap  <F7>                :RunReek<CR>
-  nnoremap  <Leader>re          :RunReek<CR>
+  nnoremap  <Leader>reek        :RunReek<CR>
 endif
 
 "" reedes/vim-lexical
@@ -491,6 +491,7 @@ if &runtimepath =~ 'vim-rspec'
   nnoremap  <Leader>ns          :call RunNearestSpec()<CR>
   nnoremap  <Leader>ls          :call RunLastSpec()<CR>
   nnoremap  <Leader>as          :call RunAllSpecs()<CR>
+  nnoremap  <F9>                :call RunAllSpecs()<CR>
 endif
 
 "" tpope/vim-surround
@@ -507,18 +508,18 @@ if exists(":TlistToggle")
 endif
 
 "" xuyuanp/nerdtree-git-plugin
-if &runtimepath =~ 'nerdtree-git-plugin'
-  let g:NERDTreeIndicatorMapCustom = {
-        \ "Clean"     : "✓",
-        \ "Deleted"   : "-­",
-        \ "Dirty"     : "✗",
-        \ "Modified"  : "±",
-        \ "Renamed"   : "⇒",
-        \ "Staged"    : "◎",
-        \ "Unknown"   : "?",
-        \ "Unmerged"  : "∴",
-        \ "Untracked" : "•" }
-endif
+"if &runtimepath =~ 'nerdtree-git-plugin'
+"  let g:NERDTreeIndicatorMapCustom = {
+"        \ "Clean"     : "",
+"        \ "Deleted"   : "",
+"        \ "Dirty"     : "",
+"        \ "Modified"  : "",
+"        \ "Renamed"   : "",
+"        \ "Staged"    : "",
+"        \ "Unknown"   : "",
+"        \ "Unmerged"  : "",
+"        \ "Untracked" : "" }
+"endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -540,11 +541,6 @@ elseif has("unix")
     "set statusline+=\ \|\ unix
     let os="unix"
   endif
-endif
-
-" Set python 3 path on macOS (need pip install pynvim)
-if os=="mac"
-  let g:python3_host_prog = expand('~/.asdf/shims/python3')
 endif
 
 " Press [gh] to open the GitHub URL for a plugin or a commit with the default browser
