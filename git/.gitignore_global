@@ -42,20 +42,6 @@ Thumbs.db
 .env.*
 .envrc
 
-# my script specials #
-######################
-.heroku_projects
-
-# Mega.nz sync #
-################
-.debris
-.debris/*
-.debris/.*
-
-# Vim sessions #
-################
-Session.vim
-
 # JetBrains #
 #############
 .idea
@@ -84,6 +70,22 @@ wiki
 #######################
 nvim/.local/share/direnv/
 
+# my script specials #
+######################
+.heroku_projects
+
+# Mega.nz sync #
+################
+.debris
+.debris/*
+.debris/.*
+
+# Vim sessions #
+################
+*ession.vim
+*.session
+*.session.vim
+
 # Abbeal #
 ##########
 run_dev.sh
@@ -96,5 +98,5 @@ toggle_keycloak.sh
 app/static/flags/*.svg
 endpoint_tests.sh
 car-eu-dataoffice*.json
-*.session
-*.log
+/Users/sfo/Developments/Abbeal/Cartier/backend/endpoint_tests.sh
+*.diff

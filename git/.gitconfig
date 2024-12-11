@@ -5,20 +5,18 @@
   branches = branch -a
   can = commit --gpg-sign --amend --no-edit
   clean-local-branches = !"for branch in $(git branch | grep -v main | grep -v "^*"); do git branch -D $branch; done"
+  clb = !"for branch in $(git branch | grep -v "^*"); do git branch -D $branch; done"
   conf = config -l
   conf-global = config --global -l
   conf-local = config --local -l
   finDbug = !"git log --grep=^$1: -"
-  force-can = !"git gpg && git commit --gpg-sign --amend --no-edit"
-  force-commit = !"git gpg && git commit --gpg-sign"
-  force-save = !"git fwip && git unwip"
-  force-wip = !"git add -u && git gpg && git commit --gpg-sign -m "wip" && git push -f"
-  gpg = !"gpgconf --kill gpg-agent"
-  l = log -5 --stat
+  fix-gpg = !"gpgconf --kill gpg-agent"
+  l = log -10 --stat
   last = log -1 --stat
   lg = log -50 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
   p = pull --all -p
+  pt = push origin --tags
   release = !"git name-rev --tags --name-only $(git log --grep ^$1: --pretty=\"format:%H\n\") -"
   remotes = remote -v
   rpo = remote prune origin
@@ -34,6 +32,8 @@
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c -i wip && git reset HEAD~1"
   wip = !"git add -A && git commit --gpg-sign -m wip && git push -f"
+[branch]
+  sort = -committerdate
 [color]
   ui = true
 [commit]
@@ -43,36 +43,59 @@
   editor = nvim
   excludesfile = ~/.gitignore_global
   filemode = false
-  pager = bat
+	pager = cat
   trustctime = false
 [credential]
   helper = cache --timeout=604800
+[diff]
+  submodule = log
+  context = 5
+  algorithm = histogram
 [fetch]
   prune = true
+  prunetags = true
 [filter "lfs"]
-  clean = git-lfs clean -- %f
-  process = git-lfs filter-process
-  required = true
-  smudge = git-lfs smudge -- %f
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+	required = true
+	smudge = git-lfs smudge -- %f
 [gist]
   private = yes
 [gpg]
   program = gpg
+[help]
+  autocorrect = prompt
 [init]
   defaultbranch = main
+[log]
+  date = iso
+[merge]
+  conflictstyle = zdiff3
 [mergetool]
   keepbackups = false
   keeptemporaries = false
   prompt = false
   trustexitcode = false
 [pager]
-  diff = bat -l diff --style='changes,grid'
-  show = bat -l diff --style='changes,grid'
+	diff = cat
+	show = cat
 [pull]
   rebase = true
 [push]
   default = current
-[user]
-  name = Stéphane FEUGA OSHIMA
+  autosetupremote = true
+[rebase]
+  autosquash = true
+  autostash = true
+[rerere]
+  enabled = true
+[status]
+  submoduleSummary = true
+[submodule]
+  recurse = true
 [tag]
   gpgSign = true
+  sort = taggerdate
+[user]
+  name = Stéphane FEUGA OSHIMA
+  email = sfeuga@member.fsf.org
