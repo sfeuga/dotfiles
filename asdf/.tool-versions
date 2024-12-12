@@ -1,10 +1,11 @@
-colima 0.8.0
+colima 0.8.1
 crystal 1.14.0
 ffmpeg 7.1
+github-cli 2.63.2
 java openjdk-23.0.1
 lima 1.0.2
 neovim 0.10.2
-nodejs 23.3.0
+nodejs 23.4.0
 pnpm 9.15.0
 pre-commit 4.0.1
 python 3.13.1t
@@ -12,5 +13,5 @@ ruby 3.3.0
 rust 1.83.0
 shellspec 0.28.1
 yamllint 1.35.1
-yt-dlp 2024.12.06
-github-cli 2.63.2
+yq 4.44.6
+yt-dlp 2024.12.13
