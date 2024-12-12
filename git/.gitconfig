@@ -40,7 +40,7 @@
   gpgsign = true
 [core]
   autocrlf = input
-  editor = nvim
+  editor = vi
   excludesfile = ~/.gitignore_global
   filemode = false
 	pager = cat
