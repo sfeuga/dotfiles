@@ -148,8 +148,8 @@ if [[ -e "$HOME/Developments" ]]; then
   fi
   if [[ -e "$HOME/Developments/SFO" ]]; then
     alias car="cd $HOME/Developments/SFO/Cartier && reset"
-    alias cbe="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate; colima start; reset && git stash && git switch develop && git p && git switch - && git stash pop; uvicorn app.main:app --reload"
-    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && reset && git stash && git switch develop && git p && git switch - && git stash pop; NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
+    alias cbe="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate; colima start; reset &&  uvicorn app.main:app --reload"
+    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && reset && NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
     alias hon="cd $HOME/Developments/SFO/Hon-e.Book && reset"
   fi
 fi
