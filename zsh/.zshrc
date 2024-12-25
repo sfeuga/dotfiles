@@ -341,11 +341,11 @@ fi
 
 # sysupdate
 if alias bupdate &> /dev/null && which asdf_update &> /dev/null; then
-  alias sysupdate="asdf_update && bupdate && asdf_clean_old"
+  alias sysupdate="asdf_update && bupdate" # && asdf_clean_old"
 elif alias bupdate &> /dev/null; then
   alias sysupdate=bupdate
 elif which asdf_update &> /dev/null; then
-  alias sysupdate="asdf_update && asdf_clean_old"
+  alias sysupdate="asdf_update" # && asdf_clean_old"
 fi
 
 # Local bin
