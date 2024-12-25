@@ -313,28 +313,30 @@ if [[ -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]]; then
     fi
   }
 
-    #function asdf_clean_old {
-    #  plugs=("${(@f)$(asdf plugin list)}")
-    #  for plug in $plugs; do
-    #    plug_versions=$(asdf list $plug)
-    #    if [[ -n "$plug" && -n "$plug_versions" ]]; then
-    #      plug_versions=$(echo $plug_versions | grep -v "*")
-    #      if [[ ! -z "$plug_versions" && ! "$plug_versions" =~ "mruby-" ]]; then
-    #        plug_to_remove="$plug $plug_versions"
-    #        plug_to_remove="$(echo $plug_to_remove | sed -e 's/  */ /g')"
+  alias ruby_post_install='. ~/.dotfiles/asdf/plugins/ruby/hooks/post-install && gem environment'
 
-    #        echo -n "Do you want to remove $plug_to_remove? [Y/n]: "
-    #        read -r ans
+  #function asdf_clean_old {
+  #  plugs=("${(@f)$(asdf plugin list)}")
+  #  for plug in $plugs; do
+  #    plug_versions=$(asdf list $plug)
+  #    if [[ -n "$plug" && -n "$plug_versions" ]]; then
+  #      plug_versions=$(echo $plug_versions | grep -v "*")
+  #      if [[ ! -z "$plug_versions" && ! "$plug_versions" =~ "mruby-" ]]; then
+  #        plug_to_remove="$plug $plug_versions"
+  #        plug_to_remove="$(echo $plug_to_remove | sed -e 's/  */ /g')"
 
-    #        if [[ ! "$ans" =~ "n" && ! "$ans" =~ "N" ]]; then
-    #          asdf uninstall $(echo $plug_to_remove)
-    #        else
-    #          echo "keeping $plug_to_remove"
-    #        fi
-    #      fi
-    #    fi
-    #  done
-    #}
+  #        echo -n "Do you want to remove $plug_to_remove? [Y/n]: "
+  #        read -r ans
+
+  #        if [[ ! "$ans" =~ "n" && ! "$ans" =~ "N" ]]; then
+  #          asdf uninstall $(echo $plug_to_remove)
+  #        else
+  #          echo "keeping $plug_to_remove"
+  #        fi
+  #      fi
+  #    fi
+  #  done
+  #}
 fi
 
 # sysupdate

@@ -73,6 +73,8 @@ nvim/.local/share/direnv/
 # my script specials #
 ######################
 .heroku_projects
+/Users/sfo/.asdf/plugins/ruby/hooks/*
+/Users/sfo/.asdf/plugins/ruby/hooks
 
 # Mega.nz sync #
 ################

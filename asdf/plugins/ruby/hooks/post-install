@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -f ~/.default-gems ]; then
+    echo "Installing default gems..."
+    while IFS= read -r gem; do
+        gem install "$gem"
+    done < ~/.default-gems
+else
+    echo "No .default-gems file found."
+fi
