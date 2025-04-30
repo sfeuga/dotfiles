@@ -8,9 +8,9 @@ done
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -21,7 +21,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -97,7 +97,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && source $HOME/.p10k.zsh
+#[[ -f ~/.p10k.zsh ]] && source $HOME/.p10k.zsh
 
 # User configuration
 
@@ -135,12 +135,22 @@ alias gpg_public_keys="gpg --list-keys --keyid-format LONG"
 
 alias ls="ls -AF --color=always"
 
+alias mumount="sudo diskutil unmount"
+
 alias grepython="ps aux | grep python | grep -v grep | grep -v vscode"
 
 alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | sed 's/>//' | awk -F ' <' '{ print }'"
 
+function change_date {
+  rename -S ' ' '' *.png
+  for file in *.png; do 
+    touch -a -m -t ${file:0:15} $file;
+  done
+}
+
 if [[ -e "$HOME/Developments" ]]; then
   alias dev="cd $HOME/Developments && reset"
+  alias perso="cd /Users/sfo/Developments/SFO && reset"
 
   if [[ -e "$HOME/Developments/Abbeal" ]]; then
     alias work="cd $HOME/Developments/Abbeal && reset"
@@ -160,6 +170,10 @@ if which freshclam &> /dev/null; then
     alias persoscan="freshclam && clamscan -r -i --bell /Volumes/Crucial\ X6\ -\ 2TB/Perso/"
     alias viruscan="freshclam && clamscan -r -i --bell ."
   fi
+fi
+
+if which ext4fuse &> /dev/null; then
+  alias mmount="sudo ext4fuse"
 fi
 
 function battery {
@@ -270,10 +284,10 @@ else
 fi
 
 # asdf
-if [[ -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]]; then
-  source "/opt/homebrew/opt/asdf/libexec/asdf.sh"
+if [[ -e "/opt/homebrew/opt/asdf/" ]]; then
+  export PATH="/opt/homebrew/opt/asdf/bin:$PATH"
 
-  function asdf_update {
+  function aupdate {
     if [[ -e "$HOME/.tool-versions" ]]; then
       echo "Update global asdf plugins..."
       cat "$HOME/.tool-versions" | awk '{ print $1 }' | while read line; do
@@ -340,12 +354,12 @@ if [[ -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]]; then
 fi
 
 # sysupdate
-if alias bupdate &> /dev/null && which asdf_update &> /dev/null; then
-  alias sysupdate="asdf_update && bupdate" # && asdf_clean_old"
+if alias bupdate &> /dev/null && which aupdate &> /dev/null; then
+  alias sysupdate="aupdate && bupdate" # && asdf_clean_old"
 elif alias bupdate &> /dev/null; then
   alias sysupdate=bupdate
-elif which asdf_update &> /dev/null; then
-  alias sysupdate="asdf_update" # && asdf_clean_old"
+elif which aupdate &> /dev/null; then
+  alias sysupdate="aupdate" # && asdf_clean_old"
 fi
 
 # Local bin
@@ -369,7 +383,6 @@ fi
 # VSCode
 if [ -e "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]; then
   export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 fi
 
 # JQ / GoJQ
@@ -548,3 +561,16 @@ function rm {
   mv "$@" "$HOME/.Trash/"
 }
 
+if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
+  alias imgcat="wezterm imgcat"
+fi
+
+if [ -e '/opt/homebrew/' ]; then
+  export PATH="/opt/homebrew/sbin:$PATH"
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+
+. "$HOME/.asdf/asdf.sh"
+
+fpath=(${ASDF_DIR}/completions $fpath)
+autoload -Uz compinit && compinit
