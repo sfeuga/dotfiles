@@ -29,7 +29,7 @@ config.colors = {
 --  saturation = 1.0,
 -- }
 -- config.window_background_opacity = 0.9
-config.window_background_opacity = 0.6
+config.window_background_opacity = 0.8
 
 config.window_frame = {
   -- The font used in the tab bar.
