@@ -18,3 +18,8 @@ end
 
 vim.api.nvim_create_user_command("RuntimePath", runtime_paths, {})
 
+-- Syntax highlighting and filetype plugins
+vim.cmd('syntax enable')
+vim.cmd('filetype plugin indent on')
+
+require('options') -- import options.lua file
