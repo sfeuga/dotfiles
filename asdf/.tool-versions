@@ -1,12 +1,12 @@
 bat 0.25.0
 colima 0.8.1
-crystal 1.16.1
+crystal 1.16.2
 ffmpeg 7.1.1
-github-cli 2.70.0
+github-cli 2.72.0
 lima 1.0.7
-neovim 0.11.0
+neovim 0.11.1
 nodejs 23.11.0
 pnpm 9.15.9
 python 3.13.3t
 ruby 3.4.1
-yt-dlp 2025.03.31
+yt-dlp 2025.04.30
