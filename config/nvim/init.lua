@@ -7,19 +7,8 @@ vim.cmd('let g:loaded_perl_provider = 0')
 -- Disable Node.js provider
 vim.cmd('let g:loaded_node_provider = 0')
 
-
--- Display Runtime Paths
-local function runtime_paths()
-	print("Runtime Paths:")
-	for path in vim.o.runtimepath:gmatch("[^,]+") do
-		print("  - " .. path)
-	end
-end
-
-vim.api.nvim_create_user_command("RuntimePath", runtime_paths, {})
-
--- Syntax highlighting and filetype plugins
-vim.cmd('syntax enable')
-vim.cmd('filetype plugin indent on')
-
-require('options') -- import options.lua file
+require('functions')
+require('options')
+require('keymaps')
+require('plugins')
+require('nerdtree')
