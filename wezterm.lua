@@ -1,5 +1,5 @@
 -- Pull in the wezterm API
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
@@ -7,7 +7,7 @@ local config = wezterm.config_builder()
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
-config.color_scheme = 'Molokai'-- (Gogh)'
+config.color_scheme = 'Molokai'
 config.colors = {
   tab_bar = {
     -- The color of the inactive tab bar edge/divider
@@ -30,6 +30,7 @@ config.colors = {
 -- }
 -- config.window_background_opacity = 0.9
 config.window_background_opacity = 0.8
+config.macos_window_background_blur = 10
 
 config.window_frame = {
   -- The font used in the tab bar.
@@ -38,7 +39,7 @@ config.window_frame = {
   -- Whatever font is selected here, it will have the
   -- main font setting appended to it to pick up any
   -- fallback fonts you may have used there.
-  font = wezterm.font { family = 'Fira Code' },
+  font = wezterm.font { family = 'FiraCode Nerd Font' },
 
   -- The size of the font in the tab bar.
   -- Default to 10.0 on Windows but 12.0 on other systems
@@ -53,14 +54,8 @@ config.window_frame = {
   inactive_titlebar_bg = '#333333',
 }
 
-config.font = wezterm.font_with_fallback {
-  {
-    family = 'FiraCode Nerd Font',
-    harfbuzz_features = {"zero" , "ss01", "ss07", "ss09", "ss10", "cv01", "cv02", "cv05", "cv09", "cv24", "cv25", "cv26", "cv29", "cv30", "cv31", "cv32" },
-  },
-  { family = 'Terminus' },
-  'Noto Color Emoji',
-}
+config.font = wezterm.font('FiraCode Nerd Font')
+config.font_size = 12.0
 
 -- and finally, return the configuration to wezterm
 return config
