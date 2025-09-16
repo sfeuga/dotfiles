@@ -21,7 +21,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
+ZSH_THEME="random"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -86,45 +87,20 @@ ZSH_THEME="agnoster"
 plugins=(
     asdf
     direnv
+    dotenv
     emoji
-    emoji-clock
     git
     gitignore
     history
     history-substring-search
+    macos
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ -f ~/.p10k.zsh ]] && source $HOME/.p10k.zsh
+export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 export GPG_TTY=$TTY
 
 alias find_apple_app_id="mdls -name kMDItemCFBundleIdentifier -r"
@@ -135,32 +111,22 @@ alias gpg_public_keys="gpg --list-keys --keyid-format LONG"
 
 alias ls="ls -AF --color=always"
 
-alias mumount="sudo diskutil unmount"
-
 alias grepython="ps aux | grep python | grep -v grep | grep -v vscode"
 
-alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | sed 's/>//' | awk -F ' <' '{ print }'"
-
-function change_date {
-  rename -S ' ' '' *.png
-  for file in *.png; do 
-    touch -a -m -t ${file:0:15} $file;
-  done
-}
+alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | awk -F ' <' '{ print }' | sed 's/Author: //'"
 
 if [[ -e "$HOME/Developments" ]]; then
-  alias dev="cd $HOME/Developments && reset"
-  alias perso="cd /Users/sfo/Developments/SFO && reset"
+  alias dev="cd $HOME/Developments && clear"
+  alias perso="cd $HOME/Developments/SFO && clear"
 
-  if [[ -e "$HOME/Developments/Abbeal" ]]; then
-    alias work="cd $HOME/Developments/Abbeal && reset"
-    alias neo="cd $HOME/Developments/Abbeal/NeoBrain/neobrain-teams-bot-app && reset && git stash && git switch dev && git p && git switch - && git stash pop"
-  fi
   if [[ -e "$HOME/Developments/SFO" ]]; then
-    alias car="cd $HOME/Developments/SFO/Cartier && reset"
-    alias cbe="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate; colima start; reset &&  uvicorn app.main:app --reload"
-    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && reset && NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
-    alias hon="cd $HOME/Developments/SFO/Hon-e.Book && reset"
+    alias car="cd $HOME/Developments/SFO/Cartier && clear"
+    alias cbe="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear"
+    alias cbes="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear && colima start && uvicorn app.main:app --reload"
+    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && reset"
+    alias cfes="cd $HOME/Developments/SFO/Cartier/*ontend && reset && NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
+
+    alias hon="cd $HOME/Developments/SFO/Hon-e.Book && clear"
   fi
 fi
 
@@ -172,12 +138,9 @@ if which freshclam &> /dev/null; then
   fi
 fi
 
-if which ext4fuse &> /dev/null; then
-  alias mmount="sudo ext4fuse"
-fi
-
 function battery {
-  ioreg -l | grep -E "\"CurrentCapacity\" = |\"MaxCapacity\" = |\"CycleCount\" = " | sed -e 's/|//g' -e 's/ //g' -e 's/"//g' -e 's/\([a-z]\)\([A-Z]\)/\1 \2/g' -e 's/=/+= /g' | column -ts '+' | sed -e 's/ =/=/g'
+  ioreg -l | grep -E "\"CurrentCapacity\" = |\"MaxCapacity\" = |\"CycleCount\" = " | \
+      sed -e 's/|//g' -e 's/ //g' -e 's/"//g' -e 's/\([a-z]\)\([A-Z]\)/\1 \2/g' -e 's/=/+= /g' | column -ts '+' | sed -e 's/ =/=/g'
 }
 
 function get_git_default_branch {
@@ -188,38 +151,6 @@ function get_git_default_branch {
     fi
 
     echo $default_branch
-  fi
-}
-
-function update_local_python_packages {
-  echo "This function is still a WIP and not working..."
-  return 1
-  if [[ -e ".venv" ]]; then
-    echo "Updating pip..."
-
-    python -m ensurepip --upgrade &> /dev/null && \
-    source .venv/bin/activate &> /dev/null && \
-    python -m pip install --upgrade pip &> /dev/null
-
-    echo "Updating Python Packages..."
-
-    files=$(ls -1 requirement* | sort -r)
-
-    for filename in $(ls -1 requirement* | sort -r); do
-      cp -f "$filename" "bak.$filename"
-
-      packages=$(cat "$filename" | awk 'BEGIN { FS = "[ ]*|[>]|[=]|[<]" } { print $1 }')
-
-      for package in "$packages"; do
-        pip install --yes --upgrade "$packages" &> /dev/null
-        pip freeze --requirement "$filename" | sed '/^##/,$d' | sed 's/==/>=/g' > "$filename"
-      done && rm "bak.$filename" || mv "bak.$filename" "$filename"
-
-    done && echo "Done"
-  else
-    echo "Run this command from a python project with a .venv folder!"
-
-    return 1
   fi
 }
 
@@ -262,7 +193,6 @@ if [[ -e "/opt/homebrew/opt/openssl@3" ]]; then
   # A CA file has been bootstrapped using certificates from the system
   #   keychain. To add additional certificates, place .pem files in
   #           /opt/homebrew/etc/openssl@3/certs
-  #
   #   and run
   #           /opt/homebrew/opt/openssl@3/bin/c_rehash
 
@@ -285,17 +215,15 @@ fi
 
 # asdf
 if [[ -e "/opt/homebrew/opt/asdf/" ]]; then
-  export PATH="/opt/homebrew/opt/asdf/bin:$PATH"
-
   function aupdate {
     if [[ -e "$HOME/.tool-versions" ]]; then
       echo "Update global asdf plugins..."
       cat "$HOME/.tool-versions" | awk '{ print $1 }' | while read line; do
         if [[ ! "$line" =~ "java" ]]; then
-          asdf install "$line" latest && asdf global "$line" latest
+          asdf install "$line" latest && asdf set -u "$line" latest
         else
           latest_openJDK=$(asdf list all java | grep ^openjdk | sort -r | head -n 1)
-          asdf install java "$latest_openJDK" && asdf global java "$latest_openJDK"
+          asdf install java "$latest_openJDK" && asdf set -u java "$latest_openJDK"
         fi
       done
     fi
@@ -326,40 +254,15 @@ if [[ -e "/opt/homebrew/opt/asdf/" ]]; then
       done
     fi
   }
-
-  alias ruby_post_install='. ~/.dotfiles/asdf/plugins/ruby/hooks/post-install && gem environment'
-
-  #function asdf_clean_old {
-  #  plugs=("${(@f)$(asdf plugin list)}")
-  #  for plug in $plugs; do
-  #    plug_versions=$(asdf list $plug)
-  #    if [[ -n "$plug" && -n "$plug_versions" ]]; then
-  #      plug_versions=$(echo $plug_versions | grep -v "*")
-  #      if [[ ! -z "$plug_versions" && ! "$plug_versions" =~ "mruby-" ]]; then
-  #        plug_to_remove="$plug $plug_versions"
-  #        plug_to_remove="$(echo $plug_to_remove | sed -e 's/  */ /g')"
-
-  #        echo -n "Do you want to remove $plug_to_remove? [Y/n]: "
-  #        read -r ans
-
-  #        if [[ ! "$ans" =~ "n" && ! "$ans" =~ "N" ]]; then
-  #          asdf uninstall $(echo $plug_to_remove)
-  #        else
-  #          echo "keeping $plug_to_remove"
-  #        fi
-  #      fi
-  #    fi
-  #  done
-  #}
 fi
 
 # sysupdate
 if alias bupdate &> /dev/null && which aupdate &> /dev/null; then
-  alias sysupdate="aupdate && bupdate" # && asdf_clean_old"
+  alias sysupdate="aupdate && bupdate"
 elif alias bupdate &> /dev/null; then
   alias sysupdate=bupdate
 elif which aupdate &> /dev/null; then
-  alias sysupdate="aupdate" # && asdf_clean_old"
+  alias sysupdate="aupdate"
 fi
 
 # Local bin
@@ -405,45 +308,10 @@ if which gh &> /dev/null; then
 fi
 
 ## Go
-#if [[ -e "$HOME/go" ]]; then
-#  go_root="$HOME/go"
-#  if [[ -e "$HOME/go/bin" ]]; then
-#    go_bin="$HOME/go/bin"
-#    export PATH="$go_bin:$PATH"
-#  fi
-##elif [[ -e "$HOME/.asdf/installs/golang" ]]; then
-##  go_root="$HOME/.asdf/installs/golang"
-#fi
 if [[ -e "$HOME/.asdf/installs/golang" ]]; then
   source "$HOME/.asdf/plugins/golang/set-env.zsh"
   export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 fi
-
-#if [[ -n "$go_root" ]]; then
-#  latest_go_version=$(\ls --color=never $go_root | sort -hr | grep "^go.*" | head -n 1 | sed 's|/||')
-#
-#  export GOPATH="$go_root/$latest_go_version"
-#  export PATH="$GOPATH/bin:$PATH"
-#fi
-
-## Ruby
-## Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-#if [ -e "$HOME/.rvm/bin" ]; then
-#  export PATH="$PATH:$HOME/.rvm/bin"
-#fi
-
-## JS
-#if [ -e "$HOME/.nvm" ]; then
-#  # NVM
-#  export NVM_DIR="$HOME/.nvm"
-#  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-#  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-#fi
-#if [ -e "/opt/homebrew/opt/node@18/bin"  ]; then
-#  export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
-#  export LDFLAGS="-L/opt/homebrew/opt/node@18/lib"
-#  export CPPFLAGS="-I/opt/homebrew/opt/node@18/include"
-#fi
 
 ## GCP sdk
 if [ -e "/opt/homebrew/bin/gcloud" ]; then
@@ -456,14 +324,6 @@ elif [ -e "$HOME/bin/google-cloud-sdk" ]; then
   source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
   # The next line enables shell command completion for gcloud.
   source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"
-fi
-
-# Docker Desktop
-if [ -e "$HOME/.docker/bin" ]; then
-  export PATH="$HOME/.docker/bin:$PATH"
-fi
-if [ -e "$HOME/.docker/cli-plugins" ]; then
-  export PATH="$HOME/.docker/cli-plugins:$PATH"
 fi
 
 # Sublime Text
@@ -489,16 +349,16 @@ if which daktilo &> /dev/null; then
   export DAKTILO_CONFIG="$HOME/.config/daktilo.toml"
 fi
 
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
-}
-compctl -K _pip_completion pip
+# unzip
+if [[ -e "/opt/homebrew/opt/unzip" ]]; then
+  export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
+fi
+
+if [[ -e "/opt/homebrew/opt/libxslt" ]]; then
+  export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/libxslt/lib"
+  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/libxslt/include"
+fi
 
 function get_token {
   case "$#" in
@@ -553,14 +413,6 @@ function rebase {
   git status
 }
 
-function rm {
-  if [[ "$1" =~ ^- && ! "$1" == "--" ]]; then
-    shift
-  fi
-
-  mv "$@" "$HOME/.Trash/"
-}
-
 if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
   alias imgcat="wezterm imgcat"
 fi
@@ -570,7 +422,8 @@ if [ -e '/opt/homebrew/' ]; then
   export PATH="/opt/homebrew/bin:$PATH"
 fi
 
-. "$HOME/.asdf/asdf.sh"
+# asdf
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 
-fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
