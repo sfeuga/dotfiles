@@ -117,23 +117,20 @@ alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | awk -F '
 
 if [[ -e "$HOME/Developments" ]]; then
   alias dev="cd $HOME/Developments && clear"
-  alias perso="cd $HOME/Developments/SFO && clear"
 
   if [[ -e "$HOME/Developments/SFO" ]]; then
+    alias perso="cd $HOME/Developments/SFO && clear"
+
     alias car="cd $HOME/Developments/SFO/Cartier && clear"
     alias cbe="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear"
     alias cbes="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear && colima start && uvicorn app.main:app --reload"
-    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && reset"
-    alias cfes="cd $HOME/Developments/SFO/Cartier/*ontend && reset && NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
-
-    alias hon="cd $HOME/Developments/SFO/Hon-e.Book && clear"
+    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && clear"
+    alias cfes="cd $HOME/Developments/SFO/Cartier/*ontend && clear && NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
   fi
 fi
 
 if which freshclam &> /dev/null; then
   if which clamscan &> /dev/null; then
-    alias winscan="freshclam && clamscan -r -i --bell /Volumes/Crucial\ X6\ -\ 2TB/Perso/Windows/"
-    alias persoscan="freshclam && clamscan -r -i --bell /Volumes/Crucial\ X6\ -\ 2TB/Perso/"
     alias viruscan="freshclam && clamscan -r -i --bell ."
   fi
 fi
@@ -179,16 +176,32 @@ unset LDFLAGS
 export OLD_CPPFLAGS=$CPPFLAGS
 unset CPPFLAGS
 
+if [[ -e "/opt/homebrew/opt/curl" ]]; then
+  export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/curl/lib"
+  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/curl/include"
+  export PKG_CONFIG_PATH="/opt/homebrew/opt/curl/lib/pkgconfig"
+fi
+
+if [[ -e "/opt/homebrew/opt/libxslt" ]]; then
+  export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/libxslt/lib"
+  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/libxslt/include"
+fi
+
 if [[ -e "/opt/homebrew/opt/binutils" ]]; then
   export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/binutils/include"
   export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/binutils/lib"
   export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
 fi
+
 if [[ -e "/opt/homebrew/opt/libpq" ]]; then
   export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/libpq/include"
   export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/libpq/lib"
   export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/opt/homebrew/opt/libpq/lib/pkgconfig"
 fi
+
 if [[ -e "/opt/homebrew/opt/openssl@3" ]]; then
   # A CA file has been bootstrapped using certificates from the system
   #   keychain. To add additional certificates, place .pem files in
@@ -214,7 +227,7 @@ else
 fi
 
 # asdf
-if [[ -e "/opt/homebrew/opt/asdf/" ]]; then
+if [[ -e "/opt/homebrew/opt/asdf" ]]; then
   function aupdate {
     if [[ -e "$HOME/.tool-versions" ]]; then
       echo "Update global asdf plugins..."
@@ -288,11 +301,6 @@ if [ -e "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]; the
   export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
-# JQ / GoJQ
-if which gojq &> /dev/null; then
-  alias jq=gojq
-fi
-
 # Github-cli (https://cli.github.com)
 if which gh &> /dev/null; then
   export GH_NO_UPDATE_NOTIFIER=false
@@ -309,34 +317,28 @@ fi
 
 ## Go
 if [[ -e "$HOME/.asdf/installs/golang" ]]; then
-  source "$HOME/.asdf/plugins/golang/set-env.zsh"
   export ASDF_GOLANG_MOD_VERSION_ENABLED=true
+
+  local go_bin_path
+  go_bin_path="$(asdf which go 2>/dev/null)"
+
+  if [[ -n "${go_bin_path}" ]]; then
+    export GOROOT="$(dirname "$(dirname "${go_bin_path:A}")")"
+    export GOBIN="$GOROOT/bin"
+    mkdir -p "$GOROOT/packages"
+    export GOPATH="$GOROOT/packages"
+  fi
 fi
 
-## GCP sdk
-if [ -e "/opt/homebrew/bin/gcloud" ]; then
-  # The next line updates PATH for the Google Cloud SDK.
-  source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-  # The next line enables shell command completion for gcloud.
-  source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-elif [ -e "$HOME/bin/google-cloud-sdk" ]; then
-  # The next line updates PATH for the Google Cloud SDK.
-  source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
-  # The next line enables shell command completion for gcloud.
-  source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"
+## Rust
+if [[ -e "$HOME/.asdf/installs/rust" ]]; then
+  version=$(\ls -1 "$HOME/.asdf/installs/rust/" | sort -r | head -n 1 | sed 's|/||')
+  source "$HOME/.asdf/installs/rust/$version/env"
 fi
 
 # Sublime Text
 if [ -e "/Applications/Sublime Text.app/Contents/MacOS/sublime_text" ]; then
   alias subl="/Applications/Sublime\ Text.app/Contents/MacOS/sublime_text --launch-or-new-window"
-fi
-
-# Curl
-if [[ -e "/opt/homebrew/opt/curl/bin" ]]; then
-  export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/curl/lib"
-  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/curl/include"
-  export PKG_CONFIG_PATH="/opt/homebrew/opt/curl/lib/pkgconfig"
 fi
 
 # GNUBin
@@ -352,12 +354,6 @@ fi
 # unzip
 if [[ -e "/opt/homebrew/opt/unzip" ]]; then
   export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
-fi
-
-if [[ -e "/opt/homebrew/opt/libxslt" ]]; then
-  export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
-  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/libxslt/lib"
-  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/libxslt/include"
 fi
 
 function get_token {
