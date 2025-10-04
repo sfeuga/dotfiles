@@ -1,4 +1,8 @@
 debug
 neovim
+rbs
 rspec
 rubocop
+sorbet-static-and-runtime
+steep
+tapioca
