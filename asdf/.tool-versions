@@ -2,6 +2,9 @@ bat 0.25.0
 colima 0.9.1
 crystal 1.17.1
 direnv 2.37.1
+elixir 1.18.4-otp-28
+elixir-ls 0.29.3
+erlang 28.1
 ffmpeg 8.0
 gcloud 541.0.0
 github-cli 2.81.0
