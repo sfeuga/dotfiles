@@ -287,13 +287,13 @@ if [ -e "$HOME/.local/bin" ]; then
 fi
 
 # NeoVim
-if which nvim > /dev/null; then
+if which nvim &> /dev/null; then
   export EDITOR="nvim"
   alias vim=nvim
 fi
 
 # VSCode-oss / Codium
-if which codium > /dev/null; then
+if which codium &> /dev/null; then
   alias code=codium
 fi
 # VSCode
