@@ -356,6 +356,7 @@ if [[ -e "/opt/homebrew/opt/unzip" ]]; then
   export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
 fi
 
+# Cartier
 function get_token {
   case "$#" in
     0)
@@ -378,19 +379,32 @@ function get_token {
               --data-urlencode 'scope=openid' \
               --data-urlencode "username=$username" \
               --data-urlencode "password=$password" | jq .access_token | sed 's/"//g')
-      echo "$token"
+      echo "Authorization: Bearer $token"
+      echo "$token" | pbcopy
       ;;
   esac
 }
 
 function anna_token {
-  clear
   get_token anna.leguen
 }
 
 function steph_token {
-  clear
   get_token stephane.feuga
+}
+
+function pytests {
+  case "$#" in
+    0)
+      python -m coverage run -m unittest -vv
+      ;;
+    1)
+      python -m coverage run -m unittest -vv $1
+      ;;
+    *)
+      python -m coverage run -m unittest -vv $@
+      ;;
+  esac
 }
 
 function rebase {
