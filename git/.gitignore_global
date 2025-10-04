@@ -104,6 +104,6 @@ toggle_keycloak.sh
 app/static/flags/*.svg
 endpoint_tests.sh
 car-eu-dataoffice*.json
-/Users/sfo/Developments/Abbeal/Cartier/backend/endpoint_tests.sh
+docker-compose.*.yml
 *.diff
 .megaignore
