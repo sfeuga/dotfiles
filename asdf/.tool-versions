@@ -11,7 +11,6 @@ github-cli 2.81.0
 golang 1.25.1
 lima 1.2.1
 neovim 0.11.4
-nim 2.2.4
 nodejs 24.9.0
 pnpm 10.18.0
 python 3.13.7t
