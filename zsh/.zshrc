@@ -23,12 +23,33 @@ export ZSH="$HOME/.oh-my-zsh"
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="agnoster"
 ZSH_THEME="random"
+ZSH_THEME_RANDOM_IGNORED=(
+    "arrow"
+    "awesomepanda"
+    "candy-kingdom"
+    "cloud"
+    "fino"
+    "fletcherm"
+    "garyblessington"
+    "gentoo"
+    "gozilla"
+    "jaischeema"
+    "jreese"
+    "kennethreitz"
+    "lambda"
+    "nicoulaj"
+    "robbyrussell"
+    "sorin"
+    "superjarin"
+    "takashiyoshida"
+    "theunraveler"
+)
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# ZSH_THEME_RANDOM_CANDIDATES=( "smt" "funky" "suvash" "nanotech" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
