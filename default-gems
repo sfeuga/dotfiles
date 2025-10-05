@@ -3,6 +3,6 @@ neovim
 rbs
 rspec
 rubocop
-sorbet-static-and-runtime
-steep
+sorbet
+sorbet-runtime
 tapioca
