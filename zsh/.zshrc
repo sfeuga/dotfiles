@@ -336,6 +336,25 @@ if [[ -e "$HOME/.asdf/installs/rust" ]]; then
   source "$HOME/.asdf/installs/rust/$version/env"
 fi
 
+## Nim
+if which nim &> /dev/null && which nimble &> /dev/null; then
+  function nimble_install_default {
+    if [[ -e "$HOME/.default-nimble-pkgs" ]]; then
+      while read -r line; do
+        nimble install "$line";
+      done < "$HOME/.default-nimble-pkgs"
+      return 0
+    else
+      echo "No \"~/.default-nimble-pkgs\" found. Nothing to install."
+      return 1
+    fi
+  }
+
+  if [[ -e "$HOME/.nimble/bin" ]] then
+    export PATH="$HOME/.nimble/bin:$PATH"
+  fi
+fi
+
 # Sublime Text
 if [ -e "/Applications/Sublime Text.app/Contents/MacOS/sublime_text" ]; then
   alias subl="/Applications/Sublime\ Text.app/Contents/MacOS/sublime_text --launch-or-new-window"
