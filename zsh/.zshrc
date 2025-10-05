@@ -96,7 +96,7 @@ plugins=(
     macos
 )
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
@@ -116,16 +116,16 @@ alias grepython="ps aux | grep python | grep -v grep | grep -v vscode"
 alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | awk -F ' <' '{ print }' | sed 's/Author: //'"
 
 if [[ -e "$HOME/Developments" ]]; then
-  alias dev="cd $HOME/Developments && clear"
+  alias dev='cd $HOME/Developments && clear'
 
   if [[ -e "$HOME/Developments/SFO" ]]; then
-    alias perso="cd $HOME/Developments/SFO && clear"
+    alias perso='cd $HOME/Developments/SFO && clear'
 
-    alias car="cd $HOME/Developments/SFO/Cartier && clear"
-    alias cbe="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear"
-    alias cbes="cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear && colima start && uvicorn app.main:app --reload"
-    alias cfe="cd $HOME/Developments/SFO/Cartier/*ontend && clear"
-    alias cfes="cd $HOME/Developments/SFO/Cartier/*ontend && clear && NODE_OPTIONS=' --dns-result-order ipv4first' pnpm dev"
+    alias car='cd $HOME/Developments/SFO/Cartier && clear'
+    alias cbe='cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear'
+    alias cbes='cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear && colima start && uvicorn app.main:app --reload'
+    alias cfe='cd $HOME/Developments/SFO/Cartier/*ontend && clear'
+    alias cfes='cd $HOME/Developments/SFO/Cartier/*ontend && clear && NODE_OPTIONS=" --dns-result-order ipv4first" pnpm dev'
   fi
 fi
 
@@ -147,15 +147,15 @@ function get_git_default_branch {
       default_branch=$(git branches | grep -E "origin/master|origin/main" -m 1 | awk -F "/" '{ print $NF }')
     fi
 
-    echo $default_branch
+    echo "$default_branch"
   fi
 }
 
 if test -n "$KITTY_INSTALLATION_DIR"; then
-    export KITTY_SHELL_INTEGRATION="no-cursor"
-    autoload -Uz -- "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty-integration"
-    kitty-integration
-    unfunction kitty-integration
+  export KITTY_SHELL_INTEGRATION="no-cursor"
+  autoload -Uz -- "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty-integration"
+  kitty-integration
+  unfunction kitty-integration
 fi
 
 if [ -f "$HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
@@ -166,7 +166,6 @@ if type brew &> /dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
   export HOMEBREW_NO_ENV_HINTS=true
-  autoload -Uz compinit; compinit
 
   alias bupdate="brew update && brew upgrade; brew upgrade --casks --greedy"
 fi
@@ -231,7 +230,7 @@ if [[ -e "/opt/homebrew/opt/asdf" ]]; then
   function aupdate {
     if [[ -e "$HOME/.tool-versions" ]]; then
       echo "Update global asdf plugins..."
-      cat "$HOME/.tool-versions" | awk '{ print $1 }' | while read line; do
+      cat "$HOME/.tool-versions" | awk '{ print $1 }' | while read -r line; do
         if [[ ! "$line" =~ "java" ]]; then
           asdf install "$line" latest && asdf set -u "$line" latest
         else
@@ -245,9 +244,9 @@ if [[ -e "/opt/homebrew/opt/asdf" ]]; then
   function asdf_install_all_plugs {
     if [[ -e "$HOME/.tool-versions" ]]; then
       echo -e "\033[30;42mInstall global asdf plugins...\033[0m"
-      cat "$HOME/.tool-versions" | while read line; do
-        plug=$(echo $line | awk '{ print $1 }')
-        version=$(echo $line | awk '{ print $2 }')
+      cat "$HOME/.tool-versions" | while read -r line; do
+        plug=$(echo "$line" | awk '{ print $1 }')
+        version=$(echo "$line" | awk '{ print $2 }')
         asdf plugin add "$plug" &> /dev/null
         asdf install "$plug" "$version"
       done
@@ -258,9 +257,9 @@ if [[ -e "/opt/homebrew/opt/asdf" ]]; then
     if [[ "${#local_plugs_paths[@]}" -gt 0 ]]; then
       echo -e "\033[30;42mInstall local asdf plugins...\033[0m"
       for local_path in "${local_plugs_paths[@]}"; do
-        cat "$local_path" | while read line; do
-          plug=$(echo $line | awk '{ print $1 }')
-          version=$(echo $line | awk '{ print $2 }')
+        cat "$local_path" | while read -r line; do
+          plug=$(echo "$line" | awk '{ print $1 }')
+          version=$(echo "$line" | awk '{ print $2 }')
           asdf plugin add "$plug" &> /dev/null
           asdf install "$plug" "$version"
         done
@@ -319,14 +318,18 @@ fi
 if [[ -e "$HOME/.asdf/installs/golang" ]]; then
   export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 
-  local go_bin_path
   go_bin_path="$(asdf which go 2>/dev/null)"
 
   if [[ -n "${go_bin_path}" ]]; then
-    export GOROOT="$(dirname "$(dirname "${go_bin_path:A}")")"
-    export GOBIN="$GOROOT/bin"
+    GOROOT="$(dirname "$(dirname "${go_bin_path:A}")")"
+    export GOROOT
+
+    GOBIN="$GOROOT/bin"
+    export GOBIN
+
     mkdir -p "$GOROOT/packages"
-    export GOPATH="$GOROOT/packages"
+    GOPATH="$GOROOT/packages"
+    export GOPATH
   fi
 fi
 
@@ -350,7 +353,7 @@ if which nim &> /dev/null && which nimble &> /dev/null; then
     fi
   }
 
-  if [[ -e "$HOME/.nimble/bin" ]] then
+  if [[ -e "$HOME/.nimble/bin" ]]; then
     export PATH="$HOME/.nimble/bin:$PATH"
   fi
 fi
@@ -418,10 +421,10 @@ function pytests {
       python -m coverage run -m unittest -vv
       ;;
     1)
-      python -m coverage run -m unittest -vv $1
+      python -m coverage run -m unittest -vv "$1"
       ;;
     *)
-      python -m coverage run -m unittest -vv $@
+      python -m coverage run -m unittest -vv "$@"
       ;;
   esac
 }
