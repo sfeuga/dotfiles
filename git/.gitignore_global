@@ -107,3 +107,4 @@ car-eu-dataoffice*.json
 docker-compose.*.yml
 *.diff
 .megaignore
+.zed
