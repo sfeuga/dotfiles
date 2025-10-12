@@ -4,6 +4,7 @@
 #  - rubocop-i18n
 #  - rubocop-md
 #  - rubocop-rails
+#  - rubocop-rake
 #  - rubocop-rspec
 #  - rubocop-sequel
 #  - rubocop/require_tools
@@ -20,3 +21,10 @@
 #  Enabled: true
 #GetText:
 #  Enabled: false
+AllCops:
+  NewCops: enable
+  ParserEngine: parser_prism
+  StringLiteralsFrozenByDefault: true
+
+Layout/LineLength:
+  Max: 80
