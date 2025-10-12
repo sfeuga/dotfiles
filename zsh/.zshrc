@@ -24,32 +24,68 @@ export ZSH="$HOME/.oh-my-zsh"
 #ZSH_THEME="agnoster"
 ZSH_THEME="random"
 ZSH_THEME_RANDOM_IGNORED=(
+    "Soliah"
+    "afowler"
+    "agnoster"
     "arrow"
+    "avit"
     "awesomepanda"
+    "bira"
+    "candy"
     "candy-kingdom"
     "cloud"
+    "cypher"
+    "daveverwer"
     "fino"
     "fletcherm"
+    "gallifrey"
+    "gallois"
     "garyblessington"
     "gentoo"
+    "geoffgarside"
     "gozilla"
+    "imajes"
     "jaischeema"
+    "jnrowe"
     "jreese"
+    "juanghurtado"
     "kennethreitz"
+    "kphoen"
     "lambda"
+    "maran"
+    "minimal"
+    "mlh"
     "nicoulaj"
+    "refined"
+    "rgm"
     "robbyrussell"
+    "skaro"
     "sorin"
+    "sporty_256"
     "superjarin"
     "takashiyoshida"
     "theunraveler"
+    "wuffers"
 )
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "smt" "funky" "suvash" "nanotech" )
+# ZSH_THEME_RANDOM_CANDIDATES=(
+#    "adben"
+#    "dogenpunk"
+#    "dst"
+#    "fox"
+#    "funky"
+#    "josh"
+#    "kafeitu"
+#    "nanotech"
+#    "pmcgee"
+#    "simonoff"
+#    "smt"
+#    "suvash"
+# )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -107,7 +143,6 @@ ZSH_THEME_RANDOM_IGNORED=(
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     asdf
-    direnv
     dotenv
     emoji
     git
@@ -399,6 +434,9 @@ if [[ -e "/opt/homebrew/opt/unzip" ]]; then
   export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
 fi
 
+# zs - Zed Smart Setup
+export PATH="$PATH:/Users/sfo/.local/bin"
+
 # Cartier
 function get_token {
   case "$#" in
@@ -439,7 +477,7 @@ function steph_token {
 function pytests {
   case "$#" in
     0)
-      python -m coverage run -m unittest -vv
+      pytest
       ;;
     1)
       python -m coverage run -m unittest -vv "$1"
@@ -448,6 +486,24 @@ function pytests {
       python -m coverage run -m unittest -vv "$@"
       ;;
   esac
+}
+
+function export_realm {
+  colima status &> /dev/null
+
+  if [[ "$?" != 0 ]]; then
+    colima start &> /dev/null
+  else
+    container_status=$(docker container ls --filter name=keycloak --format "{{.State}}")
+
+    if [[ "$container_status" == "running" ]]; then
+      docker exec -it keycloak bash -c "/opt/keycloak/bin/kc.sh export --realm cartier --users realm_file --file /opt/keycloak/data/import/cartier-realm_export.json"
+    else
+      docker compose -f $HOME/Developments/SFO/Cartier/backend/docker-compose.keycloak.yml up &> /dev/null
+      docker exec -it keycloak bash -c "/opt/keycloak/bin/kc.sh export --realm cartier --users realm_file --file /opt/keycloak/data/import/cartier-realm_export.json"
+      docker compose stop &> /dev/null
+    fi
+  fi
 }
 
 function rebase {
