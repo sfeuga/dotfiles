@@ -2,15 +2,15 @@
   detachedHead = false
 [alias]
   alias = !"git config -l | grep alias | sed 's/alias.//' | grep -v alias | sed 's/=/❌/' | column -s ❌ -x -t"
-  branches = branch -a
+  branches = branch -avv
   can = commit --gpg-sign --amend --no-edit
-  clean-local-branches = !"for branch in $(git branch | grep -v main | grep -v "^*"); do git branch -D $branch; done"
-  clb = !"for branch in $(git branch | grep -v "^*"); do git branch -D $branch; done"
+  clean-local-branches = !"for branch in $(git branch | grep -v develop | grep -v "^*"); do git branch -D $branch; done"
   conf = config -l
+  conf-edit = config --global -e
   conf-global = config --global -l
   conf-local = config --local -l
-  finDbug = !"git log --grep=^$1: -"
-  fix-gpg = !"gpgconf --kill gpg-agent"
+  findbug = !"git log --grep=^$1: -"
+  fixgpg = !"gpgconf --kill gpg-agent"
   l = log -10 --stat
   last = log -1 --stat
   lg = log -50 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -27,7 +27,7 @@
   sls = !"git show stash@{0}"
   stashes = stash list
   sync = sync-repo
-  tag-delete = push --delete origin $1 && git tag -d $1
+  tag-delete = push --delete origin $2 && git tag -d $2
   tags = tag -l
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c -i wip && git reset HEAD~1"
@@ -55,10 +55,10 @@
   prune = true
   prunetags = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	process = git-lfs filter-process
-	required = true
-	smudge = git-lfs smudge -- %f
+  clean = git-lfs clean -- %f
+  process = git-lfs filter-process
+  required = true
+  smudge = git-lfs smudge -- %f
 [gist]
   private = yes
 [gpg]
