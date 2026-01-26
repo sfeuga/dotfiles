@@ -13,9 +13,11 @@ golang 1.26.3
 lima 2.1.1
 neovim 0.12.2
 nim 2.2.10
+nodejs 24.6.0
 nodejs 25.9.0
 pnpm 10.33.0
 python 3.14.4t
+ruby 3.4.1
 ruby 3.4.5
 rust 1.95.0
 rust-analyzer 2026-05-04
