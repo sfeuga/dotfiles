@@ -27,8 +27,8 @@
   sls = !"git show stash@{0}"
   stashes = stash list
   sync = sync-repo
-  tag-delete = push --delete origin $2 && git tag -d $2
-  tags = tag -l
+  tag-delete = !"TAG=$1 && git push --delete origin $TAG && git tag -d $TAG"
+  tags = tag -l --sort=-v:refname
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c -i wip && git reset HEAD~1"
   wip = !"git add -A && git commit --gpg-sign -m wip && git push -f"
@@ -49,8 +49,11 @@
   helper = cache --timeout=604800
 [diff]
   submodule = log
-  context = 5
+  context = 8
   algorithm = histogram
+  tool = difftastic
+  colorMoved = default
+  colorMovedWS = allow-indentation-change
 [fetch]
   prune = true
   prunetags = true
@@ -84,9 +87,11 @@
 [push]
   default = current
   autosetupremote = true
+  followtags = true
 [rebase]
   autosquash = true
   autostash = true
+  updateRefs = true
 [rerere]
   enabled = true
 [status]
@@ -99,3 +104,10 @@
 [user]
   name = Stéphane FEUGA OSHIMA
   email = sfeuga@member.fsf.org
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  dark = true
+  line-numbers = true
+

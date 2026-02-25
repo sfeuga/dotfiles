@@ -105,6 +105,14 @@ app/static/flags/*.svg
 endpoint_tests.sh
 car-eu-dataoffice*.json
 docker-compose.*.yml
+compose.*.yml
+!docker-compose.dev.yml
+!compose.dev.yml
+Dockerfile.*
 *.diff
 .megaignore
 .zed
+.tokeignore
+.claude
+app/queue/
+app/queue/*
