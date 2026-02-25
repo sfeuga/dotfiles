@@ -16,6 +16,9 @@ config.colors = {
 }
 
 
+-- How many lines of scrollback you want to retain per tab
+config.scrollback_lines = 99999
+
 -- config.window_background_image = '/Users/sfo/Pictures/macOS-15-Purple-icons-wallpaper.png'
 -- config.window_background_image_hsb = {
   -- Darken the background image by reducing it to 1/3rd
@@ -58,4 +61,8 @@ config.font = wezterm.font('FiraCode Nerd Font')
 config.font_size = 12.0
 
 -- and finally, return the configuration to wezterm
+config.keys = {
+  {key="Enter", mods="SHIFT", action=wezterm.action{SendString="\x1b\r"}},
+}
+
 return config
