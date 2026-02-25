@@ -24,10 +24,11 @@ export ZSH="$HOME/.oh-my-zsh"
 #ZSH_THEME="agnoster"
 ZSH_THEME="random"
 ZSH_THEME_RANDOM_IGNORED=(
-    "Soliah"
+    "af-magic"
     "afowler"
     "agnoster"
     "arrow"
+    "aussiegeek"
     "avit"
     "awesomepanda"
     "bira"
@@ -36,14 +37,18 @@ ZSH_THEME_RANDOM_IGNORED=(
     "cloud"
     "cypher"
     "daveverwer"
+    "emotty"
+    "essembeh"
     "fino"
     "fletcherm"
+    "frontcube"
     "gallifrey"
     "gallois"
     "garyblessington"
     "gentoo"
     "geoffgarside"
     "gozilla"
+    "humzas"
     "imajes"
     "jaischeema"
     "jnrowe"
@@ -52,16 +57,25 @@ ZSH_THEME_RANDOM_IGNORED=(
     "kennethreitz"
     "kphoen"
     "lambda"
+    "linuxonly"
+    "macovsky-ruby"
     "maran"
+    "mgutz"
     "minimal"
     "mlh"
+    "murilasso"
     "nicoulaj"
     "refined"
     "rgm"
+    "rixius"
     "robbyrussell"
+    "sammy"
     "skaro"
+    "Soliah"
+    "sonicradish"
     "sorin"
     "sporty_256"
+    "strug"
     "superjarin"
     "takashiyoshida"
     "theunraveler"
@@ -74,17 +88,22 @@ ZSH_THEME_RANDOM_IGNORED=(
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=(
 #    "adben"
+#    "alanpeabody"
 #    "dogenpunk"
 #    "dst"
 #    "fox"
 #    "funky"
 #    "josh"
 #    "kafeitu"
+#    "kardan"
 #    "nanotech"
 #    "pmcgee"
+#    "rkj"
 #    "simonoff"
 #    "smt"
 #    "suvash"
+#    "tonotdo"
+#    "trapd00r"
 # )
 
 # Uncomment the following line to use case-sensitive completion.
@@ -167,7 +186,9 @@ alias gpg_public_keys="gpg --list-keys --keyid-format LONG"
 
 alias ls="ls -AF --color=always"
 
-alias grepython="ps aux | grep python | grep -v grep | grep -v vscode"
+alias grepython="ps aux | grep python | grep -v grep | grep -v vscode | grep -v cursor"
+
+alias clock="while sleep 1; do tput sc; tput cup 0 $(($(tput cols)-29)); date; tput rc; done &"
 
 alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | awk -F ' <' '{ print }' | sed 's/Author: //'"
 
@@ -451,10 +472,10 @@ function get_token {
         username="$1"
         password="$username"
       fi
-      clear
-      token=$(curl -s --location 'http://localhost:8080/realms/cartier/protocol/openid-connect/token' \
+      host="http://127.0.0.1:8080"
+      token=$(curl -s --location "${KEYCLOAK_URL:-$host}/realms/cartier/protocol/openid-connect/token" \
               --header 'Content-Type: application/x-www-form-urlencoded' \
-              --data-urlencode 'client_id=mapper-backend' \
+              --data-urlencode "client_id=${KEYCLOAK_ID:-mapper-frontend}" \
               --data-urlencode 'grant_type=password' \
               --data-urlencode 'client_secret=1234-CARTIER-5678' \
               --data-urlencode 'scope=openid' \
@@ -466,10 +487,6 @@ function get_token {
   esac
 }
 
-function anna_token {
-  get_token anna.leguen
-}
-
 function steph_token {
   get_token stephane.feuga
 }
@@ -477,7 +494,7 @@ function steph_token {
 function pytests {
   case "$#" in
     0)
-      pytest
+      python -m coverage run -m unittest -vv
       ;;
     1)
       python -m coverage run -m unittest -vv "$1"
@@ -531,8 +548,20 @@ if [ -e '/opt/homebrew/' ]; then
   export PATH="/opt/homebrew/bin:$PATH"
 fi
 
+# zsh completion
+fpath=(
+    ~/.local/share/zsh/site-functions/
+    $fpath
+)
+
 # asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 
 autoload -Uz compinit && compinit
+typeset -U PATH path
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+HISTORY_IGNORE="(history*|ls*|cd*|which*|bat*|cat*|less*|more*|man*|exit|reset|clear)"
+setopt HIST_NO_STORE
