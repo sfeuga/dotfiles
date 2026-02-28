@@ -3,7 +3,7 @@ colima 0.10.1
 crystal 1.19.1
 elixir 1.19.5-otp-28
 elixir-ls 0.30.0
-erlang 28.3.2
+erlang 28.3.3
 ffmpeg 8.0.1
 gcloud 558.0.0
 github-cli 2.87.3
