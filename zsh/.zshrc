@@ -351,7 +351,7 @@ if alias bupdate &> /dev/null && which aupdate &> /dev/null; then
 elif alias bupdate &> /dev/null; then
   alias sysupdate=bupdate
 elif which aupdate &> /dev/null; then
-  alias sysupdate="aupdate"
+  alias sysupdate=aupdate
 fi
 
 # Local bin
@@ -454,9 +454,6 @@ fi
 if [[ -e "/opt/homebrew/opt/unzip" ]]; then
   export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
 fi
-
-# zs - Zed Smart Setup
-export PATH="$PATH:/Users/sfo/.local/bin"
 
 # Cartier
 function get_token {
