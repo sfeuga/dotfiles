@@ -198,6 +198,18 @@ alias clock="while sleep 1; do tput sc; tput cup 0 $(($(tput cols)-29)); date; t
 
 alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | awk -F ' <' '{ print }' | sed 's/Author: //'"
 
+function updatevenv {
+  if [[ -e "./.venv" ]]; then
+    rm -rf .venv
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install --upgrade pip
+    pip install -r requirements.txt
+  else
+    echo 'Run this command from a python project using venv.'
+  fi
+}
+
 if [[ -e "$HOME/Developments" ]]; then
   alias dev='cd $HOME/Developments && clear'
 
