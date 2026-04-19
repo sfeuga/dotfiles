@@ -27,7 +27,7 @@
   sls = !"git show stash@{0}"
   stashes = stash list
   sync = sync-repo
-  tag-delete = !"TAG=$1 && git push --delete origin $TAG && git tag -d $TAG"
+  tag-delete = !"git push --delete origin \"$@\" && git tag -d \"$@\""
   tags = tag -l --sort=-v:refname
   unstage = reset HEAD --
   unwip = !"git log -n 1 | grep -q -c -i wip && git reset HEAD~1"
