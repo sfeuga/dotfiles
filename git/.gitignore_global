@@ -91,6 +91,7 @@ nvim/.local/share/direnv/
 # Ruby #
 ########
 *.gem
+bin/
 
 # Cartier #
 ##########
