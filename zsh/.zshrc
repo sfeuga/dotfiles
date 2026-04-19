@@ -1,6 +1,6 @@
 # Add ssh private keys
 for f in ~/.ssh/*; do
-  if [[ ! "$f" =~ "config" && ! "$f" =~ "known_hosts"  && ! "$f" =~ ".pub" && ! "$f" =~ ".zip" ]]; then
+  if [[ ! "$f" =~ "config" && ! "$f" =~ "known_hosts"  && ! "$f" =~ ".pub" && ! "$f" =~ ".zip" && ! "$f" =~ "sfo@MBA" ]]; then
     ssh-add -q "$f";
   fi;
 done
