@@ -262,7 +262,7 @@ if type brew &> /dev/null; then
 
   export HOMEBREW_NO_ENV_HINTS=true
 
-  alias bupdate="brew update && brew upgrade; brew upgrade --casks --greedy"
+  alias bupdate="brew update && brew upgrade; brew upgrade --casks --greedy; brew cleanup --prune all"
 fi
 
 export OLD_LDFLAGS=$LDFLAGS
