@@ -187,6 +187,7 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 export GPG_TTY=$TTY
 
 alias find_apple_app_id="mdls -name kMDItemCFBundleIdentifier -r"
+alias flush_dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 alias gpg_kill_agent="gpgconf --kill gpg-agent"
 alias gpg_secret_keys="gpg --list-secret-keys --keyid-format LONG"
