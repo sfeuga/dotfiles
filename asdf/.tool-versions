@@ -1,6 +1,8 @@
 bat 0.26.1
 colima 0.10.1
 crystal 1.20.1
+delta 0.19.2
+difftastic 0.69.0
 elixir 1.19.5-otp-28
 elixir-ls 0.30.0
 erlang 28.5
@@ -20,5 +22,3 @@ rust-analyzer 2026-05-04
 shellcheck 0.11.0
 shfmt 3.13.1
 yt-dlp 2026.03.17
-delta 0.19.2
-difftastic 0.69.0
