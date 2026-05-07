@@ -9,7 +9,7 @@ erlang 28.5
 ffmpeg 8.1.1
 gcloud 567.0.0
 github-cli 2.92.0
-golang 1.26.2
+golang 1.26.3
 lima 2.1.1
 neovim 0.12.2
 nim 2.2.10
