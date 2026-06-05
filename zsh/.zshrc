@@ -1,6 +1,6 @@
 # Add ssh private keys
 for f in ~/.ssh/*; do
-  if [[ ! "$f" =~ "config" && ! "$f" =~ "known_hosts"  && ! "$f" =~ ".pub" && ! "$f" =~ ".zip" && ! "$f" =~ "sfo@MBA" ]]; then
+  if [[ ! "$f" =~ "agent" && ! "$f" =~ "config" && ! "$f" =~ "known_hosts"  && ! "$f" =~ ".pub" && ! "$f" =~ ".zip" && ! "$f" =~ "sfo@MBA" ]]; then
     ssh-add -q "$f";
   fi;
 done
@@ -217,7 +217,7 @@ if [[ -e "$HOME/Developments" ]]; then
   alias dev='cd $HOME/Developments && clear'
 
   if [[ -e "$HOME/Developments/SFO" ]]; then
-    alias perso='cd $HOME/Developments/SFO && clear'
+    alias dev='cd $HOME/Developments/SFO && clear'
 
     alias car='cd $HOME/Developments/SFO/Cartier && clear'
     alias cbe='cd $HOME/Developments/SFO/Cartier/*ackend && source .venv/bin/activate && clear'
@@ -575,6 +575,9 @@ fpath=(
 # asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+if [[ -e "$HOME/.asdf" ]]; then
+  . "$HOME/.asdf/asdf.sh"
+fi
 
 autoload -Uz compinit && compinit
 typeset -U PATH path
