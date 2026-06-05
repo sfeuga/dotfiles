@@ -59,6 +59,7 @@ ZSH_THEME_RANDOM_IGNORED=(
     "jreese"
     "juanghurtado"
     "kennethreitz"
+    "kolo"
     "kphoen"
     "lambda"
     "linuxonly"
@@ -98,10 +99,13 @@ ZSH_THEME_RANDOM_IGNORED=(
 #    "dst"
 #    "fox"
 #    "funky"
+#    "flazz"
+#    "frisk"
 #    "jonathan"
 #    "josh"
 #    "kafeitu"
 #    "kardan"
+#    "miloshadzic"
 #    "nanotech"
 #    "pmcgee"
 #    "rkj"
@@ -111,6 +115,7 @@ ZSH_THEME_RANDOM_IGNORED=(
 #    "tjkirch"
 #    "tonotdo"
 #    "trapd00r"
+#    "wezm"
 #    "xiong-chiamiov-plus"
 # )
 
@@ -266,6 +271,112 @@ if type brew &> /dev/null; then
   export HOMEBREW_NO_ENV_HINTS=true
 
   alias bupdate="brew update && brew upgrade; brew upgrade --casks --greedy; brew cleanup --prune all"
+
+  brew tap hamidnazari/jetbrains-versions
+  brew tap browsh-org/browsh
+
+  function minimal_setup {
+    bupdate && brew install \
+      actionlint \
+      arp-scan-rs \
+      asdf \
+      autoconf \
+      browsh \
+      clamav \
+      cmatrix \
+      curl \
+      docker \
+      docker-buildx \
+      emacs \
+      fop \
+      gdb \
+      git-lfs \
+      gitnr \
+      gmp \
+      gnupg \
+      kewt \
+      libgit2 \
+      libxslt \
+      libyaml \
+      lynx \
+      mkvtoolnix \
+      openssl@3 \
+      pandoc \
+      posting \
+      qemu \
+      rcm \
+      rdfind \
+      readline \
+      rename \
+      rmlint \
+      rsync \
+      sevenzip \
+      sub2srt \
+      tlrc \
+      tokei \
+      unzip \
+      w3m \
+      wxwidgets
+
+    bupdate
+  }
+
+  function minimal_casks_setup {
+    bupdate && brew install \
+      apparency \
+      blankie \
+      carbon-copy-cloner \
+      cleanshot \
+      discord \
+      firefox \
+      font-jetbrains-mono-nerd-font \
+      font-noto-sans \
+      font-noto-sans-mono-cjk-jp \
+      freecad \
+      frescobaldi \
+      ghostty \
+      gimp \
+      goland@2022.1.4 \
+      google-chrome \
+      google-chrome@dev \
+      handbrake-app \
+      inkscape \
+      jellyfin-media-player \
+      mactex-no-gui \
+      megasync \
+      notunes \
+      onyx \
+      openineditor-lite \
+      openinterminal-lite \
+      openscad@snapshot \
+      qladdict \
+      raycast \
+      rio \
+      spotify \
+      sublime-text \
+      suspicious-package \
+      sweet-home3d \
+      syntax-highlight \
+      utm \
+      visual-studio-code \
+      vlc \
+      wezterm \
+      zed \
+      zettlr
+
+    brew install --cask --appdir=/Applications megacmd-app
+
+    bupdate
+  }
+else
+  if [[ "$(uname)" == "Darwin" ]]; then
+    echo "Installing brew:"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    clear
+    printf 'Installing '; tput sitm; printf "some";tput ritm; echo ' brew apps:'
+    source ~/.zshrc
+    minimal_setup && minimal_casks_setup
+  fi
 fi
 
 export OLD_LDFLAGS=$LDFLAGS
