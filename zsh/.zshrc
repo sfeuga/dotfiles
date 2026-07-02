@@ -202,7 +202,7 @@ alias ls="ls -AF --color=always"
 
 alias grepython="ps aux | grep python | grep -v grep | grep -v vscode | grep -v cursor"
 
-alias clock="while sleep 1; do tput sc; tput cup 0 $(($(tput cols)-29)); date; tput rc; done &"
+alias clock="while sleep 1; do tput sc; tput cup 0 $(($(tput cols) - 29)); date; tput rc; done &"
 
 alias gitLastAuthor="git last | grep Author | awk -F ': ' '{ print }' | awk -F ' <' '{ print }' | sed 's/Author: //'"
 
@@ -232,8 +232,8 @@ if [[ -e "$HOME/Developments" ]]; then
   fi
 fi
 
-if which freshclam &> /dev/null; then
-  if which clamscan &> /dev/null; then
+if which freshclam &>/dev/null; then
+  if which clamscan &>/dev/null; then
     alias viruscan="freshclam && clamscan -r -i --bell ."
   fi
 fi
@@ -424,7 +424,7 @@ if [[ -e "/opt/homebrew/opt/openssl@3" ]]; then
 fi
 
 # config pager
-if which bat &> /dev/null; then
+if which bat &>/dev/null; then
   git config --global core.pager "bat --style='numbers,changes,grid'"
   git config --global pager.diff "bat -l diff --style='changes,grid'"
   git config --global pager.show "bat -l diff --style='changes,grid'"
@@ -456,7 +456,7 @@ if [[ -e "/opt/homebrew/opt/asdf" ]]; then
       cat "$HOME/.tool-versions" | while read -r line; do
         plug=$(echo "$line" | awk '{ print $1 }')
         version=$(echo "$line" | awk '{ print $2 }')
-        asdf plugin add "$plug" &> /dev/null
+        asdf plugin add "$plug" &>/dev/null
         asdf install "$plug" "$version"
       done
     fi
@@ -469,7 +469,7 @@ if [[ -e "/opt/homebrew/opt/asdf" ]]; then
         cat "$local_path" | while read -r line; do
           plug=$(echo "$line" | awk '{ print $1 }')
           version=$(echo "$line" | awk '{ print $2 }')
-          asdf plugin add "$plug" &> /dev/null
+          asdf plugin add "$plug" &>/dev/null
           asdf install "$plug" "$version"
         done
       done
@@ -495,13 +495,13 @@ if [ -e "$HOME/.local/bin" ]; then
 fi
 
 # NeoVim
-if which nvim &> /dev/null; then
+if which nvim &>/dev/null; then
   export EDITOR="nvim"
   alias vim=nvim
 fi
 
 # VSCode-oss / Codium
-if which codium &> /dev/null; then
+if which codium &>/dev/null; then
   alias code=codium
 fi
 # VSCode
@@ -510,10 +510,10 @@ if [ -e "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]; the
 fi
 
 # Github-cli (https://cli.github.com)
-if which gh &> /dev/null; then
+if which gh &>/dev/null; then
   export GH_NO_UPDATE_NOTIFIER=false
 
-  if which bat &> /dev/null; then
+  if which bat &>/dev/null; then
     GH_PAGER="bat -l diff --style='changes,grid'"
   else
     GH_PAGER="less"
@@ -549,12 +549,12 @@ if [[ -e "$HOME/.asdf/installs/rust" ]]; then
 fi
 
 ## Nim
-if which nim &> /dev/null && which nimble &> /dev/null; then
+if which nim &>/dev/null && which nimble &>/dev/null; then
   function nimble_install_default {
     if [[ -e "$HOME/.default-nimble-pkgs" ]]; then
       while read -r line; do
-        nimble install "$line";
-      done < "$HOME/.default-nimble-pkgs"
+        nimble install "$line"
+      done <"$HOME/.default-nimble-pkgs"
       return 0
     else
       echo "No \"~/.default-nimble-pkgs\" found. Nothing to install."
@@ -578,7 +578,7 @@ if [[ -e "/opt/homebrew/opt/coreutils/libexec/gnubin" ]]; then
 fi
 
 # Daktilo
-if which daktilo &> /dev/null; then
+if which daktilo &>/dev/null; then
   export DAKTILO_CONFIG="$HOME/.config/daktilo.toml"
 fi
 
@@ -635,19 +635,19 @@ function pytests {
 }
 
 function export_realm {
-  colima status &> /dev/null
+  colima status &>/dev/null
 
   if [[ "$?" != 0 ]]; then
-    colima start &> /dev/null
+    colima start &>/dev/null
   else
     container_status=$(docker container ls --filter name=keycloak --format "{{.State}}")
 
     if [[ "$container_status" == "running" ]]; then
       docker exec -it keycloak bash -c "/opt/keycloak/bin/kc.sh export --realm cartier --users realm_file --file /opt/keycloak/data/import/cartier-realm_export.json"
     else
-      docker compose -f $HOME/Developments/SFO/Cartier/backend/docker-compose.keycloak.yml up &> /dev/null
+      docker compose -f $HOME/Developments/SFO/Cartier/backend/docker-compose.keycloak.yml up &>/dev/null
       docker exec -it keycloak bash -c "/opt/keycloak/bin/kc.sh export --realm cartier --users realm_file --file /opt/keycloak/data/import/cartier-realm_export.json"
-      docker compose stop &> /dev/null
+      docker compose stop &>/dev/null
     fi
   fi
 }
